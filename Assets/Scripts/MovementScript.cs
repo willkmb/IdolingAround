@@ -85,7 +85,7 @@ public class MovementScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space) && canJump)
         {
-            if(jumpVel < 200)
+            if(jumpVel < 150)
             {
                 jumpVel++;
             }
