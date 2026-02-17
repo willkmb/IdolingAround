@@ -94,7 +94,7 @@ public class MovementScript : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.Space) && canJump)
         {
-            jump();
+            jump(1f);
             jumpVel = 85f;
         }
 
@@ -111,10 +111,10 @@ public class MovementScript : MonoBehaviour
             if(charge.fillAmount < 0.42f) drain = false;
         }
     }
-    void jump()
+    public void jump(float mult)
     {
         forwardDir = rb.linearVelocity.normalized;
-        rb.AddForce(Vector3.up * jumpVel, ForceMode.Impulse);
+        rb.AddForce(Vector3.up * jumpVel * mult, ForceMode.Impulse);
         rb.AddForce(forwardDir * jumpVelFor, ForceMode.Impulse);
         drain = true;
     }
