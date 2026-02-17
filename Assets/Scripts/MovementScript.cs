@@ -41,7 +41,7 @@ public class MovementScript : MonoBehaviour
         float move = Input.GetAxis("Vertical");
         float turning = Input.GetAxis("Horizontal");
 
-        if(Input.GetKeyDown(KeyCode.W)) flipDir = Random.Range(0, 2);
+        if(Input.GetKeyDown(KeyCode.W)) { flipDir = Random.Range(0, 2);}
 
         if (move != 0)
         {
@@ -126,6 +126,11 @@ public class MovementScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground")) canJump = false;
     }
+
+    /*void cubeRot()
+    {
+        cube.transform.localRotation = transform.localRotation;
+    }*/
 
     void OnDrawGizmos()
     {
