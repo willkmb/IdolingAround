@@ -27,12 +27,17 @@ public class MovementScript : MonoBehaviour
     [SerializeField] TextMeshProUGUI timerText;
     private float timer;
 
+    [Header("voiceLines")]
+    [SerializeField] AudioClip[] voiceLines;
+    [SerializeField] AudioSource source;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = maxSpeed;
         Animation transAnim = GameObject.Find("IdolTransition").GetComponent<Animation>();
         if(transAnim != null ) transAnim.Play();
+        StartCoroutine("voices");
     }
 
     private void FixedUpdate()
@@ -117,6 +122,20 @@ public class MovementScript : MonoBehaviour
         rb.AddForce(Vector3.up * jumpVel * mult, ForceMode.Impulse);
         rb.AddForce(forwardDir * jumpVelFor, ForceMode.Impulse);
         drain = true;
+    }
+
+    IEnumerator voices()
+    {
+        yield return new WaitForSeconds(20f);
+        while (true)
+        {
+            int lineVal = Random.Range(0, voiceLines.Length);
+            int waitTime = Random.Range(30, 60);
+            AudioClip current = voiceLines[lineVal];
+            source.PlayOneShot(current);
+
+            yield return new WaitForSeconds(waitTime);
+        }
     }
 
     private void OnCollisionStay(Collision collision)
