@@ -10,7 +10,7 @@ public class MenuScript : MonoBehaviour
         GameObject clicked = EventSystem.current.currentSelectedGameObject;
         clicked.GetComponent<Animation>().Play();
         trans.GetComponent<Animation>().Play();
-        Invoke("load", 0.725f);
+        Invoke("load", trans.GetComponent<Animation>().clip.length);
     }
 
     void load()
