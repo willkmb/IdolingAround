@@ -1,5 +1,39 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2580724620847492443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1018882712950184692}
+  m_Layer: 0
+  m_Name: CrackedStone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1018882712950184692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2580724620847492443}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1226969757850345936}
+  - {fileID: 6932001431093601047}
+  - {fileID: 6277501766061545666}
+  m_Father: {fileID: 2907290132472307034}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4276402746895407722
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,9 +68,7 @@ Transform:
   - {fileID: 3270016412747588472}
   - {fileID: 7599344986674707456}
   - {fileID: 9118486418607463670}
-  - {fileID: 1226969757850345936}
-  - {fileID: 6932001431093601047}
-  - {fileID: 6277501766061545666}
+  - {fileID: 1018882712950184692}
   m_Father: {fileID: 3017403106778430963}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4465284733093401080
@@ -186,7 +218,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2907290132472307034}
+    m_TransformParent: {fileID: 1018882712950184692}
     m_Modifications:
     - target: {fileID: 5799588163878002392, guid: 2b3ca3c5528d53642bc33166510dc74b, type: 3}
       propertyPath: m_Name
@@ -194,7 +226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8430907159577668004, guid: 2b3ca3c5528d53642bc33166510dc74b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.4
+      value: -0.39999998
       objectReference: {fileID: 0}
     - target: {fileID: 8430907159577668004, guid: 2b3ca3c5528d53642bc33166510dc74b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -310,7 +342,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2907290132472307034}
+    m_TransformParent: {fileID: 1018882712950184692}
     m_Modifications:
     - target: {fileID: 5799588163878002392, guid: 2b3ca3c5528d53642bc33166510dc74b, type: 3}
       propertyPath: m_Name
@@ -318,7 +350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8430907159577668004, guid: 2b3ca3c5528d53642bc33166510dc74b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.4005101
+      value: -0.40051007
       objectReference: {fileID: 0}
     - target: {fileID: 8430907159577668004, guid: 2b3ca3c5528d53642bc33166510dc74b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -434,11 +466,11 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2907290132472307034}
+    m_TransformParent: {fileID: 1018882712950184692}
     m_Modifications:
     - target: {fileID: 4059899499197191509, guid: 15369e4ea4f685740876fcb2e47cf7d0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.22999999
+      value: -0.23000002
       objectReference: {fileID: 0}
     - target: {fileID: 4059899499197191509, guid: 15369e4ea4f685740876fcb2e47cf7d0, type: 3}
       propertyPath: m_LocalPosition.y
