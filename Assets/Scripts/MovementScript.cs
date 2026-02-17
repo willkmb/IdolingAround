@@ -85,7 +85,7 @@ public class MovementScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space) && canJump)
         {
-            if(jumpVel < 150)
+            if(jumpVel < 125f)
             {
                 jumpVel++;
             }
@@ -94,7 +94,7 @@ public class MovementScript : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space) && canJump)
         {
             jump();
-            jumpVel = 125f;
+            jumpVel = 85f;
         }
 
         cube.transform.position = transform.position;
