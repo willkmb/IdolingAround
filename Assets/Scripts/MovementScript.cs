@@ -37,7 +37,7 @@ public class MovementScript : MonoBehaviour
         rb.maxAngularVelocity = maxSpeed;
         Animation transAnim = GameObject.Find("IdolTransition").GetComponent<Animation>();
         if(transAnim != null ) transAnim.Play();
-        StartCoroutine("voices", 20f);
+        StartCoroutine("voices");
     }
 
     private void FixedUpdate()
@@ -126,6 +126,7 @@ public class MovementScript : MonoBehaviour
 
     IEnumerator voices()
     {
+        yield return new WaitForSeconds(20f);
         while (true)
         {
             int lineVal = Random.Range(0, voiceLines.Length);
