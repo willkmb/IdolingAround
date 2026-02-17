@@ -127,17 +127,4 @@ public class MovementScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground")) canJump = false;
     }
-
-    /*void cubeRot()
-    {
-        cube.transform.localRotation = transform.localRotation;
-    }*/
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Vector3 worldCOM = transform.TransformPoint(rb.centerOfMass);
-        Gizmos.DrawSphere(worldCOM, 0.1f);
-        Debug.DrawRay(transform.position, forwardDir * 3f, Color.green);
-    }
 }
