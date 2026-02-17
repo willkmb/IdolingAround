@@ -31,7 +31,8 @@ public class MovementScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = maxSpeed;
-
+        Animation transAnim = GameObject.Find("IdolTransition").GetComponent<Animation>();
+        if(transAnim != null ) transAnim.Play();
     }
 
     private void FixedUpdate()
