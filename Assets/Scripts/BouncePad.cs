@@ -3,18 +3,12 @@ using UnityEngine;
 public class BouncePad : MonoBehaviour
 {
     [SerializeField] float JumpMult;
-    [SerializeField] MovementScript movementScript;
+    MovementScript movementScript;
     [SerializeField] Animation anim;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         movementScript = GameObject.FindFirstObjectByType<MovementScript>().GetComponent<MovementScript>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnTriggerEnter(Collider col)
