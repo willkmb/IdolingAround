@@ -52,8 +52,6 @@ public class MovementScript : MonoBehaviour
         float move = Input.GetAxis("Vertical");
         float turning = Input.GetAxis("Horizontal");
 
-        if(Input.GetKeyDown(KeyCode.W)) { flipDir = Random.Range(0, 2);}
-
         if (move != 0)
         {
             float uprightAmount = Vector3.Dot(transform.up, Vector3.up);
@@ -61,8 +59,7 @@ public class MovementScript : MonoBehaviour
             {
                 Vector3 targetCOM = new Vector3(0, -0.3f, 0);
                 COM = Vector3.Lerp(COM, targetCOM, 50f * Time.deltaTime);
-                if(flipDir == 0) rb.AddTorque(transform.forward * -move * rollTorque);
-                else rb.AddTorque(-transform.forward * -move * rollTorque);
+                rb.AddTorque(transform.forward * -move * rollTorque);
                 flipped = false;
             }
             else
@@ -80,7 +77,7 @@ public class MovementScript : MonoBehaviour
         else if(Mathf.Abs(move) < 0.01f && rb.angularVelocity.magnitude < 1f)
         {
             COM = new Vector3(0, -1f, 0);
-            rb.angularDamping = 1.25f;
+            rb.angularDamping = 2.25f;
         }
 
         if(move == 0) cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 35.41f, 2 * Time.deltaTime);

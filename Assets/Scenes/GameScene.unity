@@ -921,7 +921,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 1
-  m_LookAt: {fileID: 1995569721}
+  m_LookAt: {fileID: 1567119335}
   m_Follow: {fileID: 1567119335}
   m_Lens:
     FieldOfView: 35.41018
@@ -950,7 +950,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 557106947}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000042588493, y: -0.0000000019463116, z: 9.626385e-10, w: 1}
+  m_LocalRotation: {x: -0.000000014503668, y: -0.000000020859506, z: 0.000000010412572, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7971,7 +7971,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1516474263}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22764422, y: -0.000000005642998, z: 0.0000000013192331, w: 0.9737444}
+  m_LocalRotation: {x: 0.22943215, y: 0.0000000086923055, z: -0.0000000020489508, w: 0.97332466}
   m_LocalPosition: {x: 0, y: 3.3309996, z: -6.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8178,7 +8178,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1567119334}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8590,6 +8590,7 @@ MonoBehaviour:
   maxSpeed: 40
   jumpVel: 85
   jumpVelFor: 8
+  coyote: 0.25
   timerText: {fileID: 14623758}
   voiceLines:
   - {fileID: 8300000, guid: 121b48a6c27bf9742bb3cad6c99a1dae, type: 3}
