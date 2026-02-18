@@ -11,12 +11,14 @@ public class MovementScript : MonoBehaviour
 
     public CinemachineVirtualCamera cam;
     public GameObject cube;
+    public GameObject part;
     public Image charge;
     [SerializeField] float rollTorque = 20f;
     [SerializeField] float turnSpeed = 120f;
     [SerializeField] float maxSpeed = 15f;
     [SerializeField] float jumpVel = 8f;
     [SerializeField] float jumpVelFor = 8f;
+    [SerializeField] float coyote = 0.2f;
     private Vector3 COM = new Vector3 (0, 0.5f, 0);
     private Vector3 forwardDir;
     private Rigidbody rb;
@@ -24,6 +26,7 @@ public class MovementScript : MonoBehaviour
     private bool flipped;
     private bool canJump;
     private bool drain;
+    private float coyoteTimer;
 
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
@@ -90,7 +93,10 @@ public class MovementScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Space) && canJump)
+        if (canJump) coyoteTimer = coyote;
+        else coyoteTimer -= Time.deltaTime;
+
+        if (Input.GetKey(KeyCode.Space) && coyoteTimer > 0f)
         {
             if(jumpVel < 125f)
             {
@@ -98,13 +104,14 @@ public class MovementScript : MonoBehaviour
             }
             charge.fillAmount += 1.25f * Time.deltaTime;
         }
-        if (Input.GetKeyUp(KeyCode.Space) && canJump)
+        if (Input.GetKeyUp(KeyCode.Space) && coyoteTimer > 0f)
         {
             jump(1f);
             jumpVel = 85f;
         }
 
         cube.transform.position = transform.position;
+        part.transform.position = transform.position;
 
         timer += Time.deltaTime;
         int mins = Mathf.FloorToInt(timer / 60f);
