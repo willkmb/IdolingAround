@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class MovementScript : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class MovementScript : MonoBehaviour
     [SerializeField] float jumpVel = 8f;
     [SerializeField] float jumpVelFor = 8f;
     [SerializeField] float coyote = 0.2f;
-    private Vector3 COM = new Vector3 (0, 0.5f, 0);
+    private Vector3 COM = new Vector3(0, 0.5f, 0);
     private Vector3 forwardDir;
     private Rigidbody rb;
     private int flipDir;
@@ -41,7 +42,7 @@ public class MovementScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = maxSpeed;
         Animation transAnim = GameObject.Find("IdolTransition").GetComponent<Animation>();
-        if(transAnim != null ) transAnim.Play();
+        if (transAnim != null) transAnim.Play();
         StartCoroutine("voices");
     }
 
@@ -57,10 +58,13 @@ public class MovementScript : MonoBehaviour
             float uprightAmount = Vector3.Dot(transform.up, Vector3.up);
             if (uprightAmount > 0.7f)
             {
-                Vector3 targetCOM = new Vector3(0, -0.3f, 0);
-                COM = Vector3.Lerp(COM, targetCOM, 50f * Time.deltaTime);
-                rb.AddTorque(transform.forward * -move * rollTorque);
-                flipped = false;
+                if (move > 0)
+                {
+                    Vector3 targetCOM = new Vector3(0, -0.3f, 0);
+                    COM = Vector3.Lerp(COM, targetCOM, 50f * Time.deltaTime);
+                    rb.AddTorque(transform.forward * -rollTorque);
+                    flipped = false;
+                }
             }
             else
             {
@@ -74,28 +78,29 @@ public class MovementScript : MonoBehaviour
                 cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 40, 1.65f * Time.deltaTime);
             }
         }
-        else if(Mathf.Abs(move) < 0.01f && rb.angularVelocity.magnitude < 1f)
+        else if (Mathf.Abs(move) < 0.01f && rb.angularVelocity.magnitude < 1f)
         {
             COM = new Vector3(0, -1f, 0);
             rb.angularDamping = 2.25f;
         }
 
-        if(move == 0) cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 35.41f, 2 * Time.deltaTime);
+        if (move == 0) cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 35.41f, 2 * Time.deltaTime);
 
         if (turning != 0 && flipped)
         {
-            if(move != 0) transform.Rotate(Vector3.up, turning * turnSpeed * Time.deltaTime, Space.World);
+            if (move != 0) transform.Rotate(Vector3.up, turning * turnSpeed * Time.deltaTime, Space.World);
         }
     }
 
     private void Update()
     {
+        CubeChecks();
         if (canJump) coyoteTimer = coyote;
         else coyoteTimer -= Time.deltaTime;
 
         if (Input.GetKey(KeyCode.Space) && coyoteTimer > 0f)
         {
-            if(jumpVel < 125f)
+            if (jumpVel < 195f)
             {
                 jumpVel++;
             }
@@ -118,7 +123,7 @@ public class MovementScript : MonoBehaviour
         if (drain)
         {
             charge.fillAmount -= 1.75f * Time.deltaTime;
-            if(charge.fillAmount < 0.42f) drain = false;
+            if (charge.fillAmount < 0.42f) drain = false;
         }
 
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up); // gets velocity of the idol on the ground
@@ -162,5 +167,24 @@ public class MovementScript : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground")) canJump = false;
+    }
+
+    void CubeChecks()
+    {
+        
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(cube.transform.position, cube.transform.position + cube.transform.forward * 2f);
+        float move = Input.GetAxisRaw("Vertical");
+
+        if (Mathf.Abs(move) > 0.01f)
+        {
+            Vector3 inputDir = cube.transform.forward * move;
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(cube.transform.position, cube.transform.position + inputDir * 2f);
+        }
     }
 }

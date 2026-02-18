@@ -8178,7 +8178,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1567119334}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8585,9 +8585,9 @@ MonoBehaviour:
   cube: {fileID: 1567119334}
   part: {fileID: 747146622}
   charge: {fileID: 288426137}
-  rollTorque: 70
+  rollTorque: 75
   turnSpeed: 75
-  maxSpeed: 40
+  maxSpeed: 50
   jumpVel: 85
   jumpVelFor: 8
   coyote: 0.25
