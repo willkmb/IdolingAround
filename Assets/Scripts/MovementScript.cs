@@ -146,6 +146,22 @@ public class MovementScript : MonoBehaviour
         drain = true;
     }
 
+    private void LateUpdate()
+    {
+        cube.transform.position = transform.position;
+        Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+        if (vel.magnitude > 0.01f)
+        {
+            Vector3 velDir = vel.normalized;
+            float dot = Vector3.Dot(cube.transform.forward, velDir);
+            Quaternion targetRotation;
+            if (dot > 0) targetRotation = Quaternion.LookRotation(velDir, transform.up);
+            else targetRotation = Quaternion.LookRotation(-velDir, transform.up);
+
+            cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime);
+        }
+    }
+
     IEnumerator voices()
     {
         yield return new WaitForSeconds(20f);
@@ -176,7 +192,7 @@ public class MovementScript : MonoBehaviour
         {
             float forwardDot = Vector3.Dot(cube.transform.forward, vel.normalized);
 
-            if (forwardDot > 0.5f)
+            if (forwardDot > 0.5f) // moving forward relative to cube
             {
                 float dot = Vector3.Dot(cube.transform.forward, vel.normalized);
 
@@ -187,7 +203,6 @@ public class MovementScript : MonoBehaviour
                     Quaternion targetRotation = Quaternion.LookRotation(vel.normalized, Vector3.up);
                     cube.transform.rotation = targetRotation;
                 }
-                else Debug.Log("sideways");
             }
         }
     }
