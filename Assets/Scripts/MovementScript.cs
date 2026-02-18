@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class MovementScript : MonoBehaviour
 {
+    public Transform respawnPoint;
+
     public CinemachineVirtualCamera cam;
     public GameObject cube;
     public Image charge;
