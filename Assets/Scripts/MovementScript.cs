@@ -29,7 +29,7 @@ public class MovementScript : MonoBehaviour
     private bool canJump;
     private bool drain;
     private float coyoteTimer;
-    private bool pending = false;
+    KeyCode? lastKey;
 
 
     [Header("Timer")]
@@ -42,6 +42,7 @@ public class MovementScript : MonoBehaviour
 
     private void Start()
     {
+        Application.targetFrameRate = 200;
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = maxSpeed;
         Animation transAnim = GameObject.Find("IdolTransition").GetComponent<Animation>();
@@ -171,6 +172,8 @@ public class MovementScript : MonoBehaviour
 
     void CubeChecks()
     {
+        if (Input.GetKeyDown(KeyCode.W)) lastKey = KeyCode.W;
+        if (Input.GetKeyDown(KeyCode.S)) lastKey = KeyCode.S;
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         float move = Input.GetAxisRaw("Vertical");
 
@@ -178,28 +181,17 @@ public class MovementScript : MonoBehaviour
         {
             float dot = Vector3.Dot(cube.transform.forward.normalized, vel.normalized);
 
-            if (dot > 0.7f)
-            {
-                Debug.Log("ForwardMatch");
-            }
+            if (dot > 0.7f) Debug.Log("ForwardMatch");
             else if (dot < -0.7f)
             {
-                Debug.Log("Opposite!");
-                
-                pending = true;
+                if (lastKey == KeyCode.W)
+                {
+                    Debug.Log("Opposite!");
+                    Quaternion targetRotation = Quaternion.LookRotation(vel.normalized, Vector3.up);
+                    cube.transform.rotation = targetRotation;
+                }
             }
-            else
-            {
-                Debug.Log("sideways");
-            }
-        }
-
-        if(pending && vel.magnitude < 0.05f)
-        {
-            Debug.Log("Change Now!!!");
-            Quaternion targetRotation = Quaternion.LookRotation(vel.normalized, Vector3.up);
-            cube.transform.rotation = targetRotation;
-            pending = false;
+            else Debug.Log("sideways");
         }
     }
     private void OnDrawGizmos()
