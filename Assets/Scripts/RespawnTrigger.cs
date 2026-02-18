@@ -12,6 +12,8 @@ public class RespawnTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
+        col.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+        col.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         col.gameObject.transform.position = movementScript.respawnPoint.position;
     }
 }
