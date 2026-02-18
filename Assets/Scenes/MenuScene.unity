@@ -4540,6 +4540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61332baace1866345aaddb0df4adbfa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  respawnPoint: {fileID: 0}
   cam: {fileID: 557106948}
   cube: {fileID: 1567119334}
   charge: {fileID: 288426137}
@@ -4549,6 +4550,8 @@ MonoBehaviour:
   jumpVel: 85
   jumpVelFor: 8
   timerText: {fileID: 14623758}
+  voiceLines: []
+  source: {fileID: 0}
 --- !u!136 &1995569718
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4724,7 +4727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 4.86, y: 1.48}
+  m_EffectDistance: {x: 4.86, y: 0}
   m_UseGraphicAlpha: 1
 --- !u!114 &2010958018
 MonoBehaviour:
