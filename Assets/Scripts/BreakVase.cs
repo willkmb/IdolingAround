@@ -8,8 +8,9 @@ public class BreakVase : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (this.GetComponent<Rigidbody>().angularVelocity.magnitude >= speedToBreak/2 || 
-            (collision.gameObject.GetComponent<Rigidbody>() != null && collision.gameObject.GetComponent<Rigidbody>().angularVelocity.magnitude >= speedToBreak))
+        Debug.Log(this.GetComponent<Rigidbody>().linearVelocity.magnitude);
+        if (this.GetComponent<Rigidbody>().linearVelocity.magnitude >= speedToBreak/2 || 
+            (collision.gameObject.GetComponent<Rigidbody>() != null && collision.gameObject.GetComponent<Rigidbody>().linearVelocity.magnitude >= speedToBreak * 4))
         {
             Instantiate(BrokenVase, this.transform.position, this.transform.rotation);
             this.gameObject.SetActive(false);
