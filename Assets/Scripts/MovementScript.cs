@@ -83,7 +83,6 @@ public class MovementScript : MonoBehaviour
         if (turning != 0 && flipped)
         {
             if(move != 0) transform.Rotate(Vector3.up, turning * turnSpeed * Time.deltaTime, Space.World);
-            if (move != 0) cube.transform.Rotate(Vector3.up, turning * turnSpeed * Time.deltaTime, Space.World);
         }
     }
 
@@ -114,6 +113,18 @@ public class MovementScript : MonoBehaviour
         {
             charge.fillAmount -= 1.75f * Time.deltaTime;
             if(charge.fillAmount < 0.42f) drain = false;
+        }
+
+        Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up); // gets velocity of the idol on the ground
+        float speed = vel.magnitude;
+        if (speed > 0.1f) //check if moving
+        {
+            Vector3 velDir = vel.normalized;
+            float dot = Vector3.Dot(cube.transform.forward, velDir); // dot product to check if player is moving forward relative to direction
+            Quaternion targetRotation;
+            if (dot > 0) targetRotation = Quaternion.LookRotation(velDir, transform.up); //sets rotation direction of forward
+            else targetRotation = Quaternion.LookRotation(-velDir, transform.up); // sets rotation direction of backwards to be the opposite of forwards to prevent camera pivoting
+            cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime); // smoothly adjust cubes rotation values
         }
     }
     public void jump(float mult)
