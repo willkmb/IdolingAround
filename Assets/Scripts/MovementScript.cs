@@ -29,7 +29,6 @@ public class MovementScript : MonoBehaviour
     private bool canJump;
     private bool drain;
     private float coyoteTimer;
-    KeyCode? lastKey;
 
 
     [Header("Timer")]
@@ -172,26 +171,24 @@ public class MovementScript : MonoBehaviour
 
     void CubeChecks()
     {
-        if (Input.GetKeyDown(KeyCode.W)) lastKey = KeyCode.W;
-        if (Input.GetKeyDown(KeyCode.S)) lastKey = KeyCode.S;
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
-        float move = Input.GetAxisRaw("Vertical");
-
-        if (vel.magnitude > 0.01f && move > 0 && !Input.GetKey(KeyCode.S))
+        if (vel.magnitude > 0.01f)
         {
-            float dot = Vector3.Dot(cube.transform.forward.normalized, vel.normalized);
+            float forwardDot = Vector3.Dot(cube.transform.forward, vel.normalized);
 
-            if (dot > 0.7f) Debug.Log("ForwardMatch");
-            else if (dot < -0.7f)
+            if (forwardDot > 0.5f)
             {
-                if (lastKey == KeyCode.W)
+                float dot = Vector3.Dot(cube.transform.forward, vel.normalized);
+
+                if (dot > 0.7f) Debug.Log("ForwardMatch");
+                else if (dot < -0.7f)
                 {
                     Debug.Log("Opposite!");
                     Quaternion targetRotation = Quaternion.LookRotation(vel.normalized, Vector3.up);
                     cube.transform.rotation = targetRotation;
                 }
+                else Debug.Log("sideways");
             }
-            else Debug.Log("sideways");
         }
     }
     private void OnDrawGizmos()
