@@ -1,9 +1,11 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 
 public class MovementScript : MonoBehaviour
 {
@@ -19,7 +21,7 @@ public class MovementScript : MonoBehaviour
     [SerializeField] float jumpVel = 8f;
     [SerializeField] float jumpVelFor = 8f;
     [SerializeField] float coyote = 0.2f;
-    private Vector3 COM = new Vector3 (0, 0.5f, 0);
+    private Vector3 COM = new Vector3(0, 0.5f, 0);
     private Vector3 forwardDir;
     private Rigidbody rb;
     private int flipDir;
@@ -27,6 +29,8 @@ public class MovementScript : MonoBehaviour
     private bool canJump;
     private bool drain;
     private float coyoteTimer;
+    private bool pending = false;
+
 
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
@@ -41,7 +45,7 @@ public class MovementScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = maxSpeed;
         Animation transAnim = GameObject.Find("IdolTransition").GetComponent<Animation>();
-        if(transAnim != null ) transAnim.Play();
+        if (transAnim != null) transAnim.Play();
         StartCoroutine("voices");
     }
 
@@ -57,10 +61,13 @@ public class MovementScript : MonoBehaviour
             float uprightAmount = Vector3.Dot(transform.up, Vector3.up);
             if (uprightAmount > 0.7f)
             {
-                Vector3 targetCOM = new Vector3(0, -0.3f, 0);
-                COM = Vector3.Lerp(COM, targetCOM, 50f * Time.deltaTime);
-                rb.AddTorque(transform.forward * -move * rollTorque);
-                flipped = false;
+                if (move > 0)
+                {
+                    Vector3 targetCOM = new Vector3(0, -0.3f, 0);
+                    COM = Vector3.Lerp(COM, targetCOM, 50f * Time.deltaTime);
+                    rb.AddTorque(transform.forward * -rollTorque);
+                    flipped = false;
+                }
             }
             else
             {
@@ -74,28 +81,29 @@ public class MovementScript : MonoBehaviour
                 cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 40, 1.65f * Time.deltaTime);
             }
         }
-        else if(Mathf.Abs(move) < 0.01f && rb.angularVelocity.magnitude < 1f)
+        else if (Mathf.Abs(move) < 0.01f && rb.angularVelocity.magnitude < 1f)
         {
             COM = new Vector3(0, -1f, 0);
             rb.angularDamping = 2.25f;
         }
 
-        if(move == 0) cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 35.41f, 2 * Time.deltaTime);
+        if (move == 0) cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 35.41f, 2 * Time.deltaTime);
 
         if (turning != 0 && flipped)
         {
-            if(move != 0) transform.Rotate(Vector3.up, turning * turnSpeed * Time.deltaTime, Space.World);
+            if (move != 0) transform.Rotate(Vector3.up, turning * turnSpeed * Time.deltaTime, Space.World);
         }
     }
 
     private void Update()
     {
+        CubeChecks();
         if (canJump) coyoteTimer = coyote;
         else coyoteTimer -= Time.deltaTime;
 
         if (Input.GetKey(KeyCode.Space) && coyoteTimer > 0f)
         {
-            if(jumpVel < 125f)
+            if (jumpVel < 195f)
             {
                 jumpVel++;
             }
@@ -118,20 +126,17 @@ public class MovementScript : MonoBehaviour
         if (drain)
         {
             charge.fillAmount -= 1.75f * Time.deltaTime;
-            if(charge.fillAmount < 0.42f) drain = false;
+            if (charge.fillAmount < 0.42f) drain = false;
         }
 
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up); // gets velocity of the idol on the ground
         float speed = vel.magnitude;
-        if (speed > 0.1f) //check if moving
-        {
-            Vector3 velDir = vel.normalized;
-            float dot = Vector3.Dot(cube.transform.forward, velDir); // dot product to check if player is moving forward relative to direction
-            Quaternion targetRotation;
-            if (dot > 0) targetRotation = Quaternion.LookRotation(velDir, transform.up); //sets rotation direction of forward
-            else targetRotation = Quaternion.LookRotation(-velDir, transform.up); // sets rotation direction of backwards to be the opposite of forwards to prevent camera pivoting
-            cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime); // smoothly adjust cubes rotation values
-        }
+        Vector3 velDir = vel.normalized;
+        float dot = Vector3.Dot(cube.transform.forward, velDir); // dot product to check if player is moving forward relative to direction
+        Quaternion targetRotation;
+        if (dot > 0) targetRotation = Quaternion.LookRotation(velDir, transform.up); //sets rotation direction of forward
+        else targetRotation = Quaternion.LookRotation(-velDir, transform.up); // sets rotation direction of backwards to be the opposite of forwards to prevent camera pivoting
+        cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime); // smoothly adjust cubes rotation values
     }
     public void jump(float mult)
     {
@@ -162,5 +167,55 @@ public class MovementScript : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground")) canJump = false;
+    }
+
+    void CubeChecks()
+    {
+        Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+        float move = Input.GetAxisRaw("Vertical");
+
+        if (vel.magnitude > 0.01f && move > 0 && !Input.GetKey(KeyCode.S))
+        {
+            float dot = Vector3.Dot(cube.transform.forward.normalized, vel.normalized);
+
+            if (dot > 0.7f)
+            {
+                Debug.Log("ForwardMatch");
+            }
+            else if (dot < -0.7f)
+            {
+                Debug.Log("Opposite!");
+                
+                pending = true;
+            }
+            else
+            {
+                Debug.Log("sideways");
+            }
+        }
+
+        if(pending && vel.magnitude < 0.05f)
+        {
+            Debug.Log("Change Now!!!");
+            Quaternion targetRotation = Quaternion.LookRotation(vel.normalized, Vector3.up);
+            cube.transform.rotation = targetRotation;
+            pending = false;
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(cube.transform.position, cube.transform.position + cube.transform.forward * 2f);
+
+        Vector3 vel = Vector3.ProjectOnPlane(rb != null ? rb.linearVelocity : Vector3.zero, Vector3.up);
+
+        if (vel.magnitude > 0.01f)
+        {
+            Vector3 camDir = (cam.transform.position - cube.transform.position).normalized;
+
+            float dot = Vector3.Dot(vel.normalized, camDir);
+            Gizmos.color = (dot > 0) ? Color.green : Color.red;
+            Gizmos.DrawLine(cube.transform.position, cube.transform.position + vel.normalized * 2f);
+        }
     }
 }
