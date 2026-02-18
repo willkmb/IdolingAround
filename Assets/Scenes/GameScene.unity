@@ -935,7 +935,7 @@ MonoBehaviour:
     FocusDistance: 10
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
-    m_BlendHint: 0
+    m_BlendHint: 1
     m_InheritPosition: 0
     m_OnCameraLive:
       m_PersistentCalls:
@@ -950,7 +950,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 557106947}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000014503668, y: -0.000000020859506, z: 0.000000010412572, w: 1}
+  m_LocalRotation: {x: -0.00000014420823, y: -0.000000012352891, z: 0.0000000061662697, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7773,10 +7773,10 @@ MonoBehaviour:
   m_FollowOffset: {x: 0, y: 3.03, z: -6.07}
   m_XDamping: 0
   m_YDamping: 0
-  m_ZDamping: 1
+  m_ZDamping: 0
   m_AngularDampingMode: 0
   m_PitchDamping: 0
-  m_YawDamping: 1.91
+  m_YawDamping: 4
   m_RollDamping: 0
   m_AngularDamping: 0
 --- !u!114 &1477061728
@@ -7971,7 +7971,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1516474263}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22943215, y: 0.0000000086923055, z: -0.0000000020489508, w: 0.97332466}
+  m_LocalRotation: {x: 0.2294322, y: 0.000000013438108, z: -0.0000000031676322, w: 0.97332466}
   m_LocalPosition: {x: 0, y: 3.3309996, z: -6.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8178,7 +8178,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1567119334}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

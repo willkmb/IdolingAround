@@ -1,10 +1,11 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UI;
+using Cinemachine;
 
 public class MovementScript : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class MovementScript : MonoBehaviour
     private bool canJump;
     private bool drain;
     private float coyoteTimer;
+    private bool pending = false;
+
 
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
@@ -128,15 +131,12 @@ public class MovementScript : MonoBehaviour
 
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up); // gets velocity of the idol on the ground
         float speed = vel.magnitude;
-        if (speed > 0.1f) //check if moving
-        {
-            Vector3 velDir = vel.normalized;
-            float dot = Vector3.Dot(cube.transform.forward, velDir); // dot product to check if player is moving forward relative to direction
-            Quaternion targetRotation;
-            if (dot > 0) targetRotation = Quaternion.LookRotation(velDir, transform.up); //sets rotation direction of forward
-            else targetRotation = Quaternion.LookRotation(-velDir, transform.up); // sets rotation direction of backwards to be the opposite of forwards to prevent camera pivoting
-            cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime); // smoothly adjust cubes rotation values
-        }
+        Vector3 velDir = vel.normalized;
+        float dot = Vector3.Dot(cube.transform.forward, velDir); // dot product to check if player is moving forward relative to direction
+        Quaternion targetRotation;
+        if (dot > 0) targetRotation = Quaternion.LookRotation(velDir, transform.up); //sets rotation direction of forward
+        else targetRotation = Quaternion.LookRotation(-velDir, transform.up); // sets rotation direction of backwards to be the opposite of forwards to prevent camera pivoting
+        cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime); // smoothly adjust cubes rotation values
     }
     public void jump(float mult)
     {
@@ -171,20 +171,51 @@ public class MovementScript : MonoBehaviour
 
     void CubeChecks()
     {
-        
-    }
+        Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+        float move = Input.GetAxisRaw("Vertical");
 
+        if (vel.magnitude > 0.01f && move > 0 && !Input.GetKey(KeyCode.S))
+        {
+            float dot = Vector3.Dot(cube.transform.forward.normalized, vel.normalized);
+
+            if (dot > 0.7f)
+            {
+                Debug.Log("ForwardMatch");
+            }
+            else if (dot < -0.7f)
+            {
+                Debug.Log("Opposite!");
+                
+                pending = true;
+            }
+            else
+            {
+                Debug.Log("sideways");
+            }
+        }
+
+        if(pending && vel.magnitude < 0.05f)
+        {
+            Debug.Log("Change Now!!!");
+            Quaternion targetRotation = Quaternion.LookRotation(vel.normalized, Vector3.up);
+            cube.transform.rotation = targetRotation;
+            pending = false;
+        }
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(cube.transform.position, cube.transform.position + cube.transform.forward * 2f);
-        float move = Input.GetAxisRaw("Vertical");
 
-        if (Mathf.Abs(move) > 0.01f)
+        Vector3 vel = Vector3.ProjectOnPlane(rb != null ? rb.linearVelocity : Vector3.zero, Vector3.up);
+
+        if (vel.magnitude > 0.01f)
         {
-            Vector3 inputDir = cube.transform.forward * move;
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(cube.transform.position, cube.transform.position + inputDir * 2f);
+            Vector3 camDir = (cam.transform.position - cube.transform.position).normalized;
+
+            float dot = Vector3.Dot(vel.normalized, camDir);
+            Gizmos.color = (dot > 0) ? Color.green : Color.red;
+            Gizmos.DrawLine(cube.transform.position, cube.transform.position + vel.normalized * 2f);
         }
     }
 }
