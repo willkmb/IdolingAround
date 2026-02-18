@@ -47,7 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e43598518666fb42ba3e3743ba84dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpMult: 5
+  JumpMult: 2
+  ObjBounceMult: 3
   anim: {fileID: 1759534291073413989}
 --- !u!65 &8166309321666564965
 BoxCollider:
@@ -68,8 +69,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 0.2, z: 2}
-  m_Center: {x: 0, y: 0.1, z: 0}
+  m_Size: {x: 2, y: 0.1, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4347282295464698576
 GameObject:
   m_ObjectHideFlags: 0

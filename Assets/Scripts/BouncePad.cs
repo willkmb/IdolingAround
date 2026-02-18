@@ -3,6 +3,7 @@ using UnityEngine;
 public class BouncePad : MonoBehaviour
 {
     [SerializeField] float JumpMult;
+    [SerializeField] float ObjBounceMult;
     MovementScript movementScript;
     [SerializeField] Animation anim;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,8 +24,8 @@ public class BouncePad : MonoBehaviour
         {
             if (col.gameObject.GetComponent<Rigidbody>() != null)
             {
+                col.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpMult * ObjBounceMult, ForceMode.Impulse);
                 anim.Play();
-                col.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * JumpMult, ForceMode.Impulse);
             }
         }
     }
