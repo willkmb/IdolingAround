@@ -16,8 +16,8 @@ public class BouncePad : MonoBehaviour
     {
         if (col.gameObject.GetComponent<MovementScript>() != null)
         {
-            anim.Play();
             BouncePlayer();
+            anim.Play();
         }
 
         else
