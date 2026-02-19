@@ -697,37 +697,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 288426135}
   m_CullTransparentMesh: 1
---- !u!1 &370991393
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 370991394}
-  m_Layer: 0
-  m_Name: Plant1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &370991394
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370991393}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.58101, y: 0, z: -4.40957}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &557106947
 GameObject:
   m_ObjectHideFlags: 0
@@ -7797,11 +7766,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6756723539056822742, guid: e33a849b96a19044b8b7588b907da589, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11
+      value: 6.46
       objectReference: {fileID: 0}
     - target: {fileID: 6756723539056822742, guid: e33a849b96a19044b8b7588b907da589, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -16.557838
+      value: -11.81
       objectReference: {fileID: 0}
     - target: {fileID: 6756723539056822742, guid: e33a849b96a19044b8b7588b907da589, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8405,4 +8374,3 @@ SceneRoots:
   - {fileID: 1748295528}
   - {fileID: 1768891347}
   - {fileID: 1983162420}
-  - {fileID: 370991394}

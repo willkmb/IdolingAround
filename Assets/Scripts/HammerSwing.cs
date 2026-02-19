@@ -5,6 +5,8 @@ using UnityEngine;
 public class HammerSwing : MonoBehaviour
 {
     [SerializeField] Rigidbody HammerRB;
+    [SerializeField] AudioSource sound;
+
     void Start()
     {
         StartCoroutine(ResetHammer());
@@ -12,6 +14,7 @@ public class HammerSwing : MonoBehaviour
 
     IEnumerator ResetHammer()
     {
+        sound.Play();
         yield return new WaitForSeconds(4);
 
         float time = 0;
