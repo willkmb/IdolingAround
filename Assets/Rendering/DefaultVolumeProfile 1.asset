@@ -82,7 +82,7 @@ MonoBehaviour:
   active: 1
   distance:
     m_OverrideState: 1
-    m_Value: 0.1
+    m_Value: 0.063
   cropToFit:
     m_OverrideState: 1
     m_Value: 1
@@ -104,7 +104,7 @@ MonoBehaviour:
     m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.21
+    m_Value: 0
   response:
     m_OverrideState: 1
     m_Value: 0
@@ -172,10 +172,10 @@ MonoBehaviour:
   active: 1
   temperature:
     m_OverrideState: 1
-    m_Value: 12
+    m_Value: 7.7
   tint:
     m_OverrideState: 1
-    m_Value: 5
+    m_Value: 3.9
 --- !u!114 &-4413847918144246233
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -191,13 +191,13 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.9039172, y: 1, z: 0.82722247, w: -0.251038}
+    m_Value: {x: 1, y: 1, z: 1, w: 0.02098636}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.8433711, z: 0.7072611, w: 0.12364759}
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.024729611}
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
   shadowsStart:
     m_OverrideState: 1
     m_Value: 0
@@ -225,13 +225,13 @@ MonoBehaviour:
   active: 1
   redOutRedIn:
     m_OverrideState: 1
-    m_Value: 82
+    m_Value: 100
   redOutGreenIn:
     m_OverrideState: 1
-    m_Value: 12
+    m_Value: 0
   redOutBlueIn:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 0
   greenOutRedIn:
     m_OverrideState: 1
     m_Value: 0
@@ -305,19 +305,19 @@ MonoBehaviour:
   active: 1
   postExposure:
     m_OverrideState: 1
-    m_Value: 0.22
+    m_Value: 0.26
   contrast:
     m_OverrideState: 1
-    m_Value: -5
+    m_Value: 0
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 1.2311443, g: 1.1255796, b: 1.1151202, a: 1}
+    m_Value: {r: 1, g: 0.9386792, b: 0.95388836, a: 1}
   hueShift:
     m_OverrideState: 1
-    m_Value: -7
+    m_Value: -9
   saturation:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 10.6
 --- !u!114 &-100920997033934598
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -339,7 +339,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.48
+    m_Value: 0.294
   smoothness:
     m_OverrideState: 1
     m_Value: 0.2
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: DefaultVolumeProfile
+  m_Name: DefaultVolumeProfile 1
   m_EditorClassIdentifier: 
   components:
   - {fileID: 6359051291017162537}
@@ -393,7 +393,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.26
+    m_Value: 0.204
   xMultiplier:
     m_OverrideState: 1
     m_Value: 1
@@ -499,7 +499,7 @@ MonoBehaviour:
     m_Value: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   balance:
     m_OverrideState: 1
-    m_Value: -3
+    m_Value: 0
 --- !u!114 &3048607511631313496
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -562,7 +562,7 @@ MonoBehaviour:
   master:
     m_OverrideState: 1
     m_Value:
-      <length>k__BackingField: 4
+      <length>k__BackingField: 2
       m_Loop: 0
       m_ZeroValue: 0
       m_Range: 1
@@ -570,27 +570,9 @@ MonoBehaviour:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.0033869648
-          value: 0.025925815
+          time: 0
+          value: 0
           inSlope: 0
-          outSlope: 0.2187036
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.31160033
-          value: 0.2851851
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.72142243
-          value: 0.7444444
-          inSlope: 1
           outSlope: 1
           tangentMode: 0
           weightedMode: 0
@@ -807,7 +789,7 @@ MonoBehaviour:
     m_Value: {x: 0.9640065, y: 0.94527406, z: 1, w: 0.02098636}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 0.99775076, y: 0.99550176, z: 1, w: 0.05694526}
+    m_Value: {x: 0.99775076, y: 0.99550176, z: 1, w: -0.041972723}
   gain:
     m_OverrideState: 1
     m_Value: {x: 1, y: 1, z: 1, w: -0.020986361}
