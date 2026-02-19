@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 public class MenuScript : MonoBehaviour
 {
     [SerializeField] GameObject trans;
+    [SerializeField] GameObject screen;
+    [SerializeField] GameObject text;
     public void playButton()
     {
         GameObject clicked = EventSystem.current.currentSelectedGameObject;
@@ -14,6 +16,19 @@ public class MenuScript : MonoBehaviour
     }
 
     void load()
+    {
+        screen.GetComponent<Animation>().Play();
+        Invoke("load2", 0.35f);
+    }
+
+    void load2()
+    {
+        text.GetComponent<Animation>().Play();
+        screen.GetComponent<AudioSource>().Play();
+        Invoke("load3", screen.GetComponent<AudioSource>().clip.length + 1f);
+    }
+
+    void load3()
     {
         SceneManager.LoadScene("GameScene");
     }
