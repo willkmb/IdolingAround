@@ -150,7 +150,7 @@ public class MovementScript : MonoBehaviour
         rb.AddForce(forwardDir * jumpVelFor, ForceMode.Impulse);
         drain = true;
         float pitch = Random.Range(0.85f, 1.15f);
-        source.pitch = pitch;
+        sourceJump.pitch = pitch;
         sourceJump.Play();
     }
 
@@ -204,7 +204,7 @@ public class MovementScript : MonoBehaviour
         {
             camTimer += Time.deltaTime;
             Debug.Log(camTimer);
-            if (vel.magnitude > 2.75f || camTimer >= 0.75f)
+            if (vel.magnitude > 2.5f || camTimer >= 0.7f)
             {
                 transposer.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetWithWorldUp;
             }
