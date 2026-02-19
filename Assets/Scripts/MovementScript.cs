@@ -149,6 +149,8 @@ public class MovementScript : MonoBehaviour
         rb.AddForce(Vector3.up * jumpVel * mult, ForceMode.Impulse);
         rb.AddForce(forwardDir * jumpVelFor, ForceMode.Impulse);
         drain = true;
+        float pitch = Random.Range(0.85f, 1.15f);
+        source.pitch = pitch;
         sourceJump.Play();
     }
 
