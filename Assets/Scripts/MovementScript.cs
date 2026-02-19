@@ -44,6 +44,13 @@ public class MovementScript : MonoBehaviour
     [Header("camera Stuff")]
     private float camTimer = 0f;
 
+    [Header("Score")]
+    private float highScore = Mathf.Infinity;
+    [SerializeField] TextMeshProUGUI currentTimeText;
+    [SerializeField] TextMeshProUGUI highScoreText;
+    private bool timerRunning = true;
+
+
     private void Start()
     {
         Application.targetFrameRate = 200;
@@ -52,6 +59,16 @@ public class MovementScript : MonoBehaviour
         Animation transAnim = GameObject.Find("IdolTransition").GetComponent<Animation>();
         if (transAnim != null) transAnim.Play();
         StartCoroutine("voices");
+
+        if (PlayerPrefs.HasKey("HighScore"))
+        {
+            highScore = PlayerPrefs.GetFloat("HighScore");
+            highScoreText.text = "Highscore: " + FormatTime(highScore);
+        }
+        else
+        {
+            highScoreText.text = "Highscore: 00:00";
+        }
     }
 
     private void FixedUpdate()
@@ -123,7 +140,10 @@ public class MovementScript : MonoBehaviour
         cube.transform.position = transform.position;
         part.transform.position = transform.position;
 
-        timer += Time.deltaTime;
+        if (timerRunning)
+        {
+            timer += Time.deltaTime;
+        }
         int mins = Mathf.FloorToInt(timer / 60f);
         int secs = Mathf.FloorToInt(timer % 60f);
         timerText.text = $"{mins:00}:{secs:00}";
@@ -142,6 +162,27 @@ public class MovementScript : MonoBehaviour
         if (dot > 0) targetRotation = Quaternion.LookRotation(velDir, transform.up); //sets rotation direction of forward
         else targetRotation = Quaternion.LookRotation(-velDir, transform.up); // sets rotation direction of backwards to be the opposite of forwards to prevent camera pivoting
         cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime); // smoothly adjust cubes rotation values
+
+        if (PlayerPrefs.HasKey("HighScore"))
+        {
+            highScore = PlayerPrefs.GetFloat("HighScore");
+        }
+        else
+        {
+            highScore = Mathf.Infinity;
+        }
+
+        if (Input.GetKeyDown(KeyCode.P) && timerRunning)
+        {
+            CheckScore();
+            timerRunning = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            PlayerPrefs.DeleteAll();
+            highScoreText.text = "Highscore: 00:00";
+        }
     }
     public void jump(float mult)
     {
@@ -203,7 +244,6 @@ public class MovementScript : MonoBehaviour
         if (forwardSpeed > 0.7f && move > 0)
         {
             camTimer += Time.deltaTime;
-            Debug.Log(camTimer);
             if (vel.magnitude > 2.5f || camTimer >= 0.7f)
             {
                 transposer.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetWithWorldUp;
@@ -215,6 +255,26 @@ public class MovementScript : MonoBehaviour
             camTimer = 0f;
         }
 
+    }
+    string FormatTime(float t)
+    {
+        int mins = Mathf.FloorToInt(t / 60f);
+        int secs = Mathf.FloorToInt(t % 60f);
+        return $"{mins:00}:{secs:00}";
+    }
+
+    public void CheckScore()
+    {
+        currentTimeText.text = FormatTime(timer);
+
+        if (timer < highScore)
+        {
+            highScore = timer;
+            PlayerPrefs.SetFloat("HighScore", highScore);
+            PlayerPrefs.Save();
+
+            highScoreText.text = "Highscore: " + FormatTime(highScore);
+        }
     }
     private void OnDrawGizmos()
     {
