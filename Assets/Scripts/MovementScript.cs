@@ -1,11 +1,12 @@
 using Cinemachine;
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using Cinemachine;
 
 public class MovementScript : MonoBehaviour
 {
@@ -35,8 +36,10 @@ public class MovementScript : MonoBehaviour
     private float timer;
 
     [Header("voiceLines")]
-    [SerializeField] AudioClip[] voiceLines;
+    [SerializeField] AudioClip[] voiceLinesMove;
+    [SerializeField] AudioClip[] voiceLinesIdle;
     [SerializeField] AudioSource source;
+    [SerializeField] AudioSource sourceJump;
 
     [Header("camera Stuff")]
     private float camTimer = 0f;
@@ -146,6 +149,7 @@ public class MovementScript : MonoBehaviour
         rb.AddForce(Vector3.up * jumpVel * mult, ForceMode.Impulse);
         rb.AddForce(forwardDir * jumpVelFor, ForceMode.Impulse);
         drain = true;
+        sourceJump.Play();
     }
 
     IEnumerator voices()
@@ -153,11 +157,16 @@ public class MovementScript : MonoBehaviour
         yield return new WaitForSeconds(20f);
         while (true)
         {
-            int lineVal = Random.Range(0, voiceLines.Length);
-            int waitTime = Random.Range(30, 60);
-            AudioClip current = voiceLines[lineVal];
-            source.PlayOneShot(current);
-
+            Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+            bool isMoving = vel.magnitude > 2.75f;
+            AudioClip[] cur = isMoving ? voiceLinesMove : voiceLinesIdle;
+            if (!source.isPlaying && cur.Length > 0)
+            {
+                int lineVal = Random.Range(0, cur.Length);
+                source.clip = cur[lineVal];
+                source.Play();
+            }
+            float waitTime = Random.Range(30f, 60f);
             yield return new WaitForSeconds(waitTime);
         }
     }
