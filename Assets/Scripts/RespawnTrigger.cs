@@ -5,6 +5,7 @@ public class RespawnTrigger : MonoBehaviour
 {
     MovementScript movementScript;
     AudioSource sound;
+    [SerializeField] AudioSource DeathSound;
     Collider coll;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,12 +16,17 @@ public class RespawnTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        coll = col;
-        StartCoroutine(Respawn());
+        if (col.gameObject.layer == 6)
+        {
+            coll = col;
+            StartCoroutine(Respawn());
+        }
+
     }
 
     IEnumerator Respawn()
     {
+        DeathSound.Play();
         yield return new WaitForSeconds(0.5f);
         coll.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
         coll.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;

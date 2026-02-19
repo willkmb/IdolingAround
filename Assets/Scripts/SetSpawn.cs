@@ -12,6 +12,9 @@ public class SetSpawn : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        movementScript.respawnPoint = this.gameObject.transform;
+        if (other.gameObject.layer == 6)
+        {
+            movementScript.respawnPoint = this.gameObject.transform;
+        }
     }
 }
