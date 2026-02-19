@@ -30,7 +30,6 @@ public class MovementScript : MonoBehaviour
     private bool drain;
     private float coyoteTimer;
 
-
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
     private float timer;
@@ -38,6 +37,9 @@ public class MovementScript : MonoBehaviour
     [Header("voiceLines")]
     [SerializeField] AudioClip[] voiceLines;
     [SerializeField] AudioSource source;
+
+    [Header("camera Stuff")]
+    private float camTimer = 0f;
 
     private void Start()
     {
@@ -146,22 +148,6 @@ public class MovementScript : MonoBehaviour
         drain = true;
     }
 
-    private void LateUpdate()
-    {
-        cube.transform.position = transform.position;
-        Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
-        if (vel.magnitude > 0.01f)
-        {
-            Vector3 velDir = vel.normalized;
-            float dot = Vector3.Dot(cube.transform.forward, velDir);
-            Quaternion targetRotation;
-            if (dot > 0) targetRotation = Quaternion.LookRotation(velDir, transform.up);
-            else targetRotation = Quaternion.LookRotation(-velDir, transform.up);
-
-            cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime);
-        }
-    }
-
     IEnumerator voices()
     {
         yield return new WaitForSeconds(20f);
@@ -187,24 +173,37 @@ public class MovementScript : MonoBehaviour
 
     void CubeChecks()
     {
+
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+        CinemachineTransposer transposer = cam.GetCinemachineComponent<CinemachineTransposer>();
+        float dot = Vector3.Dot(cube.transform.forward, vel.normalized);
+        float forwardSpeed = Vector3.Dot(cube.transform.forward, vel);
+        float move = Input.GetAxis("Vertical");
+
         if (vel.magnitude > 0.01f)
         {
-            float forwardDot = Vector3.Dot(cube.transform.forward, vel.normalized);
-
-            if (forwardDot > 0.5f) // moving forward relative to cube
+            if (dot < -0.7f)
             {
-                float dot = Vector3.Dot(cube.transform.forward, vel.normalized);
-
-                if (dot > 0.7f) Debug.Log("ForwardMatch");
-                else if (dot < -0.7f)
-                {
-                    Debug.Log("Opposite!");
-                    Quaternion targetRotation = Quaternion.LookRotation(vel.normalized, Vector3.up);
-                    cube.transform.rotation = targetRotation;
-                }
+                Quaternion targetRotation = Quaternion.LookRotation(vel.normalized, Vector3.up);
+                cube.transform.rotation = targetRotation;
             }
         }
+
+        if (forwardSpeed > 0.7f && move > 0)
+        {
+            camTimer += Time.deltaTime;
+            Debug.Log(camTimer);
+            if (vel.magnitude > 2.75f || camTimer >= 0.75f)
+            {
+                transposer.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetWithWorldUp;
+            }
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            transposer.m_BindingMode = CinemachineTransposer.BindingMode.SimpleFollowWithWorldUp;
+            camTimer = 0f;
+        }
+
     }
     private void OnDrawGizmos()
     {
