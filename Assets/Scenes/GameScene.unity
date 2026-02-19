@@ -238,6 +238,7 @@ GameObject:
   - component: {fileID: 14623757}
   - component: {fileID: 14623759}
   - component: {fileID: 14623758}
+  - component: {fileID: 14623760}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -261,7 +262,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -8.5, y: -10.9}
+  m_AnchoredPosition: {x: -8.5, y: -9.13}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &14623758
@@ -293,8 +294,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 3374523182
-  m_fontColor: {r: 0.1792453, g: 0.13781595, b: 0.13781595, a: 0.7882353}
+    rgba: 3388471287
+  m_fontColor: {r: 0.96981126, g: 0.96981126, b: 0.96981126, a: 0.7882353}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -363,6 +364,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14623756}
   m_CullTransparentMesh: 1
+--- !u!114 &14623760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14623756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8162504dc24f144f8a8b5bc53fb8081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 14623758}
+  speed: 2
+  squash: 0.07
+  amount: 0.5
 --- !u!1001 &18588917
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -495,7 +512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.97735846, g: 0.9195775, b: 0.89068705, a: 1}
+  m_Color: {r: 0.36862746, g: 0.41960785, b: 0.34117648, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -861,7 +878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.509434, g: 0.45666832, b: 0.43494126, a: 1}
+  m_Color: {r: 0.36862746, g: 0.41960785, b: 0.34117648, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8990,11 +9007,11 @@ RectTransform:
   - {fileID: 726092233}
   - {fileID: 1364904967}
   - {fileID: 288426136}
+  - {fileID: 49441296}
   - {fileID: 2029340324}
   - {fileID: 669187520}
   - {fileID: 1890340035}
   - {fileID: 612154099}
-  - {fileID: 49441296}
   - {fileID: 2138871463}
   - {fileID: 966772838}
   m_Father: {fileID: 0}

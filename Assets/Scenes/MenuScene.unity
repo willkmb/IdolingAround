@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.5529412, g: 0.34901962, b: 0.38363448, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.197
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -8565,6 +8565,7 @@ GameObject:
   - component: {fileID: 950222973}
   - component: {fileID: 950222972}
   - component: {fileID: 950222971}
+  - component: {fileID: 950222974}
   m_Layer: 5
   m_Name: StartingText
   m_TagString: Untagged
@@ -8708,6 +8709,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950222969}
   m_CullTransparentMesh: 1
+--- !u!114 &950222974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950222969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8162504dc24f144f8a8b5bc53fb8081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 950222972}
+  speed: 2
+  squash: 0.07
+  amount: 2.15
 --- !u!1001 &976130238
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9247,6 +9264,7 @@ GameObject:
   - component: {fileID: 1072729026}
   - component: {fileID: 1072729028}
   - component: {fileID: 1072729027}
+  - component: {fileID: 1072729029}
   m_Layer: 5
   m_Name: StartText
   m_TagString: Untagged
@@ -9372,6 +9390,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1072729025}
   m_CullTransparentMesh: 1
+--- !u!114 &1072729029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072729025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8162504dc24f144f8a8b5bc53fb8081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 0}
+  speed: 2
+  squash: 0.01
+  amount: 10
 --- !u!1001 &1108298312
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9901,7 +9935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.98039216, g: 0.92156863, b: 0.89411765, a: 1}
+  m_Color: {r: 0.36902952, g: 0.41960785, b: 0.34117648, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
