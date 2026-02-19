@@ -24,7 +24,10 @@ public class CamPedestal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        StartCoroutine(CamSwitch());
+        if (other.gameObject.layer == 6)
+        {
+            StartCoroutine(CamSwitch());
+        }
 
     }
 
