@@ -7,7 +7,7 @@ public class BreakVase : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(this.GetComponent<Rigidbody>().linearVelocity.magnitude);
+        //Debug.Log(this.GetComponent<Rigidbody>().linearVelocity.magnitude);
         if (this.GetComponent<Rigidbody>().linearVelocity.magnitude >= speedToBreak/2 || 
             (collision.gameObject.GetComponent<Rigidbody>() != null && collision.gameObject.GetComponent<Rigidbody>().angularVelocity.magnitude >= speedToBreak * 4))
         {
