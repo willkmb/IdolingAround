@@ -557,7 +557,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1903787585332043155}
-  - component: {fileID: 17312011069990724}
+  - component: {fileID: 5675471755239638565}
+  - component: {fileID: 5415776061149104341}
   m_Layer: 0
   m_Name: Vase_V2_Broken
   m_TagString: Untagged
@@ -587,7 +588,22 @@ Transform:
   - {fileID: 8731617710324614554}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &17312011069990724
+--- !u!114 &5675471755239638565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7437490971368860960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f9f4e2ca4f3557409e3af0ea1ecc45f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 5415776061149104341}
+  minPitch: 0.75
+  maxPitch: 0.9
+--- !u!82 &5415776061149104341
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -599,8 +615,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 0fcec7a273e24af4795e8db464f197c0, type: 3}
   m_Resource: {fileID: 8300000, guid: 0fcec7a273e24af4795e8db464f197c0, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.75
+  m_PlayOnAwake: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -611,7 +627,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
