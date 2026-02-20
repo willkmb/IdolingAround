@@ -62,7 +62,8 @@ public class MovementScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = maxSpeed;
         Animation transAnim = GameObject.Find("IdolTransition").GetComponent<Animation>();
-        if (transAnim != null) transAnim.Play();
+        AudioSource transSound = GameObject.Find("IdolTransition").GetComponent<AudioSource>();
+        if (transAnim != null) { transAnim.Play(); transSound.Play(); }
         StartCoroutine("voices");
 
         if (PlayerPrefs.HasKey("HighScore"))

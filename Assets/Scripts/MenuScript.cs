@@ -11,7 +11,9 @@ public class MenuScript : MonoBehaviour
     {
         GameObject clicked = EventSystem.current.currentSelectedGameObject;
         clicked.GetComponent<Animation>().Play();
+        clicked.GetComponent<AudioSource>().Play();
         trans.GetComponent<Animation>().Play();
+        trans.GetComponent<AudioSource>().Play();
         Invoke("load", trans.GetComponent<Animation>().clip.length);
     }
 
@@ -31,5 +33,12 @@ public class MenuScript : MonoBehaviour
     void load3()
     {
         SceneManager.LoadScene("GameScene");
+    }
+
+    public void quitButton()
+    {
+        GameObject clicked = EventSystem.current.currentSelectedGameObject;
+        clicked.GetComponent<AudioSource>().Play();
+        Application.Quit();
     }
 }
