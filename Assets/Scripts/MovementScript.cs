@@ -39,7 +39,7 @@ public class MovementScript : MonoBehaviour
     [SerializeField] AudioClip[] voiceLinesMove;
     [SerializeField] AudioClip[] voiceLinesIdle;
     [SerializeField] AudioSource source;
-    [SerializeField] AudioSource sourceJump;
+    public AudioSource sourceJump;
     [SerializeField] AudioSource sourceCol;
     [SerializeField] AudioClip colClip;
     [SerializeField] AudioClip[] voiceLinesHit;
