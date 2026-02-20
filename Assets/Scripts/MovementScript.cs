@@ -7,6 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MovementScript : MonoBehaviour
 {
@@ -74,6 +75,11 @@ public class MovementScript : MonoBehaviour
         else
         {
             highScoreText.text = "Highscore: 00:00";
+        }
+
+        if (SceneManager.GetActiveScene().name == "BlockoutTestV2")
+        {
+            Cursor.visible = false;
         }
     }
 

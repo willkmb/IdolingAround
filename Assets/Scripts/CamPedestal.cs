@@ -10,6 +10,7 @@ public class CamPedestal : MonoBehaviour
     [SerializeField] GameObject GameIdol;
     [SerializeField] Animation anim;
     [SerializeField] Animation anim2;
+    [SerializeField] Animation trans;
     BoxCollider col;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -40,6 +41,7 @@ public class CamPedestal : MonoBehaviour
     {
 
         Debug.Log("idol black screen");
+        trans.Play();
         //Time.timeScale = 0;
         yield return new WaitForSeconds(0.5f);
         CSIdol.SetActive(true);

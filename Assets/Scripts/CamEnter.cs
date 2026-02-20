@@ -6,6 +6,7 @@ public class CamEnter : MonoBehaviour
     [SerializeField] GameObject mainCam;
     [SerializeField] GameObject thisCam;
     [SerializeField] Animation anim;
+    [SerializeField] Animation trans;
     BoxCollider col;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,6 +32,8 @@ public class CamEnter : MonoBehaviour
     IEnumerator CamSwitch()
     {
         Debug.Log("idol black screen");
+        trans.Play();
+        trans.gameObject.GetComponent<AudioSource>().Play();
         //Time.timeScale = 0;
         yield return new WaitForSeconds(0.5f);
         RenderSettings.fogDensity = 0.015f;
