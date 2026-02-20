@@ -11,6 +11,11 @@ public class CamPedestal : MonoBehaviour
     [SerializeField] Animation anim;
     [SerializeField] Animation anim2;
     [SerializeField] Animation trans;
+    [SerializeField] Animation UI;
+    [SerializeField] Animation tint;
+    [SerializeField] Animation cur;
+    [SerializeField] Animation high;
+    [SerializeField] GameObject idol;
     BoxCollider col;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,7 +46,9 @@ public class CamPedestal : MonoBehaviour
     {
 
         Debug.Log("idol black screen");
+        idol.GetComponent<MovementScript>().CheckScore();
         trans.Play();
+        trans.gameObject.GetComponent<AudioSource>().Play();
         //Time.timeScale = 0;
         yield return new WaitForSeconds(0.5f);
         CSIdol.SetActive(true);
@@ -50,12 +57,16 @@ public class CamPedestal : MonoBehaviour
         thisCam.SetActive(true);
         anim.Play();
         anim2.Play();
-        yield return new WaitForSeconds(3.5f);
         Debug.Log("idol black screen2 - go to leaderboard");
         col.enabled = false;
-
-
-        //Time.timeScale = 1;
+        yield return new WaitForSeconds(2.25f);
+        UI.Play();
+        tint.Play();
+        tint.gameObject.GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(0.5f);
+        cur.Play();
+        yield return new WaitForSeconds(0.35f);
+        high.Play();
     }
 
 
