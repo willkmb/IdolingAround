@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class BouncePad : MonoBehaviour
 {
@@ -31,7 +32,12 @@ public class BouncePad : MonoBehaviour
     }
     void BouncePlayer()
     {
-        movementScript.jump(JumpMult);
+        movementScript.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * 100 * JumpMult, ForceMode.Impulse);
+        float pitch = Random.Range(0.80f, 1f);
+        movementScript.sourceJump.pitch = pitch;
+        movementScript.sourceJump.Play();
+
+        //movementScript.jump(JumpMult);
     }
 
 }

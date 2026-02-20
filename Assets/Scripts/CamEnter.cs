@@ -33,13 +33,15 @@ public class CamEnter : MonoBehaviour
         Debug.Log("idol black screen");
         //Time.timeScale = 0;
         yield return new WaitForSeconds(0.5f);
-        mainCam.SetActive(false);
+        RenderSettings.fogDensity = 0.015f;
+        //mainCam.SetActive(false);
         thisCam.SetActive(true);
         anim.Play();
         yield return new WaitForSeconds(2.5f);
         Debug.Log("idol black screen2");
         col.enabled = false;
-        mainCam.SetActive(true);
+        RenderSettings.fogDensity = 0.05f;
+        //mainCam.SetActive(true);
         thisCam.SetActive(false);
         //Time.timeScale = 1;
     }
