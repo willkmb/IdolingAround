@@ -19,18 +19,20 @@ public class RespawnTrigger : MonoBehaviour
         if (col.gameObject.layer == 6)
         {
             coll = col;
-            StartCoroutine(Respawn());
+            Invoke("Spawn", 0.5f);
         }
 
     }
 
-    IEnumerator Respawn()
+
+    void Spawn()
     {
         DeathSound.Play();
-        yield return new WaitForSeconds(0.5f);
         coll.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
         coll.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         coll.gameObject.transform.position = movementScript.respawnPoint.position;
         sound.Play();
     }
+
+
 }
