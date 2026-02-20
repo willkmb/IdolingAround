@@ -372,9 +372,17 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: c0efd5ca88fa0d84e87f7dc31cc2550a, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c0efd5ca88fa0d84e87f7dc31cc2550a, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 7147057336996564386bdd2802b6940b, type: 2}
+    - target: {fileID: -7511558181221131132, guid: c0efd5ca88fa0d84e87f7dc31cc2550a, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8648a3b82c24e3a4fa16da2bc31f7ec1, type: 2}
     - target: {fileID: 919132149155446097, guid: c0efd5ca88fa0d84e87f7dc31cc2550a, type: 3}
       propertyPath: m_Name
       value: SM_Idol_LP (1)
