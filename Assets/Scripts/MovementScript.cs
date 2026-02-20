@@ -40,6 +40,11 @@ public class MovementScript : MonoBehaviour
     [SerializeField] AudioClip[] voiceLinesIdle;
     [SerializeField] AudioSource source;
     [SerializeField] AudioSource sourceJump;
+    [SerializeField] AudioSource sourceCol;
+    [SerializeField] AudioClip colClip;
+    [SerializeField] AudioClip[] voiceLinesHit;
+    private float lastvoice = -Mathf.Infinity;
+    [SerializeField] AudioSource rolling;
 
     [Header("camera Stuff")]
     private float camTimer = 0f;
@@ -183,6 +188,9 @@ public class MovementScript : MonoBehaviour
             PlayerPrefs.DeleteAll();
             highScoreText.text = "Highscore: 00:00";
         }
+
+        float target = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) ? 0.075f : 0f;
+        rolling.volume = Mathf.MoveTowards(rolling.volume, target, 0.12f * Time.deltaTime);
     }
     public void jump(float mult)
     {
@@ -225,7 +233,6 @@ public class MovementScript : MonoBehaviour
 
     void CubeChecks()
     {
-
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         CinemachineTransposer transposer = cam.GetCinemachineComponent<CinemachineTransposer>();
         float dot = Vector3.Dot(cube.transform.forward, vel.normalized);
@@ -274,6 +281,23 @@ public class MovementScript : MonoBehaviour
             PlayerPrefs.Save();
 
             highScoreText.text = "Highscore: " + FormatTime(highScore);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+        if(vel.magnitude > 2f)
+        {
+            float pitch = Random.Range(0.4f, 0.6f);
+            sourceCol.pitch = pitch;
+            sourceCol.Play();
+            if(vel.magnitude > 2.9f && Time.time - lastvoice >= 2f)
+            {
+                int lineVal = Random.Range(0, voiceLinesHit.Length);
+                source.PlayOneShot(voiceLinesHit[lineVal]);
+                lastvoice = Time.time;
+            }
         }
     }
     private void OnDrawGizmos()

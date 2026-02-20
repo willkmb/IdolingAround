@@ -13255,8 +13255,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 121b48a6c27bf9742bb3cad6c99a1dae, type: 3}
-  m_Resource: {fileID: 8300000, guid: 121b48a6c27bf9742bb3cad6c99a1dae, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5c714bbd95e749c4394db89c6b58a9d1, type: 3}
+  m_Resource: {fileID: 8300000, guid: 5c714bbd95e749c4394db89c6b58a9d1, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.55
   m_Pitch: 0.85
@@ -14416,6 +14416,8 @@ MonoBehaviour:
   voiceLinesIdle: []
   source: {fileID: 0}
   sourceJump: {fileID: 0}
+  currentTimeText: {fileID: 0}
+  highScoreText: {fileID: 0}
 --- !u!136 &1995569718
 CapsuleCollider:
   m_ObjectHideFlags: 0
