@@ -7,6 +7,7 @@ public class CamEnter : MonoBehaviour
     [SerializeField] GameObject thisCam;
     [SerializeField] Animation anim;
     [SerializeField] Animation trans;
+    [SerializeField] GameObject text;
     BoxCollider col;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,6 +42,7 @@ public class CamEnter : MonoBehaviour
         //mainCam.SetActive(false);
         thisCam.SetActive(true);
         anim.Play();
+        text.SetActive(false);
         yield return new WaitForSeconds(2f);
         trans.Play();
         yield return new WaitForSeconds(.5f);
