@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 
 public class CamPedestal : MonoBehaviour
@@ -19,7 +20,6 @@ public class CamPedestal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     private void OnTriggerEnter(Collider other)
