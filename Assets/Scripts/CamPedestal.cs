@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CamPedestal : MonoBehaviour
 {
@@ -14,8 +15,10 @@ public class CamPedestal : MonoBehaviour
     [SerializeField] Animation tint;
     [SerializeField] Animation cur;
     [SerializeField] Animation high;
+    [SerializeField] Animation Res;
     [SerializeField] GameObject idol;
     BoxCollider col;
+    private bool gamefin = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,6 +28,10 @@ public class CamPedestal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Space) && gamefin)
+        {
+            restart();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -66,7 +73,14 @@ public class CamPedestal : MonoBehaviour
         cur.Play();
         yield return new WaitForSeconds(0.35f);
         high.Play();
+        Res.Play();
+        gamefin = true;
+
     }
 
-
+    void restart()
+    {
+        SceneManager.LoadScene(0);
+        Cursor.visible = true;
+    }
 }
