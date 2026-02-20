@@ -76,11 +76,6 @@ public class MovementScript : MonoBehaviour
         {
             highScoreText.text = "Highscore: 00:00";
         }
-
-        if (SceneManager.GetActiveScene().name == "BlockoutTestV2")
-        {
-            Cursor.visible = false;
-        }
     }
 
     private void FixedUpdate()
@@ -184,12 +179,6 @@ public class MovementScript : MonoBehaviour
             highScore = Mathf.Infinity;
         }
 
-        if (Input.GetKeyDown(KeyCode.P) && timerRunning)
-        {
-            CheckScore();
-            timerRunning = false;
-        }
-
         if (Input.GetKeyDown(KeyCode.T))
         {
             PlayerPrefs.DeleteAll();
@@ -279,15 +268,19 @@ public class MovementScript : MonoBehaviour
 
     public void CheckScore()
     {
-        currentTimeText.text = FormatTime(timer);
-
-        if (timer < highScore)
+        if (timerRunning)
         {
-            highScore = timer;
-            PlayerPrefs.SetFloat("HighScore", highScore);
-            PlayerPrefs.Save();
+            timerRunning = false;
+            currentTimeText.text = FormatTime(timer);
 
-            highScoreText.text = "Highscore: " + FormatTime(highScore);
+            if (timer < highScore)
+            {
+                highScore = timer;
+                PlayerPrefs.SetFloat("HighScore", highScore);
+                PlayerPrefs.Save();
+
+                highScoreText.text = "Highscore: " + FormatTime(highScore);
+            }
         }
     }
 

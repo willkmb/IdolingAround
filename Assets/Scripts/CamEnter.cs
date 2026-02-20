@@ -12,6 +12,7 @@ public class CamEnter : MonoBehaviour
     void Start()
     {
         col = GetComponent<BoxCollider>();
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -40,7 +41,9 @@ public class CamEnter : MonoBehaviour
         //mainCam.SetActive(false);
         thisCam.SetActive(true);
         anim.Play();
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2f);
+        trans.Play();
+        yield return new WaitForSeconds(.5f);
         Debug.Log("idol black screen2");
         col.enabled = false;
         RenderSettings.fogDensity = 0.05f;
