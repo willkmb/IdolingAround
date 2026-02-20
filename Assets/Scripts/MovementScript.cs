@@ -106,7 +106,7 @@ public class MovementScript : MonoBehaviour
                 rb.angularDamping = 4;
                 flipped = true;
 
-                cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 40, 1.65f * Time.deltaTime);
+                cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 45, 1.65f * Time.deltaTime);
             }
         }
         else if (Mathf.Abs(move) < 0.01f && rb.angularVelocity.magnitude < 1f)
@@ -115,7 +115,7 @@ public class MovementScript : MonoBehaviour
             rb.angularDamping = 2.25f;
         }
 
-        if (move == 0) cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 35.41f, 2 * Time.deltaTime);
+        if (move == 0) cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 40f, 2 * Time.deltaTime);
 
         if (turning != 0 && flipped)
         {
@@ -288,12 +288,12 @@ public class MovementScript : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
-        if(vel.magnitude > 2f)
+        if(vel.magnitude > 2.75f)
         {
             float pitch = Random.Range(0.4f, 0.6f);
             sourceCol.pitch = pitch;
             sourceCol.Play();
-            if(vel.magnitude > 2.9f && Time.time - lastvoice >= 2f)
+            if(vel.magnitude > 3.2f && Time.time - lastvoice >= 2f)
             {
                 int lineVal = Random.Range(0, voiceLinesHit.Length);
                 source.PlayOneShot(voiceLinesHit[lineVal]);

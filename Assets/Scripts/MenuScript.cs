@@ -32,7 +32,7 @@ public class MenuScript : MonoBehaviour
 
     void load3()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("BlockoutTestV2");
     }
 
     public void quitButton()
