@@ -125,7 +125,7 @@ public class MovementScript : MonoBehaviour
 
     private void Update()
     {
-        CubeChecks();
+        //CubeChecks();
         if (canJump) coyoteTimer = coyote;
         else coyoteTimer -= Time.deltaTime;
 
