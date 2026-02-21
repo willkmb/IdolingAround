@@ -7,22 +7,27 @@ public class RespawnTrigger : MonoBehaviour
     AudioSource sound;
     [SerializeField] AudioSource DeathSound;
     Collider coll;
-    bool isSpawning;
+    GameObject Player;
+    Rigidbody rb;
+    //bool isSpawning;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //movementScript = GameObject.FindFirstObjectByType<MovementScript>().GetComponent<MovementScript>();
+        Player = GameObject.Find("IdolCapsule");
+        rb = Player.GetComponent<Rigidbody>();
+        movementScript = Player.GetComponent<MovementScript>();
         sound = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider col)
     {
-        if (isSpawning == false)
+        if (movementScript.isSpawning == false)
         {
             if (col.gameObject.layer == 6)
             {
-                isSpawning = true;
+                movementScript.isSpawning = true;
                 coll = col;
+                //rb.isKinematic = true;
                 Invoke("Spawn", 0.5f);
             }
         }
@@ -34,14 +39,26 @@ public class RespawnTrigger : MonoBehaviour
     void Spawn()
     {
         DeathSound.Play();
-        coll.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-        coll.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        rb.isKinematic= true;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         //coll.gameObject.transform.position = movementScript.respawnPoint.position;
-        coll.gameObject.transform.position = coll.gameObject.GetComponent<MovementScript>().respawnPoint.position;
+        //coll.gameObject.transform.position = coll.gameObject.GetComponent<MovementScript>().respawnPoint.position;
+        Player.transform.position = movementScript.respawnPoint.position;
+        //rb.isKinematic = false;
+        Debug.Log("should have moved");
         //movementScript.gameObject.transform.Find("CameraTarget").transform.rotation = Quaternion.identity;
         GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
         sound.Play();
-        isSpawning = false;
+        //movementScript.isSpawning = false;
+        //rb.isKinematic = false;
+        Invoke("KinematicOff", 0.05f);
+    }
+
+    void KinematicOff()
+    {
+        rb.isKinematic = false;
+        movementScript.isSpawning = false;
     }
 
 

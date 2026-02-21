@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 public class MovementScript : MonoBehaviour
 {
     public Transform respawnPoint;
+    public bool isSpawning;
 
     public CinemachineVirtualCamera cam;
     public GameObject cube;
