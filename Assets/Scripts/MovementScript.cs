@@ -180,8 +180,8 @@ public class MovementScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            PlayerPrefs.DeleteAll();
-            highScoreText.text = "Highscore: 00:00";
+            //PlayerPrefs.DeleteAll();
+            //highScoreText.text = "Highscore: 00:00";
         }
 
         float target = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) ? 0.075f : 0f;
