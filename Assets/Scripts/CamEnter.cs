@@ -33,7 +33,7 @@ public class CamEnter : MonoBehaviour
 
     IEnumerator CamSwitch()
     {
-        Debug.Log("idol black screen");
+        //Debug.Log("idol black screen");
         trans.Play();
         trans.gameObject.GetComponent<AudioSource>().Play();
         //Time.timeScale = 0;
@@ -46,7 +46,7 @@ public class CamEnter : MonoBehaviour
         yield return new WaitForSeconds(2f);
         trans.Play();
         yield return new WaitForSeconds(.5f);
-        Debug.Log("idol black screen2");
+        //Debug.Log("idol black screen2");
         col.enabled = false;
         RenderSettings.fogDensity = 0.05f;
         //mainCam.SetActive(true);
