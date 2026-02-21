@@ -32,7 +32,7 @@ public class RespawnTrigger : MonoBehaviour
         coll.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         coll.gameObject.transform.position = movementScript.respawnPoint.position;
         //movementScript.gameObject.transform.Find("CameraTarget").transform.rotation = Quaternion.identity;
-        GameObject.FindGameObjectWithTag("CamTarget").transform.rotation = Quaternion.identity;
+        GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
         sound.Play();
     }
 
