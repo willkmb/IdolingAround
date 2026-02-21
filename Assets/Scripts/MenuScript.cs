@@ -32,13 +32,16 @@ public class MenuScript : MonoBehaviour
 
     void load3()
     {
-        SceneManager.LoadScene("BlockoutTestV2");
+        SceneManager.LoadScene(1);
     }
 
     public void quitButton()
     {
         GameObject clicked = EventSystem.current.currentSelectedGameObject;
         clicked.GetComponent<AudioSource>().Play();
-        Application.Quit();
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
+        {
+            Application.Quit();
+        }
     }
 }

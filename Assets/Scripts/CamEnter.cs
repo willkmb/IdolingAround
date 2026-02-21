@@ -14,6 +14,7 @@ public class CamEnter : MonoBehaviour
     {
         col = GetComponent<BoxCollider>();
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame

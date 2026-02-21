@@ -9450,7 +9450,6 @@ GameObject:
   - component: {fileID: 1072729026}
   - component: {fileID: 1072729028}
   - component: {fileID: 1072729027}
-  - component: {fileID: 1072729029}
   m_Layer: 5
   m_Name: StartText
   m_TagString: Untagged
@@ -9576,22 +9575,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1072729025}
   m_CullTransparentMesh: 1
---- !u!114 &1072729029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072729025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8162504dc24f144f8a8b5bc53fb8081, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 0}
-  speed: 2
-  squash: 0.01
-  amount: 10
 --- !u!1001 &1108298312
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14695,9 +14678,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnPoint: {fileID: 0}
+  isSpawning: 0
   cam: {fileID: 557106948}
   cube: {fileID: 1567119334}
-  part: {fileID: 0}
+  part: {fileID: 867554632}
   charge: {fileID: 288426137}
   rollTorque: 70
   turnSpeed: 75
