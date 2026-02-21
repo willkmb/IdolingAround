@@ -224,7 +224,7 @@ public class MovementScript : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground")) {canJump = false; jumpVel = 85f;}
+        if (collision.gameObject.CompareTag("Ground")) {canJump = false;}
     }
 
     void CubeChecks()
