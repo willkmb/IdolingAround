@@ -10,6 +10,7 @@ public class SetSpawn : MonoBehaviour
     void Start()
     {
         movementScript = GameObject.FindFirstObjectByType<MovementScript>().GetComponent<MovementScript>();
+        particle = GetComponentInChildren<ParticleSystem>();
         sound = GetComponent<AudioSource>();
     }
 
@@ -19,6 +20,7 @@ public class SetSpawn : MonoBehaviour
         {
             movementScript.respawnPoint = this.gameObject.transform;
             sound.Play();
+            particle = GetComponentInChildren<ParticleSystem>();
             particle.Play();
             //Invoke("ParticleOff", 1f);
         }
