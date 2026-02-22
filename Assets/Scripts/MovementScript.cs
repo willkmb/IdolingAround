@@ -31,6 +31,7 @@ public class MovementScript : MonoBehaviour
     private bool canJump;
     private bool drain;
     private float coyoteTimer;
+    private Scene activeScene;
 
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
@@ -59,23 +60,27 @@ public class MovementScript : MonoBehaviour
 
     private void Start()
     {
+        activeScene = SceneManager.GetActiveScene();
         Application.targetFrameRate = 200;
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = maxSpeed;
-        Animation transAnim = GameObject.Find("IdolTransition").GetComponent<Animation>();
-        AudioSource transSound = GameObject.Find("IdolTransition").GetComponent<AudioSource>();
-        if (transAnim != null) { transAnim.Play(); transSound.Play(); }
-        StartCoroutine("voices");
+        if (activeScene.buildIndex == 1)
+        {
+            Animation transAnim = GameObject.Find("IdolTransition").GetComponent<Animation>();
+            AudioSource transSound = GameObject.Find("IdolTransition").GetComponent<AudioSource>();
+            if (transAnim != null) { transAnim.Play(); transSound.Play(); }
 
-        if (PlayerPrefs.HasKey("HighScore"))
-        {
-            highScore = PlayerPrefs.GetFloat("HighScore");
-            highScoreText.text = "Highscore: " + FormatTime(highScore);
+            if (PlayerPrefs.HasKey("HighScore"))
+            {
+                highScore = PlayerPrefs.GetFloat("HighScore");
+                highScoreText.text = "Highscore: " + FormatTime(highScore);
+            }
+            else
+            {
+                highScoreText.text = "Highscore: 00:00";
+            }
         }
-        else
-        {
-            highScoreText.text = "Highscore: 00:00";
-        }
+        StartCoroutine("voices");
     }
 
     private void FixedUpdate()
@@ -132,7 +137,7 @@ public class MovementScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && coyoteTimer > 0f)
         {
-            if (jumpVel < 195f)
+            if (jumpVel < 220f)
             {
                 jumpVel++;
             }
@@ -145,7 +150,7 @@ public class MovementScript : MonoBehaviour
         }
 
         cube.transform.position = transform.position;
-        part.transform.position = transform.position;
+        if (activeScene.buildIndex == 1) part.transform.position = transform.position;
 
         if (timerRunning)
         {
@@ -185,8 +190,11 @@ public class MovementScript : MonoBehaviour
             //highScoreText.text = "Highscore: 00:00";
         }
 
-        float target = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) ? 0.075f : 0f;
-        rolling.volume = Mathf.MoveTowards(rolling.volume, target, 0.12f * Time.deltaTime);
+        if (activeScene.buildIndex == 1)
+        {
+            float target = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) ? 0.075f : 0f;
+            rolling.volume = Mathf.MoveTowards(rolling.volume, target, 0.12f * Time.deltaTime);
+        }
     }
     public void jump(float mult)
     {
@@ -204,6 +212,7 @@ public class MovementScript : MonoBehaviour
         yield return new WaitForSeconds(20f);
         while (true)
         {
+            if (activeScene.buildIndex != 1) yield break;
             Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
             bool isMoving = vel.magnitude > 2.75f;
             AudioClip[] cur = isMoving ? voiceLinesMove : voiceLinesIdle;
@@ -224,7 +233,7 @@ public class MovementScript : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground")) {canJump = false;}
+        if (collision.gameObject.CompareTag("Ground")) { canJump = false; }
     }
 
     void CubeChecks()
@@ -287,12 +296,12 @@ public class MovementScript : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
-        if(vel.magnitude > 2.75f)
+        if (vel.magnitude > 2.75f)
         {
             float pitch = Random.Range(0.4f, 0.6f);
             sourceCol.pitch = pitch;
             sourceCol.Play();
-            if(vel.magnitude > 3.2f && Time.time - lastvoice >= 2f)
+            if (vel.magnitude > 3.2f && Time.time - lastvoice >= 2f)
             {
                 int lineVal = Random.Range(0, voiceLinesHit.Length);
                 source.PlayOneShot(voiceLinesHit[lineVal]);
