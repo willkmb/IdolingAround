@@ -6,7 +6,6 @@ public class RespawnTrigger : MonoBehaviour
     MovementScript movementScript;
     AudioSource sound;
     [SerializeField] AudioSource DeathSound;
-    Collider coll;
     GameObject Player;
     Rigidbody rb;
     //bool isSpawning;
@@ -26,7 +25,6 @@ public class RespawnTrigger : MonoBehaviour
             if (col.gameObject.layer == 6)
             {
                 movementScript.isSpawning = true;
-                coll = col;
                 //rb.isKinematic = true;
                 Invoke("Spawn", 0.5f);
             }
@@ -39,7 +37,7 @@ public class RespawnTrigger : MonoBehaviour
     void Spawn()
     {
         DeathSound.Play();
-        rb.isKinematic= true;
+        rb.isKinematic = true;
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         //coll.gameObject.transform.position = movementScript.respawnPoint.position;

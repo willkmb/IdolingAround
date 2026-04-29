@@ -97,12 +97,12 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b491dcc87ca2180419c99ba29c210217, type: 3}
-  m_Resource: {fileID: 8300000, guid: b491dcc87ca2180419c99ba29c210217, type: 3}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: 72c6ce9e504fb5441a4199d858dc9b1c, type: 3}
+  m_Resource: {fileID: 8300000, guid: 72c6ce9e504fb5441a4199d858dc9b1c, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -144,7 +144,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.9
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -196,8 +196,7 @@ GameObject:
   - component: {fileID: 8332787551191540892}
   - component: {fileID: 9053991284933849862}
   - component: {fileID: 7697505730928818226}
-  - component: {fileID: 894975242020918415}
-  - component: {fileID: 6163728797926592004}
+  - component: {fileID: 4137243074336300926}
   m_Layer: 0
   m_Name: Hammer
   m_TagString: Untagged
@@ -213,7 +212,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4014187023903616991}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.6087605, w: 0.79335415}
+  m_LocalRotation: {x: 0, y: 0, z: 0.60876137, w: 0.7933534}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -221,7 +220,7 @@ Transform:
   - {fileID: 5899759408863420794}
   - {fileID: 7256336685816378759}
   m_Father: {fileID: 6756723539056822742}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 75}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 32.440277}
 --- !u!33 &8332787551191540892
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -284,7 +283,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4014187023903616991}
   serializedVersion: 5
-  m_Mass: 10000
+  m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -298,64 +297,28 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!59 &894975242020918415
-HingeJoint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4014187023903616991}
-  serializedVersion: 3
-  m_ConnectedBody: {fileID: 0}
-  m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 0, y: 0, z: 1}
-  m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_UseSpring: 0
-  m_Spring:
-    spring: 0
-    damper: 0
-    targetPosition: 0
-  m_UseMotor: 0
-  m_Motor:
-    targetVelocity: 100
-    force: 100
-    freeSpin: 1
-  m_UseLimits: 0
-  m_ExtendedLimits: 0
-  m_UseAcceleration: 1
-  m_Limits:
-    min: 0
-    max: 0
-    bounciness: 0
-    bounceMinVelocity: 0.2
-    contactDistance: 0
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
---- !u!114 &6163728797926592004
-MonoBehaviour:
+--- !u!111 &4137243074336300926
+Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4014187023903616991}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d34ab15469937a469e19e567107e26b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HammerRB: {fileID: 7697505730928818226}
-  sound: {fileID: 7466707989922764064}
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: c666b854843fc5345a4d544999e7e2a2, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: c666b854843fc5345a4d544999e7e2a2, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 1
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &4308366626511100908
 GameObject:
   m_ObjectHideFlags: 0
