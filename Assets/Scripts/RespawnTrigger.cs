@@ -8,7 +8,6 @@ public class RespawnTrigger : MonoBehaviour
     [SerializeField] AudioSource DeathSound;
     GameObject Player;
     Rigidbody rb;
-    //bool isSpawning;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,31 +24,21 @@ public class RespawnTrigger : MonoBehaviour
             if (col.gameObject.layer == 6)
             {
                 movementScript.isSpawning = true;
-                //rb.isKinematic = true;
+                DeathSound.Play();
                 Invoke("Spawn", 0.5f);
             }
         }
-
-
     }
-
 
     void Spawn()
     {
-        DeathSound.Play();
         rb.isKinematic = true;
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        //coll.gameObject.transform.position = movementScript.respawnPoint.position;
-        //coll.gameObject.transform.position = coll.gameObject.GetComponent<MovementScript>().respawnPoint.position;
         Player.transform.position = movementScript.respawnPoint.position;
-        //rb.isKinematic = false;
         Debug.Log("should have moved");
-        //movementScript.gameObject.transform.Find("CameraTarget").transform.rotation = Quaternion.identity;
         GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
         sound.Play();
-        //movementScript.isSpawning = false;
-        //rb.isKinematic = false;
         Invoke("KinematicOff", 0.05f);
     }
 
