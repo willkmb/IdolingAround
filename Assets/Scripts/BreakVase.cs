@@ -4,6 +4,8 @@ public class BreakVase : MonoBehaviour
 {
     [SerializeField] GameObject BrokenVase;
     [SerializeField] float speedToBreak;
+    [SerializeField] bool decaysOverTime;
+    [SerializeField] float timeUntilObjDecay;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -11,7 +13,9 @@ public class BreakVase : MonoBehaviour
         if (this.GetComponent<Rigidbody>().linearVelocity.magnitude >= speedToBreak/2 || 
             (collision.gameObject.GetComponent<Rigidbody>() != null && collision.gameObject.GetComponent<Rigidbody>().angularVelocity.magnitude >= speedToBreak * 4))
         {
-            Instantiate(BrokenVase, this.transform.position, this.transform.rotation);
+            BrokenVase = Instantiate(BrokenVase, this.transform.position, this.transform.rotation);
+            BrokenVase.GetComponent<PotSmash>().decaysOverTime = decaysOverTime; 
+            BrokenVase.GetComponent<PotSmash>().timeUntilDecay = timeUntilObjDecay; 
             this.gameObject.SetActive(false);
         }
     }

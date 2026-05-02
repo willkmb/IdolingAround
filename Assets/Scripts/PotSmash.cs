@@ -1,15 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PotSmash : MonoBehaviour
 {
-    [SerializeField] AudioSource sound;
+    public ObjectDecay[] childObjDecay;
+    AudioSource sound;
+    public bool decaysOverTime;
+    public float timeUntilDecay;
     [SerializeField] float minPitch;
     [SerializeField] float maxPitch;
+    [SerializeField] float minDecayMult;
+    [SerializeField] float maxDecayMult;
 
-    private void Awake()
+    private void OnEnable()
     {
+        sound = GetComponent<AudioSource>();
+        childObjDecay = GetComponentsInChildren<ObjectDecay>();
         sound.pitch = Random.Range(minPitch, maxPitch);
         sound.Play();
+        StartCoroutine(ObjStartDecay());
     }
 
+    IEnumerator ObjStartDecay()
+    {
+        if (decaysOverTime)
+        {
+            foreach (var decay in childObjDecay)
+            {
+                decay.timeUntilDecay = timeUntilDecay;
+                float mult = Random.Range(minDecayMult, maxDecayMult);
+                decay.mult = mult;
+                yield return new WaitForSeconds(0.1f);            
+                decay.StartObjDecay();
+            }
+        }
+
+    }
 }
