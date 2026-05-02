@@ -14,7 +14,6 @@ public class BreakVase : MonoBehaviour
             (collision.gameObject.GetComponent<Rigidbody>() != null && collision.gameObject.GetComponent<Rigidbody>().angularVelocity.magnitude >= speedToBreak * 4))
         {
             BrokenVase = Instantiate(BrokenVase, this.transform.position, this.transform.rotation);
-            BrokenVase.GetComponent<PotSmash>().decaysOverTime = decaysOverTime; 
             BrokenVase.GetComponent<PotSmash>().timeUntilDecay = timeUntilObjDecay; 
             this.gameObject.SetActive(false);
         }

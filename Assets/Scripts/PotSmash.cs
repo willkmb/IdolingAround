@@ -24,6 +24,16 @@ public class PotSmash : MonoBehaviour
 
     IEnumerator ObjStartDecay()
     {
+        int decayInt = Random.Range(0, 2);
+        if (decayInt == 0)
+        {
+            decaysOverTime = true;
+        }
+        else
+        {
+            decaysOverTime = false;
+        }
+
         if (decaysOverTime)
         {
             foreach (var decay in childObjDecay)
@@ -31,7 +41,7 @@ public class PotSmash : MonoBehaviour
                 decay.timeUntilDecay = timeUntilDecay;
                 float mult = Random.Range(minDecayMult, maxDecayMult);
                 decay.mult = mult;
-                yield return new WaitForSeconds(0.1f);            
+                yield return new WaitForSeconds(0.1f);
                 decay.StartObjDecay();
             }
         }
