@@ -48,6 +48,6 @@ public class BouncePad : MonoBehaviour
     {
         Rigidbody rb = objCol.gameObject.GetComponent<Rigidbody>();
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-        rb.AddForce(Vector3.up * JumpMult * ObjBounceMult, ForceMode.Impulse);
+        rb.AddForce(Vector3.up * ObjBounceMult, ForceMode.Impulse);
     }
 }

@@ -8,6 +8,7 @@ public class PotSmash : MonoBehaviour
     AudioSource sound;
     public bool decaysOverTime;
     public float timeUntilDecay;
+    public Vector3 potVelocity;
     [SerializeField] float minPitch;
     [SerializeField] float maxPitch;
     [SerializeField] float minDecayMult;
@@ -24,27 +25,35 @@ public class PotSmash : MonoBehaviour
 
     IEnumerator ObjStartDecay()
     {
-        int decayInt = Random.Range(0, 2);
-        if (decayInt == 0)
-        {
-            decaysOverTime = true;
-        }
-        else
-        {
-            decaysOverTime = false;
-        }
-
         if (decaysOverTime)
         {
-            foreach (var decay in childObjDecay)
+            int decayInt = Random.Range(0, 2);
+            if (decayInt == 0)
             {
-                decay.timeUntilDecay = timeUntilDecay;
-                float mult = Random.Range(minDecayMult, maxDecayMult);
-                decay.mult = mult;
-                yield return new WaitForSeconds(0.1f);
-                decay.StartObjDecay();
+                decaysOverTime = true;
             }
+            else
+            {
+                decaysOverTime = false;
+            }
+
+            if (decaysOverTime)
+            {
+
+                foreach (var decay in childObjDecay)
+                {
+                    decay.GetComponent<Rigidbody>().linearVelocity = potVelocity;
+                    decay.timeUntilDecay = timeUntilDecay;
+                    float mult = Random.Range(minDecayMult, maxDecayMult);
+                    decay.mult = mult;
+                    yield return new WaitForSeconds(0.1f);
+                    decay.StartObjDecay();
+                }
+            }
+
         }
+
+
 
     }
 }
