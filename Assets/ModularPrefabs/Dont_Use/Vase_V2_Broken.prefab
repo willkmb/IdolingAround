@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 6714053044183227043}
   - component: {fileID: 6649119926140572340}
   - component: {fileID: 1716193675135716245}
+  - component: {fileID: 4128781916080226942}
+  - component: {fileID: 553174763345793768}
   m_Layer: 0
   m_Name: V1_3
   m_TagString: Untagged
@@ -138,6 +140,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &4128781916080226942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128311532694056525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15db6703f585ac44e9b2df1514318dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeUntilDecay: 0
+  mult: 0
+--- !u!111 &553174763345793768
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128311532694056525}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: e978bdb3066bbd54fa17842bfb8200ac, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e978bdb3066bbd54fa17842bfb8200ac, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &2699808710204644495
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,6 +184,8 @@ GameObject:
   - component: {fileID: 8634626900419820422}
   - component: {fileID: 9007964019510256575}
   - component: {fileID: 8769267497879659752}
+  - component: {fileID: 7466525659360579803}
+  - component: {fileID: 464468208207039922}
   m_Layer: 0
   m_Name: V1_2
   m_TagString: Untagged
@@ -276,6 +311,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &7466525659360579803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2699808710204644495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15db6703f585ac44e9b2df1514318dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeUntilDecay: 0
+  mult: 0
+--- !u!111 &464468208207039922
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2699808710204644495}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: e978bdb3066bbd54fa17842bfb8200ac, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e978bdb3066bbd54fa17842bfb8200ac, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &3449752569383209129
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,6 +355,8 @@ GameObject:
   - component: {fileID: 8798238875012095179}
   - component: {fileID: 4469474165899518676}
   - component: {fileID: 7055912636308913498}
+  - component: {fileID: 4063433143391142594}
+  - component: {fileID: 6973545575379444088}
   m_Layer: 0
   m_Name: V1_1
   m_TagString: Untagged
@@ -414,6 +482,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &4063433143391142594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3449752569383209129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15db6703f585ac44e9b2df1514318dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeUntilDecay: 0
+  mult: 0
+--- !u!111 &6973545575379444088
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3449752569383209129}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: e978bdb3066bbd54fa17842bfb8200ac, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e978bdb3066bbd54fa17842bfb8200ac, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &5037883422639472720
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +526,8 @@ GameObject:
   - component: {fileID: 5790980014723807840}
   - component: {fileID: 2409580926578879646}
   - component: {fileID: 3433765892431854796}
+  - component: {fileID: 4921861043714038207}
+  - component: {fileID: 6666794828144201648}
   m_Layer: 0
   m_Name: V1_7
   m_TagString: Untagged
@@ -552,6 +653,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &4921861043714038207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5037883422639472720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15db6703f585ac44e9b2df1514318dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeUntilDecay: 0
+  mult: 0
+--- !u!111 &6666794828144201648
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5037883422639472720}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: e978bdb3066bbd54fa17842bfb8200ac, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e978bdb3066bbd54fa17842bfb8200ac, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &7437490971368860960
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,9 +736,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9f4e2ca4f3557409e3af0ea1ecc45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound: {fileID: 5415776061149104341}
+  childObjDecay: []
+  decaysOverTime: 0
+  timeUntilDecay: 5
+  potVelocity: {x: 0, y: 0, z: 0}
   minPitch: 0.75
   maxPitch: 0.9
+  minDecayMult: 0.75
+  maxDecayMult: 1.5
 --- !u!82 &5415776061149104341
 AudioSource:
   m_ObjectHideFlags: 0
@@ -735,6 +872,8 @@ GameObject:
   - component: {fileID: 2476606452050714640}
   - component: {fileID: 7266400606712694867}
   - component: {fileID: 1810729370027826960}
+  - component: {fileID: 1396790213769199603}
+  - component: {fileID: 2734172252328393532}
   m_Layer: 0
   m_Name: V1_4
   m_TagString: Untagged
@@ -860,6 +999,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &1396790213769199603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7732466026273047054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15db6703f585ac44e9b2df1514318dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeUntilDecay: 0
+  mult: 0
+--- !u!111 &2734172252328393532
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7732466026273047054}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: e978bdb3066bbd54fa17842bfb8200ac, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e978bdb3066bbd54fa17842bfb8200ac, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &7777427346213174344
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,6 +1043,8 @@ GameObject:
   - component: {fileID: 7316984870047315866}
   - component: {fileID: 5970846057028019251}
   - component: {fileID: 2392024499469201664}
+  - component: {fileID: 6874868268513775330}
+  - component: {fileID: 3688329371151136794}
   m_Layer: 0
   m_Name: V1_5
   m_TagString: Untagged
@@ -998,6 +1170,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &6874868268513775330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7777427346213174344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15db6703f585ac44e9b2df1514318dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeUntilDecay: 0
+  mult: 0
+--- !u!111 &3688329371151136794
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7777427346213174344}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: e978bdb3066bbd54fa17842bfb8200ac, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e978bdb3066bbd54fa17842bfb8200ac, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &8010132021772080776
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,6 +1214,8 @@ GameObject:
   - component: {fileID: 5473193039499142720}
   - component: {fileID: 1794026848015801414}
   - component: {fileID: 3415013139865234769}
+  - component: {fileID: 9121509295408250790}
+  - component: {fileID: 6204425536111183683}
   m_Layer: 0
   m_Name: V1_6
   m_TagString: Untagged
@@ -1136,3 +1341,34 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &9121509295408250790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8010132021772080776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15db6703f585ac44e9b2df1514318dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeUntilDecay: 0
+  mult: 0
+--- !u!111 &6204425536111183683
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8010132021772080776}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: e978bdb3066bbd54fa17842bfb8200ac, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e978bdb3066bbd54fa17842bfb8200ac, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
