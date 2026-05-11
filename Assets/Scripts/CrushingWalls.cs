@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CrushingWalls : MonoBehaviour
 {
+    MovementScript playerMovement;
     [SerializeField] Animation deathAnim;
     public Animation[] anims;
     public TriggerScript[] triggers;
@@ -13,6 +14,7 @@ public class CrushingWalls : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        playerMovement = FindFirstObjectByType<MovementScript>();
         anims = GetComponentsInChildren<Animation>();
         triggers = GetComponentsInChildren<TriggerScript>();
     }
@@ -37,7 +39,9 @@ public class CrushingWalls : MonoBehaviour
                         //anim.Stop();
                     }
                     GameObject.FindWithTag("Player").GetComponent<Rigidbody>().isKinematic = true;
-                    deathAnim.Play();
+                    playerMovement.gameObject.transform.position = playerMovement.respawnPoint.transform.position;
+                    GameObject.FindWithTag("Player").GetComponent<Rigidbody>().isKinematic = false;
+                    //deathAnim.Play();
                     Debug.Log("Idol is crushed");
                     idolCrushed = true;
                 }
