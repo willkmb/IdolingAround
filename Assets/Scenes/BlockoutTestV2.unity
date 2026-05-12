@@ -19177,11 +19177,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnPoint: {fileID: 1154966707}
-  isSpawning: 0
   cam: {fileID: 1322513115}
-  cube: {fileID: 1567119334}
+  camTarget: {fileID: 1567119334}
   part: {fileID: 747146622}
   charge: {fileID: 288426137}
+  isSpawning: 0
+  alignSpeed: 120
   rollTorque: 75
   turnSpeed: 75
   maxSpeed: 50
@@ -19189,6 +19190,8 @@ MonoBehaviour:
   jumpVelFor: 8
   coyote: 0.32
   timerText: {fileID: 14623758}
+  currentTimeText: {fileID: 1125946213}
+  highScoreText: {fileID: 1531210732}
   voiceLinesMove:
   - {fileID: 8300000, guid: 076350a79cea8014ba4dfb0407490a86, type: 3}
   - {fileID: 8300000, guid: 47ded69975247ab42b672bbd39f0d362, type: 3}
@@ -19201,17 +19204,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4bea2fa51af9cf542938868b0c76f938, type: 3}
   - {fileID: 8300000, guid: 919cb39ae9cc7b845a37b17c200eb106, type: 3}
   - {fileID: 8300000, guid: 38a16b3accacdd64cb3388abffb00a44, type: 3}
-  source: {fileID: 288821116}
-  sourceJump: {fileID: 258626722}
-  sourceCol: {fileID: 1593716894}
-  colClip: {fileID: 8300000, guid: bdffa02a295e2504ea5af1107c01fe44, type: 3}
   voiceLinesHit:
   - {fileID: 8300000, guid: e7d3282f60b98ce46ab6ab7f2f838eb8, type: 3}
   - {fileID: 8300000, guid: 65159bf442f32d24580b8472a026b79a, type: 3}
   - {fileID: 8300000, guid: 38c751747b7588842a297e2e08544fd8, type: 3}
+  colClip: {fileID: 8300000, guid: bdffa02a295e2504ea5af1107c01fe44, type: 3}
+  source: {fileID: 288821116}
+  sourceJump: {fileID: 258626722}
+  sourceCol: {fileID: 1593716894}
   rolling: {fileID: 419904397}
-  currentTimeText: {fileID: 1125946213}
-  highScoreText: {fileID: 1531210732}
 --- !u!136 &288821119
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -152613,7 +152614,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ffd489740aaf834081a94f848a98198, type: 3}
---- !u!1001 &6144067488127484454
+--- !u!1001 &6782078626887597062
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -152621,55 +152622,55 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 153342355851541244, guid: ae65e6af081e5d24a8ec796b46375560, type: 3}
-      propertyPath: m_Name
-      value: JungleLevel_BlockoutTest_V3_Updated
-      objectReference: {fileID: 0}
-    - target: {fileID: 678663261288996934, guid: ae65e6af081e5d24a8ec796b46375560, type: 3}
+    - target: {fileID: 4787466785949766218, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
       propertyPath: m_LocalPosition.x
       value: -442.267
       objectReference: {fileID: 0}
-    - target: {fileID: 678663261288996934, guid: ae65e6af081e5d24a8ec796b46375560, type: 3}
+    - target: {fileID: 4787466785949766218, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 678663261288996934, guid: ae65e6af081e5d24a8ec796b46375560, type: 3}
+    - target: {fileID: 4787466785949766218, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
       propertyPath: m_LocalPosition.z
       value: -178.28403
       objectReference: {fileID: 0}
-    - target: {fileID: 678663261288996934, guid: ae65e6af081e5d24a8ec796b46375560, type: 3}
+    - target: {fileID: 4787466785949766218, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 678663261288996934, guid: ae65e6af081e5d24a8ec796b46375560, type: 3}
+    - target: {fileID: 4787466785949766218, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 678663261288996934, guid: ae65e6af081e5d24a8ec796b46375560, type: 3}
+    - target: {fileID: 4787466785949766218, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 678663261288996934, guid: ae65e6af081e5d24a8ec796b46375560, type: 3}
+    - target: {fileID: 4787466785949766218, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 678663261288996934, guid: ae65e6af081e5d24a8ec796b46375560, type: 3}
+    - target: {fileID: 4787466785949766218, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 678663261288996934, guid: ae65e6af081e5d24a8ec796b46375560, type: 3}
+    - target: {fileID: 4787466785949766218, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 678663261288996934, guid: ae65e6af081e5d24a8ec796b46375560, type: 3}
+    - target: {fileID: 4787466785949766218, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5277003809979369712, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
+      propertyPath: m_Name
+      value: JungleLevel_BlockoutTest_V3_Updated
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ae65e6af081e5d24a8ec796b46375560, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -152725,5 +152726,5 @@ SceneRoots:
   - {fileID: 2092569117}
   - {fileID: 2107626953}
   - {fileID: 2107789063}
-  - {fileID: 6144067488127484454}
+  - {fileID: 6782078626887597062}
   - {fileID: 604329122}
