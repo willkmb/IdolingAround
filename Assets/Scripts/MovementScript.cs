@@ -12,13 +12,12 @@ public class MovementScript : MonoBehaviour
     [Header("References")]
     public Transform respawnPoint;
     public CinemachineVirtualCamera cam;
-    public GameObject camTarget;
+    public GameObject cube;
     public GameObject part;
     public Image charge;
     public bool isSpawning;
 
     [Header("Movement Settings")]
-    [SerializeField] float alignSpeed = 120f;
     [SerializeField] float rollTorque = 20f;
     [SerializeField] float turnSpeed = 120f;
     [SerializeField] float maxSpeed = 15f;
@@ -38,7 +37,6 @@ public class MovementScript : MonoBehaviour
     [SerializeField] AudioClip[] voiceLinesIdle;
     [SerializeField] AudioClip[] voiceLinesHit;
     [SerializeField] AudioClip colClip;
-
     [SerializeField] AudioSource source;
     public AudioSource sourceJump;
     [SerializeField] AudioSource sourceCol;
@@ -50,6 +48,7 @@ public class MovementScript : MonoBehaviour
 
     private Rigidbody rb;
     private Scene activeScene;
+
     private Vector3 COM = new Vector3(0, 0.5f, 0);
     private Vector3 forwardDir;
 
@@ -71,13 +70,16 @@ public class MovementScript : MonoBehaviour
     private void Start()
     {
         activeScene = SceneManager.GetActiveScene();
+
         Application.targetFrameRate = 200;
 
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = maxSpeed;
 
         if (activeScene.buildIndex == 1)
+        {
             LoadHighScore();
+        }
 
         StartCoroutine(voices());
     }
@@ -92,7 +94,6 @@ public class MovementScript : MonoBehaviour
         float move = Input.GetAxis("Vertical");
         float turning = Input.GetAxis("Horizontal");
 
-        HandleCameraAlign();
         HandleMovement(move);
         HandleTurning(move, turning);
         HandleCameraFOV(move);
@@ -100,7 +101,6 @@ public class MovementScript : MonoBehaviour
 
     private void Update()
     {
-        
         HandleCoyoteTimer();
         HandleJumpInput();
         UpdateCubePosition();
@@ -114,13 +114,17 @@ public class MovementScript : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
+        {
             canJump = true;
+        }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
+        {
             canJump = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -135,7 +139,9 @@ public class MovementScript : MonoBehaviour
             if (vel.magnitude > 3.2f && Time.time - lastVoice >= 2f)
             {
                 int lineVal = Random.Range(0, voiceLinesHit.Length);
+
                 source.PlayOneShot(voiceLinesHit[lineVal]);
+
                 lastVoice = Time.time;
             }
         }
@@ -144,17 +150,30 @@ public class MovementScript : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(camTarget.transform.position, camTarget.transform.position + camTarget.transform.forward * 2f);
 
-        Vector3 vel = Vector3.ProjectOnPlane(rb != null ? rb.linearVelocity : Vector3.zero, Vector3.up);
+        Gizmos.DrawLine(
+            cube.transform.position,
+            cube.transform.position + cube.transform.forward * 2f
+        );
+
+        Vector3 vel = Vector3.ProjectOnPlane(
+            rb != null ? rb.linearVelocity : Vector3.zero,
+            Vector3.up
+        );
 
         if (vel.magnitude > 0.01f)
         {
-            Vector3 camDir = (cam.transform.position - camTarget.transform.position).normalized;
+            Vector3 camDir =
+                (cam.transform.position - cube.transform.position).normalized;
+
             float dot = Vector3.Dot(vel.normalized, camDir);
 
             Gizmos.color = (dot > 0) ? Color.green : Color.red;
-            Gizmos.DrawLine(camTarget.transform.position, camTarget.transform.position + vel.normalized * 2f);
+
+            Gizmos.DrawLine(
+                cube.transform.position,
+                cube.transform.position + vel.normalized * 2f
+            );
         }
     }
 
@@ -166,71 +185,77 @@ public class MovementScript : MonoBehaviour
     {
         if (move != 0)
         {
-            float uprightAmount = Vector3.Dot(rb.rotation * Vector3.up, Vector3.up);
+            float uprightAmount = Vector3.Dot(transform.up, Vector3.up);
 
             if (uprightAmount > 0.7f)
             {
                 if (move > 0)
                 {
-                    COM = Vector3.Lerp(COM, new Vector3(0, -0.3f, 0), 50f * Time.deltaTime);
+                    COM = Vector3.Lerp(
+                        COM,
+                        new Vector3(0, -0.3f, 0),
+                        50f * Time.deltaTime
+                    );
+
                     rb.AddTorque(transform.forward * -rollTorque);
+
                     flipped = false;
                 }
             }
             else
             {
-                rb.AddTorque(transform.up * move * rollTorque, ForceMode.Acceleration);
-                COM = Vector3.Lerp(COM, Vector3.zero, 12f * Time.deltaTime);
+                rb.AddTorque(
+                    transform.up * move * rollTorque,
+                    ForceMode.Acceleration
+                );
+
+                COM = Vector3.Lerp(
+                    COM,
+                    Vector3.zero,
+                    12f * Time.deltaTime
+                );
+
                 rb.angularDamping = 4;
+
                 flipped = true;
-                cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 45, 1.65f * Time.deltaTime);
+
+                cam.m_Lens.FieldOfView = Mathf.Lerp(
+                    cam.m_Lens.FieldOfView,
+                    45,
+                    1.65f * Time.deltaTime
+                );
             }
         }
         else if (rb.angularVelocity.magnitude < 1f)
         {
             COM = new Vector3(0, -1f, 0);
+
             rb.angularDamping = 2.25f;
         }
     }
 
     private void HandleTurning(float move, float turning)
     {
-        if (turning != 0 && move != 0 && flipped)
+        if (turning != 0 && flipped && move != 0)
         {
-            transform.Rotate(Vector3.up, turning * turnSpeed * Time.deltaTime, Space.World);
-        }
-    }
-
-    private void HandleCameraAlign()
-    {
-        if (!flipped) return;
-
-        Vector3 playerForward = Vector3.ProjectOnPlane(camTarget.transform.forward, Vector3.up).normalized;
-        Vector3 camForward = Vector3.ProjectOnPlane(-cam.transform.forward, Vector3.up).normalized;
-
-        float angle = Vector3.SignedAngle(playerForward, camForward, Vector3.up);
-
-        if (Mathf.Abs(angle) < 5f)
-        {
-            Debug.Log("ALIGNED");
-            return;
-        }
-        else if (angle > 0)
-        {
-            Debug.Log("LEFT");
-            transform.Rotate(Vector3.up, alignSpeed * Time.deltaTime, Space.World);
-        }
-        else
-        {
-            Debug.Log("RIGHT");
-            transform.Rotate(Vector3.up, -alignSpeed * Time.deltaTime, Space.World);
+            transform.Rotate(
+                Vector3.up,
+                turning * turnSpeed * Time.deltaTime,
+                Space.World
+            );
         }
     }
 
     private void HandleCameraFOV(float move)
     {
         if (move == 0)
-            cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 40f, 2 * Time.deltaTime);
+        {
+            cam.m_Lens.FieldOfView = Mathf.Lerp(
+                cam.m_Lens.FieldOfView,
+                40f,
+                2 * Time.deltaTime
+            );
+        }
     }
 
     #endregion
@@ -240,9 +265,13 @@ public class MovementScript : MonoBehaviour
     private void HandleCoyoteTimer()
     {
         if (canJump)
+        {
             coyoteTimer = coyote;
+        }
         else
+        {
             coyoteTimer -= Time.deltaTime;
+        }
     }
 
     private void HandleJumpInput()
@@ -250,7 +279,9 @@ public class MovementScript : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && coyoteTimer > 0f)
         {
             if (jumpVel < 220f)
+            {
                 jumpVel++;
+            }
 
             charge.fillAmount += 1.25f * Time.deltaTime;
         }
@@ -258,6 +289,7 @@ public class MovementScript : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space) && coyoteTimer > 0f)
         {
             jump(1f);
+
             jumpVel = 85f;
         }
     }
@@ -266,12 +298,20 @@ public class MovementScript : MonoBehaviour
     {
         forwardDir = rb.linearVelocity.normalized;
 
-        rb.AddForce(Vector3.up * jumpVel * mult, ForceMode.Impulse);
-        rb.AddForce(forwardDir * jumpVelFor, ForceMode.Impulse);
+        rb.AddForce(
+            Vector3.up * jumpVel * mult,
+            ForceMode.Impulse
+        );
+
+        rb.AddForce(
+            forwardDir * jumpVelFor,
+            ForceMode.Impulse
+        );
 
         drain = true;
 
         sourceJump.pitch = Random.Range(0.80f, 1f);
+
         sourceJump.Play();
     }
 
@@ -281,9 +321,10 @@ public class MovementScript : MonoBehaviour
 
     private void UpdateTimer()
     {
-        if (!timerRunning) return;
-
-        timer += Time.deltaTime;
+        if (timerRunning)
+        {
+            timer += Time.deltaTime;
+        }
 
         int mins = Mathf.FloorToInt(timer / 60f);
         int secs = Mathf.FloorToInt(timer % 60f);
@@ -293,8 +334,11 @@ public class MovementScript : MonoBehaviour
 
     private void LoadHighScore()
     {
-        Animation transAnim = GameObject.Find("IdolTransition").GetComponent<Animation>();
-        AudioSource transSound = GameObject.Find("IdolTransition").GetComponent<AudioSource>();
+        Animation transAnim =
+            GameObject.Find("IdolTransition").GetComponent<Animation>();
+
+        AudioSource transSound =
+            GameObject.Find("IdolTransition").GetComponent<AudioSource>();
 
         if (transAnim != null)
         {
@@ -305,7 +349,9 @@ public class MovementScript : MonoBehaviour
         if (PlayerPrefs.HasKey("HighScore"))
         {
             highScore = PlayerPrefs.GetFloat("HighScore");
-            highScoreText.text = "Highscore: " + FormatTime(highScore);
+
+            highScoreText.text =
+                "Highscore: " + FormatTime(highScore);
         }
         else
         {
@@ -322,18 +368,25 @@ public class MovementScript : MonoBehaviour
 
     public void CheckScore()
     {
-        if (!timerRunning) return;
+        if (!timerRunning)
+        {
+            return;
+        }
 
         timerRunning = false;
+
         currentTimeText.text = FormatTime(timer);
 
         if (timer < highScore)
         {
             highScore = timer;
+
             PlayerPrefs.SetFloat("HighScore", highScore);
+
             PlayerPrefs.Save();
 
-            highScoreText.text = "Highscore: " + FormatTime(highScore);
+            highScoreText.text =
+                "Highscore: " + FormatTime(highScore);
         }
     }
 
@@ -351,39 +404,56 @@ public class MovementScript : MonoBehaviour
 
     private void UpdateCubePosition()
     {
-        camTarget.transform.position = transform.position;
+        cube.transform.position = transform.position;
 
         if (activeScene.buildIndex == 1)
+        {
             part.transform.position = transform.position;
+        }
     }
 
     private void HandleChargeDrain()
     {
-        if (!drain) return;
+        if (!drain)
+        {
+            return;
+        }
 
         charge.fillAmount -= 1.75f * Time.deltaTime;
 
         if (charge.fillAmount < 0.42f)
+        {
             drain = false;
+        }
     }
 
     private void RotateCubeToVelocity()
     {
-        Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+        Vector3 vel = Vector3.ProjectOnPlane(
+            rb.linearVelocity,
+            Vector3.up
+        );
+
         float speed = vel.magnitude;
 
-        if (speed < 0.01f) return;
+        if (speed < 0.01f)
+        {
+            return;
+        }
 
         Vector3 velDir = vel.normalized;
-        float dot = Vector3.Dot(camTarget.transform.forward, velDir);
 
-        Quaternion targetRotation =
-            dot > 0
+        float dot = Vector3.Dot(
+            cube.transform.forward,
+            velDir
+        );
+
+        Quaternion targetRotation = dot > 0
             ? Quaternion.LookRotation(velDir, transform.up)
             : Quaternion.LookRotation(-velDir, transform.up);
 
-        camTarget.transform.rotation = Quaternion.Slerp(
-            camTarget.transform.rotation,
+        cube.transform.rotation = Quaternion.Slerp(
+            cube.transform.rotation,
             targetRotation,
             10f * Time.deltaTime
         );
@@ -391,13 +461,21 @@ public class MovementScript : MonoBehaviour
 
     private void HandleRollingSound()
     {
-        if (activeScene.buildIndex != 1) return;
+        if (activeScene.buildIndex != 1)
+        {
+            return;
+        }
 
-        float target = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
+        float target =
+            (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
             ? 0.075f
             : 0f;
 
-        rolling.volume = Mathf.MoveTowards(rolling.volume, target, 0.12f * Time.deltaTime);
+        rolling.volume = Mathf.MoveTowards(
+            rolling.volume,
+            target,
+            0.12f * Time.deltaTime
+        );
     }
 
     #endregion
@@ -411,21 +489,33 @@ public class MovementScript : MonoBehaviour
         while (true)
         {
             if (activeScene.buildIndex != 1)
+            {
                 yield break;
+            }
 
-            Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+            Vector3 vel = Vector3.ProjectOnPlane(
+                rb.linearVelocity,
+                Vector3.up
+            );
+
             bool isMoving = vel.magnitude > 2.75f;
 
-            AudioClip[] cur = isMoving ? voiceLinesMove : voiceLinesIdle;
+            AudioClip[] cur = isMoving
+                ? voiceLinesMove
+                : voiceLinesIdle;
 
             if (!source.isPlaying && cur.Length > 0)
             {
                 int lineVal = Random.Range(0, cur.Length);
+
                 source.clip = cur[lineVal];
+
                 source.Play();
             }
 
-            yield return new WaitForSeconds(Random.Range(30f, 60f));
+            yield return new WaitForSeconds(
+                Random.Range(30f, 60f)
+            );
         }
     }
 
