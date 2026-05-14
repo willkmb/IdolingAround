@@ -12,6 +12,8 @@ public class MovementScript : MonoBehaviour
     [Header("References")]
     public Transform respawnPoint;
     public CinemachineVirtualCamera cam;
+    public CinemachineVirtualCamera orbit;
+    public CinemachineVirtualCamera follow;
     public GameObject cube;
     public GameObject part;
     public Image charge;
@@ -62,6 +64,7 @@ public class MovementScript : MonoBehaviour
     private bool canJump;
     private bool drain;
     private bool timerRunning = true;
+    private bool following = true;
 
     #endregion
 
@@ -91,6 +94,26 @@ public class MovementScript : MonoBehaviour
         Vector3 camForward = cam.transform.forward;
         camForward = Vector3.ProjectOnPlane(camForward, Vector3.up).normalized;
 
+        Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+
+        if (vel.magnitude > 0.01f)
+        {
+            Vector3 velDir = vel.normalized;
+
+            Vector3 camDir = Vector3.ProjectOnPlane(cam.transform.forward, Vector3.up).normalized;
+
+            float dot = Vector3.Dot(velDir, camDir);
+
+            if (dot < 0f)
+            {
+                camDir = Quaternion.AngleAxis(180f, Vector3.up) * camDir;
+            }
+
+            camForward = camDir;
+        }
+
+        cam.transform.rotation = Quaternion.LookRotation(camForward, Vector3.up);
+
         float move = Input.GetAxis("Vertical");
         float turning = Input.GetAxis("Horizontal");
 
@@ -109,6 +132,19 @@ public class MovementScript : MonoBehaviour
         RotateCubeToVelocity();
         UpdateHighScoreCache();
         HandleRollingSound();
+
+        if (Input.GetMouseButton(1))
+        {
+            orbit.gameObject.GetComponent<CinemachineFreeLook>().Priority = 11;
+            follow.Priority = 10;
+            cam = orbit;
+        }
+        else
+        {
+            orbit.gameObject.GetComponent<CinemachineFreeLook>().Priority = 10;
+            follow.Priority = 11;
+            cam = follow;
+        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -194,7 +230,7 @@ public class MovementScript : MonoBehaviour
                     COM = Vector3.Lerp(
                         COM,
                         new Vector3(0, -0.3f, 0),
-                        50f * Time.deltaTime
+                        46f * Time.deltaTime
                     );
 
                     rb.AddTorque(transform.forward * -rollTorque);
@@ -221,7 +257,7 @@ public class MovementScript : MonoBehaviour
 
                 cam.m_Lens.FieldOfView = Mathf.Lerp(
                     cam.m_Lens.FieldOfView,
-                    45,
+                    53,
                     1.65f * Time.deltaTime
                 );
             }
@@ -252,7 +288,7 @@ public class MovementScript : MonoBehaviour
         {
             cam.m_Lens.FieldOfView = Mathf.Lerp(
                 cam.m_Lens.FieldOfView,
-                40f,
+                41f,
                 2 * Time.deltaTime
             );
         }
