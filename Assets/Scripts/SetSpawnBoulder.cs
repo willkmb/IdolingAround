@@ -1,11 +1,16 @@
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Splines;
 
-public class SetSpawn : MonoBehaviour
+public class SetSpawnBoulder : MonoBehaviour
 {
     MovementScript movementScript;
     AudioSource sound;
     [SerializeField] ParticleSystem particle;
+    [SerializeField] BoulderRoll boulderScript;
     [SerializeField] Transform respawnPoint;
+    //[SerializeField] int knotNumber;
+    [SerializeField] int boulderTime;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,6 +30,8 @@ public class SetSpawn : MonoBehaviour
             particle = GetComponentInChildren<ParticleSystem>();
             particle.Play();
             //Invoke("ParticleOff", 1f);
+            boulderScript.boulderRespawnTime = boulderTime;
+
         }
     }
 
