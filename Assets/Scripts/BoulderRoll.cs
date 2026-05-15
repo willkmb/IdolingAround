@@ -1,15 +1,13 @@
+using UnityEditor.Splines;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Splines;
 
 public class BoulderRoll : MonoBehaviour
 {
     [HideInInspector] public Transform boulderRespawn;
-    [SerializeField] NavMeshAgent navAgent;
-    [SerializeField] Transform target;
-    [SerializeField] Animator anim;
-    [SerializeField] float killDistance;
-    [SerializeField] float rollSpeed;
-    [SerializeField] float rollTorque;
+    [HideInInspector] public float boulderRespawnTime;
+    SplineAnimate splineAnim;
 
     Rigidbody rb;
 
@@ -17,17 +15,22 @@ public class BoulderRoll : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        splineAnim = GetComponent<SplineAnimate>();
         rb = GetComponent<Rigidbody>();
+        
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        RollBoulder();
+        //RollBoulder();
     }
 
     void RollBoulder()
     {
+        
+
+        /*
         targetDistance = Vector3.Distance(navAgent.transform.position, target.position);
         if (targetDistance < killDistance)
         {
@@ -44,5 +47,15 @@ public class BoulderRoll : MonoBehaviour
             transform.rotation = navAgent.transform.rotation;
             anim.speed = 1;
         }
+        */
+
+
+    }
+
+    public void RespawnBoulder()
+    {
+        splineAnim.Pause();
+        splineAnim.ElapsedTime = boulderRespawnTime;
+        splineAnim.Play();
     }
 }
