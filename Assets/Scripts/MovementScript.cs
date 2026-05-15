@@ -155,9 +155,7 @@ public class MovementScript : MonoBehaviour
             if (vel.magnitude > 3.2f && Time.time - lastVoice >= 2f)
             {
                 int lineVal = Random.Range(0, voiceLinesHit.Length);
-
                 source.PlayOneShot(voiceLinesHit[lineVal]);
-
                 lastVoice = Time.time;
             }
         }
@@ -166,30 +164,16 @@ public class MovementScript : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-
-        Gizmos.DrawLine(
-            cube.transform.position,
-            cube.transform.position + cube.transform.forward * 2f
-        );
-
-        Vector3 vel = Vector3.ProjectOnPlane(
-            rb != null ? rb.linearVelocity : Vector3.zero,
-            Vector3.up
-        );
+        Gizmos.DrawLine(cube.transform.position, cube.transform.position + cube.transform.forward * 2f);
+        Vector3 vel = Vector3.ProjectOnPlane(rb != null ? rb.linearVelocity : Vector3.zero,Vector3.up);
 
         if (vel.magnitude > 0.01f)
         {
-            Vector3 camDir =
-                (cam.transform.position - cube.transform.position).normalized;
+            Vector3 camDir = (cam.transform.position - cube.transform.position).normalized;
 
             float dot = Vector3.Dot(vel.normalized, camDir);
-
             Gizmos.color = (dot > 0) ? Color.green : Color.red;
-
-            Gizmos.DrawLine(
-                cube.transform.position,
-                cube.transform.position + vel.normalized * 2f
-            );
+            Gizmos.DrawLine(cube.transform.position,cube.transform.position + vel.normalized * 2f);
         }
     }
 
@@ -207,45 +191,23 @@ public class MovementScript : MonoBehaviour
             {
                 if (move > 0)
                 {
-                    COM = Vector3.Lerp(
-                        COM,
-                        new Vector3(0, -0.3f, 0),
-                        46f * Time.deltaTime
-                    );
-
+                    COM = Vector3.Lerp(COM,new Vector3(0, -0.3f, 0), 46f * Time.deltaTime); //wide FOV
                     rb.AddTorque(transform.forward * -rollTorque);
-
                     flipped = false;
                 }
             }
             else
             {
-                rb.AddTorque(
-                    transform.up * move * rollTorque,
-                    ForceMode.Acceleration
-                );
-
-                COM = Vector3.Lerp(
-                    COM,
-                    Vector3.zero,
-                    12f * Time.deltaTime
-                );
-
+                rb.AddTorque(transform.up * move * rollTorque, ForceMode.Acceleration);
+                COM = Vector3.Lerp(COM,Vector3.zero,12f * Time.deltaTime);
                 rb.angularDamping = 4;
-
                 flipped = true;
-
-                cam.m_Lens.FieldOfView = Mathf.Lerp(
-                    cam.m_Lens.FieldOfView,
-                    53,
-                    1.65f * Time.deltaTime
-                );
+                cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView,53,1.65f * Time.deltaTime);
             }
         }
         else if (rb.angularVelocity.magnitude < 1f)
         {
             COM = new Vector3(0, -1f, 0);
-
             rb.angularDamping = 2.25f;
         }
     }
@@ -254,11 +216,7 @@ public class MovementScript : MonoBehaviour
     {
         if (turning != 0 && flipped && move != 0)
         {
-            transform.Rotate(
-                Vector3.up,
-                turning * turnSpeed * Time.deltaTime,
-                Space.World
-            );
+            transform.Rotate(Vector3.up,turning * turnSpeed * Time.deltaTime,Space.World);
         }
     }
 
@@ -266,11 +224,7 @@ public class MovementScript : MonoBehaviour
     {
         if (move == 0)
         {
-            cam.m_Lens.FieldOfView = Mathf.Lerp(
-                cam.m_Lens.FieldOfView,
-                41f,
-                2 * Time.deltaTime
-            );
+            cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView,41f,2 * Time.deltaTime);
         }
     }
 
@@ -305,7 +259,6 @@ public class MovementScript : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space) && coyoteTimer > 0f)
         {
             jump(1f);
-
             jumpVel = 85f;
         }
     }
@@ -313,21 +266,10 @@ public class MovementScript : MonoBehaviour
     public void jump(float mult)
     {
         forwardDir = rb.linearVelocity.normalized;
-
-        rb.AddForce(
-            Vector3.up * jumpVel * mult,
-            ForceMode.Impulse
-        );
-
-        rb.AddForce(
-            forwardDir * jumpVelFor,
-            ForceMode.Impulse
-        );
-
+        rb.AddForce(Vector3.up * jumpVel * mult,ForceMode.Impulse);
+        rb.AddForce(forwardDir * jumpVelFor,ForceMode.Impulse);
         drain = true;
-
         sourceJump.pitch = Random.Range(0.80f, 1f);
-
         sourceJump.Play();
     }
 
@@ -344,17 +286,13 @@ public class MovementScript : MonoBehaviour
 
         int mins = Mathf.FloorToInt(timer / 60f);
         int secs = Mathf.FloorToInt(timer % 60f);
-
         timerText.text = $"{mins:00}:{secs:00}";
     }
 
     private void LoadHighScore()
     {
-        Animation transAnim =
-            GameObject.Find("IdolTransition").GetComponent<Animation>();
-
-        AudioSource transSound =
-            GameObject.Find("IdolTransition").GetComponent<AudioSource>();
+        Animation transAnim =GameObject.Find("IdolTransition").GetComponent<Animation>();
+        AudioSource transSound =GameObject.Find("IdolTransition").GetComponent<AudioSource>();
 
         if (transAnim != null)
         {
@@ -365,9 +303,7 @@ public class MovementScript : MonoBehaviour
         if (PlayerPrefs.HasKey("HighScore"))
         {
             highScore = PlayerPrefs.GetFloat("HighScore");
-
-            highScoreText.text =
-                "Highscore: " + FormatTime(highScore);
+            highScoreText.text = "Highscore: " + FormatTime(highScore);
         }
         else
         {
@@ -377,32 +313,22 @@ public class MovementScript : MonoBehaviour
 
     private void UpdateHighScoreCache()
     {
-        highScore = PlayerPrefs.HasKey("HighScore")
-            ? PlayerPrefs.GetFloat("HighScore")
-            : Mathf.Infinity;
+        highScore = PlayerPrefs.HasKey("HighScore")? PlayerPrefs.GetFloat("HighScore"): Mathf.Infinity;
     }
 
     public void CheckScore()
     {
-        if (!timerRunning)
-        {
-            return;
-        }
+        if (!timerRunning) return;
 
         timerRunning = false;
-
         currentTimeText.text = FormatTime(timer);
 
         if (timer < highScore)
         {
             highScore = timer;
-
             PlayerPrefs.SetFloat("HighScore", highScore);
-
             PlayerPrefs.Save();
-
-            highScoreText.text =
-                "Highscore: " + FormatTime(highScore);
+            highScoreText.text = "Highscore: " + FormatTime(highScore);
         }
     }
 
@@ -410,7 +336,6 @@ public class MovementScript : MonoBehaviour
     {
         int mins = Mathf.FloorToInt(t / 60f);
         int secs = Mathf.FloorToInt(t % 60f);
-
         return $"{mins:00}:{secs:00}";
     }
 
@@ -421,75 +346,42 @@ public class MovementScript : MonoBehaviour
     private void UpdateCubePosition()
     {
         cube.transform.position = transform.position;
-
-        if (activeScene.buildIndex == 1)
-            part.transform.position = transform.position;
+        if (activeScene.buildIndex == 1) part.transform.position = transform.position;
     }
 
     private void RotateCubeToVelocity()
     {
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         float speed = vel.magnitude;
-
         if (speed < 0.01f) return;
 
         Vector3 velDir = vel.normalized;
         float dot = Vector3.Dot(cube.transform.forward, velDir);
+        Quaternion targetRotation = dot > 0 ? Quaternion.LookRotation(velDir, Vector3.up) : Quaternion.LookRotation(-velDir, Vector3.up);
+        cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation,targetRotation, 10f * Time.deltaTime);
 
-        Quaternion targetRotation = dot > 0
-            ? Quaternion.LookRotation(velDir, Vector3.up)
-            : Quaternion.LookRotation(-velDir, Vector3.up);
-
-        cube.transform.rotation = Quaternion.Slerp(
-            cube.transform.rotation,
-            targetRotation,
-            10f * Time.deltaTime
-        );
-
-        // Check if camTarget forward and velocity direction are misaligned
         float alignDot = Vector3.Dot(cube.transform.forward, velDir);
         Debug.DrawRay(cube.transform.position, cube.transform.forward * 3f, Color.blue);
         Debug.DrawRay(cube.transform.position, velDir * 3f, Color.red);
 
-        if (alignDot < 0f)
-        {
-            Debug.Log("FLIPPED - rotating 180");
-            cube.transform.Rotate(Vector3.up, 180f, Space.World);
-        }
+        if (alignDot < 0f) cube.transform.Rotate(Vector3.up, 180f, Space.World);
     }
 
     private void HandleChargeDrain()
     {
-        if (!drain)
-        {
-            return;
-        }
+        if (!drain) return;
 
         charge.fillAmount -= 1.75f * Time.deltaTime;
 
-        if (charge.fillAmount < 0.42f)
-        {
-            drain = false;
-        }
+        if (charge.fillAmount < 0.42f) drain = false;
     }
 
     private void HandleRollingSound()
     {
-        if (activeScene.buildIndex != 1)
-        {
-            return;
-        }
+        if (activeScene.buildIndex != 1) return;
 
-        float target =
-            (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
-            ? 0.075f
-            : 0f;
-
-        rolling.volume = Mathf.MoveTowards(
-            rolling.volume,
-            target,
-            0.12f * Time.deltaTime
-        );
+        float target = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))? 0.075f: 0f;
+        rolling.volume = Mathf.MoveTowards(rolling.volume,target, 0.12f * Time.deltaTime);
     }
 
     #endregion
@@ -502,34 +394,20 @@ public class MovementScript : MonoBehaviour
 
         while (true)
         {
-            if (activeScene.buildIndex != 1)
-            {
-                yield break;
-            }
+            if (activeScene.buildIndex != 1) yield break;
 
-            Vector3 vel = Vector3.ProjectOnPlane(
-                rb.linearVelocity,
-                Vector3.up
-            );
-
+            Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity,Vector3.up);
             bool isMoving = vel.magnitude > 2.75f;
-
-            AudioClip[] cur = isMoving
-                ? voiceLinesMove
-                : voiceLinesIdle;
+            AudioClip[] cur = isMoving? voiceLinesMove: voiceLinesIdle;
 
             if (!source.isPlaying && cur.Length > 0)
             {
                 int lineVal = Random.Range(0, cur.Length);
-
                 source.clip = cur[lineVal];
-
                 source.Play();
             }
 
-            yield return new WaitForSeconds(
-                Random.Range(30f, 60f)
-            );
+            yield return new WaitForSeconds(Random.Range(30f, 60f));
         }
     }
 
