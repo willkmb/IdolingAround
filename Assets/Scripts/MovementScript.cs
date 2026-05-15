@@ -94,26 +94,6 @@ public class MovementScript : MonoBehaviour
         Vector3 camForward = cam.transform.forward;
         camForward = Vector3.ProjectOnPlane(camForward, Vector3.up).normalized;
 
-        Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
-
-        if (vel.magnitude > 0.01f)
-        {
-            Vector3 velDir = vel.normalized;
-
-            Vector3 camDir = Vector3.ProjectOnPlane(cam.transform.forward, Vector3.up).normalized;
-
-            float dot = Vector3.Dot(velDir, camDir);
-
-            if (dot < 0f)
-            {
-                camDir = Quaternion.AngleAxis(180f, Vector3.up) * camDir;
-            }
-
-            camForward = camDir;
-        }
-
-        cam.transform.rotation = Quaternion.LookRotation(camForward, Vector3.up);
-
         float move = Input.GetAxis("Vertical");
         float turning = Input.GetAxis("Horizontal");
 
@@ -443,8 +423,38 @@ public class MovementScript : MonoBehaviour
         cube.transform.position = transform.position;
 
         if (activeScene.buildIndex == 1)
-        {
             part.transform.position = transform.position;
+    }
+
+    private void RotateCubeToVelocity()
+    {
+        Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+        float speed = vel.magnitude;
+
+        if (speed < 0.01f) return;
+
+        Vector3 velDir = vel.normalized;
+        float dot = Vector3.Dot(cube.transform.forward, velDir);
+
+        Quaternion targetRotation = dot > 0
+            ? Quaternion.LookRotation(velDir, Vector3.up)
+            : Quaternion.LookRotation(-velDir, Vector3.up);
+
+        cube.transform.rotation = Quaternion.Slerp(
+            cube.transform.rotation,
+            targetRotation,
+            10f * Time.deltaTime
+        );
+
+        // Check if camTarget forward and velocity direction are misaligned
+        float alignDot = Vector3.Dot(cube.transform.forward, velDir);
+        Debug.DrawRay(cube.transform.position, cube.transform.forward * 3f, Color.blue);
+        Debug.DrawRay(cube.transform.position, velDir * 3f, Color.red);
+
+        if (alignDot < 0f)
+        {
+            Debug.Log("FLIPPED - rotating 180");
+            cube.transform.Rotate(Vector3.up, 180f, Space.World);
         }
     }
 
@@ -461,38 +471,6 @@ public class MovementScript : MonoBehaviour
         {
             drain = false;
         }
-    }
-
-    private void RotateCubeToVelocity()
-    {
-        Vector3 vel = Vector3.ProjectOnPlane(
-            rb.linearVelocity,
-            Vector3.up
-        );
-
-        float speed = vel.magnitude;
-
-        if (speed < 0.01f)
-        {
-            return;
-        }
-
-        Vector3 velDir = vel.normalized;
-
-        float dot = Vector3.Dot(
-            cube.transform.forward,
-            velDir
-        );
-
-        Quaternion targetRotation = dot > 0
-            ? Quaternion.LookRotation(velDir, transform.up)
-            : Quaternion.LookRotation(-velDir, transform.up);
-
-        cube.transform.rotation = Quaternion.Slerp(
-            cube.transform.rotation,
-            targetRotation,
-            10f * Time.deltaTime
-        );
     }
 
     private void HandleRollingSound()
