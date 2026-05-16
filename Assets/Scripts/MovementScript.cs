@@ -100,6 +100,15 @@ public class MovementScript : MonoBehaviour
         HandleMovement(move);
         HandleTurning(move, turning);
         HandleCameraFOV(move);
+
+        Vector3 horizontalVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        bool movingBackwards = Vector3.Dot(cube.transform.forward, horizontalVel.normalized) < 0f;
+
+        if (movingBackwards && horizontalVel.magnitude > 1.85f)
+        {
+            Vector3 clamped = horizontalVel.normalized * 1.85f;
+            rb.linearVelocity = new Vector3(clamped.x, rb.linearVelocity.y, clamped.z);
+        }
     }
 
     private void Update()
