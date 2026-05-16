@@ -100,6 +100,17 @@ public class MovementScript : MonoBehaviour
         HandleMovement(move);
         HandleTurning(move, turning);
         HandleCameraFOV(move);
+
+        if (Input.GetAxis("Vertical") < 0f)
+        {
+            Vector3 horizontalVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+
+            if (horizontalVel.magnitude > 1.85f)
+            {
+                Vector3 clamped = horizontalVel.normalized * 1.85f;
+                rb.linearVelocity = new Vector3(clamped.x, rb.linearVelocity.y, clamped.z);
+            }
+        }
     }
 
     private void Update()
