@@ -26,6 +26,8 @@ public class MovementScript : MonoBehaviour
     [SerializeField] float jumpVel = 8f;
     [SerializeField] float jumpVelFor = 8f;
     [SerializeField] float coyote = 0.2f;
+    [SerializeField] float groundedBackwardsMaxSpeed = 1.25f;
+    [SerializeField] float airborneBackwardsMaxSpeed = 4f;
 
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
@@ -105,9 +107,9 @@ public class MovementScript : MonoBehaviour
         {
             Vector3 horizontalVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
-            if (horizontalVel.magnitude > 1.25f)
+            if (horizontalVel.magnitude > 1.45f)
             {
-                Vector3 clamped = horizontalVel.normalized * 1.25f;
+                Vector3 clamped = horizontalVel.normalized * 1.45f;
                 rb.linearVelocity = new Vector3(clamped.x, rb.linearVelocity.y, clamped.z);
             }
         }
