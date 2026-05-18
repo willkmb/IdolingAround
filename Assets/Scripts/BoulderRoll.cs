@@ -8,6 +8,7 @@ public class BoulderRoll : MonoBehaviour
     [HideInInspector] public Transform boulderRespawn;
     [HideInInspector] public float boulderRespawnTime;
     SplineAnimate splineAnim;
+    Animation rollAnim;
 
     Rigidbody rb;
 
@@ -17,45 +18,24 @@ public class BoulderRoll : MonoBehaviour
     {
         splineAnim = GetComponent<SplineAnimate>();
         rb = GetComponent<Rigidbody>();
-        
+        rollAnim = GetComponentInChildren<Animation>();
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        //RollBoulder();
-    }
-
-    void RollBoulder()
-    {
-        
-
-        /*
-        targetDistance = Vector3.Distance(navAgent.transform.position, target.position);
-        if (targetDistance < killDistance)
+        if (splineAnim.Duration - splineAnim.ElapsedTime < 0.1f)
         {
-            navAgent.isStopped = true;
-            //anim.speed = 0;
-            navAgent.transform.position = boulderRespawn.position;
+            rollAnim.Stop();
         }
-
-        else
-        {
-            navAgent.isStopped = false;
-            navAgent.destination = target.position;
-            transform.position = new Vector3(navAgent.transform.position.x, transform.position.y, navAgent.transform.position.z);
-            transform.rotation = navAgent.transform.rotation;
-            anim.speed = 1;
-        }
-        */
-
-
     }
 
     public void RespawnBoulder()
     {
-        splineAnim.Pause();
-        splineAnim.ElapsedTime = boulderRespawnTime;
-        splineAnim.Play();
+        if (splineAnim.ElapsedTime != splineAnim.Duration)
+        {
+            splineAnim.Pause();
+            splineAnim.ElapsedTime = boulderRespawnTime;
+            splineAnim.Play();
+        }
     }
 }

@@ -4411,7 +4411,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170773039}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.010159233, y: 0.83194315, z: -0.5505488, w: -0.068290405}
+  m_LocalRotation: {x: -0.010159232, y: 0.83194304, z: -0.55054873, w: -0.0682904}
   m_LocalPosition: {x: -0.0000000061426473, y: 0.0000002217855, z: -0.0000001477421}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -21104,7 +21104,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756484551}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.008199155, y: 0.84737015, z: -0.52649516, w: -0.06855336}
+  m_LocalRotation: {x: -0.008199155, y: 0.8473701, z: -0.52649516, w: -0.06855335}
   m_LocalPosition: {x: -0.0000000061426473, y: 0.0000002217855, z: -0.0000001477421}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -25415,6 +25415,8 @@ MonoBehaviour:
   jumpVel: 85
   jumpVelFor: 8
   coyote: 0.32
+  minSpeedBeforeFlip: 0
+  camAlignDuration: 1
   timerText: {fileID: 136592260}
   currentTimeText: {fileID: 354449692}
   highScoreText: {fileID: 471187768}
@@ -46863,7 +46865,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928686193}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.012123925, y: 0.8157241, z: -0.57430613, w: -0.067969106}
+  m_LocalRotation: {x: -0.012123924, y: 0.815724, z: -0.5743061, w: -0.0679691}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -52382,6 +52384,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RollingBoulder
       objectReference: {fileID: 0}
+    - target: {fileID: 3081035054166788863, guid: 51294cd89b3b2364994749c100382f95, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6225372749793621401, guid: 51294cd89b3b2364994749c100382f95, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14.992437
@@ -52426,6 +52432,14 @@ PrefabInstance:
       propertyPath: m_Target
       value: 
       objectReference: {fileID: 1452150432}
+    - target: {fileID: 6608403471468265891, guid: 51294cd89b3b2364994749c100382f95, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320256287792703538, guid: 51294cd89b3b2364994749c100382f95, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
