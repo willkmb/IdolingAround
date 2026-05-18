@@ -26,8 +26,8 @@ public class MovementScript : MonoBehaviour
     [SerializeField] float jumpVel = 8f;
     [SerializeField] float jumpVelFor = 8f;
     [SerializeField] float coyote = 0.2f;
-    [SerializeField] float groundedBackwardsMaxSpeed = 1.25f;
-    [SerializeField] float airborneBackwardsMaxSpeed = 4f;
+    [SerializeField] float minSpeedBeforeFlip;
+    [SerializeField] float camAlignDuration = 1f;
 
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
@@ -67,6 +67,8 @@ public class MovementScript : MonoBehaviour
     private bool drain;
     private bool timerRunning = true;
     private bool following = true;
+    private bool facingLocked = false;
+    private float lockTimer = 0f;
 
     #endregion
 
@@ -107,9 +109,9 @@ public class MovementScript : MonoBehaviour
         {
             Vector3 horizontalVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
-            if (horizontalVel.magnitude > 1.45f)
+            if (horizontalVel.magnitude > 3f)
             {
-                Vector3 clamped = horizontalVel.normalized * 1.45f;
+                Vector3 clamped = horizontalVel.normalized * 3f;
                 rb.linearVelocity = new Vector3(clamped.x, rb.linearVelocity.y, clamped.z);
             }
         }
@@ -117,6 +119,9 @@ public class MovementScript : MonoBehaviour
 
     private void Update()
     {
+        Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+        float speed = vel.magnitude;
+        Debug.Log(speed);
         HandleCoyoteTimer();
         HandleJumpInput();
         UpdateCubePosition();
@@ -368,17 +373,28 @@ public class MovementScript : MonoBehaviour
         float speed = vel.magnitude;
 
         if (speed < 0.01f) return;
+        float vertInput = Input.GetAxis("Vertical");
+        bool movingBackwards = Vector3.Dot(vel.normalized, cube.transform.forward) < -0.5f;
 
-        Vector3 velDir = vel.normalized;
-        float dot = Vector3.Dot(cube.transform.forward, velDir);
-        Quaternion targetRotation = dot > 0? Quaternion.LookRotation(velDir, Vector3.up): Quaternion.LookRotation(-velDir, Vector3.up);
-        cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation,targetRotation,10f * Time.deltaTime);
+        if (vertInput < 0f && canJump) facingLocked = true;
+        else if (vertInput > 0f && !movingBackwards && speed > minSpeedBeforeFlip)facingLocked = false;
 
-        float alignDot = Vector3.Dot(cube.transform.forward, velDir);
+        if (movingBackwards && vertInput >= 0f) facingLocked = true;
+        if (facingLocked)lockTimer += Time.deltaTime;
+        else lockTimer = 0f;
+
+        if (!facingLocked)
+        {
+            cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation,Quaternion.LookRotation(vel.normalized, Vector3.up),10f * Time.deltaTime);
+        }
+        else if (vertInput < 0f)
+        {
+            float rampedSpeed = Mathf.Lerp(0f, 3.5f, lockTimer / camAlignDuration);
+            cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation,Quaternion.LookRotation(-vel.normalized, Vector3.up),rampedSpeed * Time.deltaTime);
+        }
+
         Debug.DrawRay(cube.transform.position, cube.transform.forward * 3f, Color.blue);
-        Debug.DrawRay(cube.transform.position, velDir * 3f, Color.red);
-
-        if (alignDot < 0f && Input.GetAxis("Vertical") > 0f && speed > 1.6f) cube.transform.Rotate(Vector3.up, 180f, Space.World);
+        Debug.DrawRay(cube.transform.position, vel.normalized * 3f, Color.red);
     }
 
     private void HandleChargeDrain()

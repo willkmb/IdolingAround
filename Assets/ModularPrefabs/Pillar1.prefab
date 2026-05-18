@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3402798283378481583}
   - component: {fileID: 6219993877634722653}
   - component: {fileID: 7747019103603983402}
-  - component: {fileID: 7751186661552693090}
+  - component: {fileID: 7689907284212585613}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -109,7 +109,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.6458758, y: 4.8751945, z: 1.6978381}
   m_Center: {x: 0.0000032186508, y: 2.4375973, z: -0.0000021457672}
---- !u!64 &7751186661552693090
+--- !u!64 &7689907284212585613
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,7 +128,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4068373912626513877, guid: 8f5667fb470fc804ea283c45291a3e72, type: 3}
 --- !u!1 &5582222789923927352
@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 6193311837289875326}
   - component: {fileID: 2597857291528612697}
   - component: {fileID: 217487505889760722}
+  - component: {fileID: 2833558005814953078}
   m_Layer: 0
   m_Name: Mesh (1)
   m_TagString: Untagged
@@ -235,10 +236,32 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 2.362869, y: 0.95195425, z: 2.3628683}
   m_Center: {x: -0.00000023841858, y: 0.48802578, z: 0}
+--- !u!64 &2833558005814953078
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5582222789923927352}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3369316746193770658, guid: 9c5db75fd59b20449a2e43794a239568, type: 3}
 --- !u!1 &7496424939127812588
 GameObject:
   m_ObjectHideFlags: 0
