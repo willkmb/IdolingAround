@@ -378,7 +378,7 @@ public class MovementScript : MonoBehaviour
         Debug.DrawRay(cube.transform.position, cube.transform.forward * 3f, Color.blue);
         Debug.DrawRay(cube.transform.position, velDir * 3f, Color.red);
 
-        if (alignDot < 0f && Input.GetAxis("Vertical") > 0f && speed > 1.6f) cube.transform.Rotate(Vector3.up, 180f, Space.World);
+        if (alignDot < 0f && Input.GetAxis("Vertical") > 0f && speed > 1.6f && canJump) cube.transform.Rotate(Vector3.up, 180f, Space.World);
     }
 
     private void HandleChargeDrain()
