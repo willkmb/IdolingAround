@@ -18,6 +18,7 @@ public class MovementScript : MonoBehaviour
     public GameObject part;
     public Image charge;
     public bool isSpawning;
+    public Transform chargeUI;
 
     [Header("Movement Settings")]
     [SerializeField] float rollTorque = 20f;
@@ -125,6 +126,17 @@ public class MovementScript : MonoBehaviour
         RotateCubeToVelocity();
         UpdateHighScoreCache();
         HandleRollingSound();
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector3 camDir = follow.transform.position - transform.position;
+            float yaw = Mathf.Atan2(camDir.x, camDir.z) * Mathf.Rad2Deg + 180f;
+            float pitch = Mathf.Clamp(Vector3.Angle(Vector3.up, camDir.normalized), 0f, 180f);
+            CinemachineFreeLook freeLook = orbit.gameObject.GetComponent<CinemachineFreeLook>();
+            freeLook.m_XAxis.Value = yaw;
+            freeLook.m_YAxis.Value = pitch / 180f;
+        }
+
 
         if (Input.GetMouseButton(1))
         {
