@@ -20,8 +20,10 @@ public class SetSpawn : MonoBehaviour
     {
         if (other.gameObject.layer == 6)
         {
+            respawnPoint.gameObject.transform.position = other.gameObject.transform.position;
             movementScript.respawnPoint = respawnPoint;
             sound.Play();
+            particle.gameObject.transform.position = other.gameObject.transform.position;
             particle = GetComponentInChildren<ParticleSystem>();
             particle.Play();
             //Invoke("ParticleOff", 1f);

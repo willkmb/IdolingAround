@@ -14,6 +14,7 @@ public class PotSmash : MonoBehaviour
     [SerializeField] float minDecayMult;
     [SerializeField] float maxDecayMult;
 
+
     private void OnEnable()
     {
         sound = GetComponent<AudioSource>();
