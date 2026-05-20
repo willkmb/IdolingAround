@@ -26,6 +26,8 @@ public class MovementScript : MonoBehaviour
     [SerializeField] float jumpVel = 8f;
     [SerializeField] float jumpVelFor = 8f;
     [SerializeField] float coyote = 0.2f;
+    [SerializeField] float inAirControl = 5f;
+    [SerializeField] float inAirControlSide = 5f;
 
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
@@ -217,8 +219,27 @@ public class MovementScript : MonoBehaviour
             {
                 if (move > 0)
                 {
-                    COM = Vector3.Lerp(COM, new Vector3(0, -0.3f, 0), 46f * Time.deltaTime); //wide FOV
-                    rb.AddTorque(transform.forward * -rollTorque);
+                    COM = Vector3.Lerp(COM, new Vector3(0, -0.3f, 0), 46f * Time.deltaTime);
+                    float closestDistance = Mathf.Infinity;
+                    Vector3 closestDirection = Vector3.zero;
+
+                    for (int i = 0; i < 8; i++)
+                    {
+                        float angle = i * 45f;
+                        Vector3 direction = Quaternion.Euler(0, angle, 0) * Vector3.forward;
+                        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, 15f))
+                        {
+                            if (hit.distance < closestDistance)
+                            {
+                                closestDistance = hit.distance;
+                                closestDirection = direction;
+                            }
+                        }
+                    }
+
+                    Vector3 toppleDir = closestDirection != Vector3.zero ? -closestDirection : cube.transform.forward;
+                    Vector3 torqueAxis = Vector3.Cross(Vector3.up, toppleDir).normalized;
+                    rb.AddTorque(torqueAxis * rollTorque);
                     flipped = false;
                 }
             }
@@ -229,6 +250,14 @@ public class MovementScript : MonoBehaviour
                 rb.angularDamping = 4;
                 flipped = true;
                 cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 53, 1.65f * Time.deltaTime);
+            }
+
+            if (!canJump)
+            {
+                Vector3 airForward = Vector3.ProjectOnPlane(cube.transform.forward, Vector3.up).normalized;
+                Vector3 airSideways = Vector3.ProjectOnPlane(cube.transform.right, Vector3.up).normalized;
+                rb.AddForce(airForward * move * inAirControl, ForceMode.Acceleration);
+                rb.AddForce(airSideways * Input.GetAxis("Horizontal") * inAirControlSide, ForceMode.Acceleration);
             }
         }
         else if (rb.angularVelocity.magnitude < 1f)
