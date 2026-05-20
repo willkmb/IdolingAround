@@ -66,6 +66,7 @@ public class MovementScript : MonoBehaviour
     private bool timerRunning = true;
     private bool following = true;
     private bool hasJumped;
+    private float collisionCooldown = 0f;
 
     #endregion
 
@@ -116,7 +117,6 @@ public class MovementScript : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(hasJumped);
         HandleCoyoteTimer();
         HandleJumpInput();
         UpdateCubePosition();
@@ -169,8 +169,10 @@ public class MovementScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Vector3 normal = collision.contacts[0].normal;
+        bool isWall = Vector3.Dot(normal, Vector3.up) < 0.5f;
+        if (isWall) collisionCooldown = 0.5f;
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
-
         if (vel.magnitude > 2.75f)
         {
             sourceCol.pitch = Random.Range(0.4f, 0.6f);
@@ -400,7 +402,8 @@ public class MovementScript : MonoBehaviour
         Debug.DrawRay(cube.transform.position, cube.transform.forward * 3f, Color.blue);
         Debug.DrawRay(cube.transform.position, velDir * 3f, Color.red);
 
-        if (alignDot < 0f && Input.GetAxis("Vertical") > 0f && speed > 1.6f && canJump) cube.transform.Rotate(Vector3.up, 180f, Space.World);
+        collisionCooldown -= Time.deltaTime;
+        if (alignDot < 0f && Input.GetAxis("Vertical") > 0f && speed > 1.6f && canJump && collisionCooldown <= 0f) cube.transform.Rotate(Vector3.up, 180f, Space.World);
     }
 
     private void HandleChargeDrain()
