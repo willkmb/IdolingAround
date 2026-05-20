@@ -289,7 +289,7 @@ public class MovementScript : MonoBehaviour
 
     public void jump(float mult)
     {
-        if (!hasJumped) return;
+        if (hasJumped) return;
         forwardDir = rb.linearVelocity.normalized;
         rb.AddForce(Vector3.up * jumpVel * mult, ForceMode.Impulse);
         rb.AddForce(forwardDir * jumpVelFor, ForceMode.Impulse);
