@@ -171,7 +171,7 @@ public class MovementScript : MonoBehaviour
     {
         Vector3 normal = collision.contacts[0].normal;
         bool isWall = Vector3.Dot(normal, Vector3.up) < 0.5f;
-        if (isWall) collisionCooldown = 0.5f;
+        if (isWall) collisionCooldown = 1.5f;
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         if (vel.magnitude > 2.75f)
         {
