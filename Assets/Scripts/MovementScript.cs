@@ -18,7 +18,6 @@ public class MovementScript : MonoBehaviour
     public GameObject part;
     public Image charge;
     public bool isSpawning;
-    public Transform chargeUI;
 
     [Header("Movement Settings")]
     [SerializeField] float rollTorque = 20f;
@@ -27,8 +26,6 @@ public class MovementScript : MonoBehaviour
     [SerializeField] float jumpVel = 8f;
     [SerializeField] float jumpVelFor = 8f;
     [SerializeField] float coyote = 0.2f;
-    [SerializeField] float groundedBackwardsMaxSpeed = 1.25f;
-    [SerializeField] float airborneBackwardsMaxSpeed = 4f;
 
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
@@ -68,6 +65,7 @@ public class MovementScript : MonoBehaviour
     private bool drain;
     private bool timerRunning = true;
     private bool following = true;
+    private bool hasJumped;
 
     #endregion
 
@@ -118,6 +116,7 @@ public class MovementScript : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(hasJumped);
         HandleCoyoteTimer();
         HandleJumpInput();
         UpdateCubePosition();
@@ -271,7 +270,7 @@ public class MovementScript : MonoBehaviour
 
     private void HandleJumpInput()
     {
-        if (Input.GetKey(KeyCode.Space) && coyoteTimer > 0f)
+        if (Input.GetKey(KeyCode.Space) && coyoteTimer > 0f && !hasJumped)
         {
             if (jumpVel < 220f)
             {
@@ -281,7 +280,7 @@ public class MovementScript : MonoBehaviour
             charge.fillAmount += 1.25f * Time.deltaTime;
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) && coyoteTimer > 0f)
+        if (Input.GetKeyUp(KeyCode.Space) && coyoteTimer > 0f & !hasJumped)
         {
             jump(1f);
             jumpVel = 85f;
@@ -290,12 +289,23 @@ public class MovementScript : MonoBehaviour
 
     public void jump(float mult)
     {
+        if (!hasJumped) return;
         forwardDir = rb.linearVelocity.normalized;
         rb.AddForce(Vector3.up * jumpVel * mult, ForceMode.Impulse);
         rb.AddForce(forwardDir * jumpVelFor, ForceMode.Impulse);
         drain = true;
         sourceJump.pitch = Random.Range(0.80f, 1f);
         sourceJump.Play();
+        coyoteTimer = 0f;
+        canJump = false;
+        hasJumped = true;
+        StartCoroutine(ResetJump());
+    }
+
+    IEnumerator ResetJump()
+    {
+        yield return new WaitForSeconds(coyote);
+        hasJumped = false;
     }
 
     #endregion
