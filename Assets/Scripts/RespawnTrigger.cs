@@ -39,6 +39,7 @@ public class RespawnTrigger : MonoBehaviour
         Debug.Log("should have moved");
         GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
         sound.Play();
+        movementScript.deaths++;
         Invoke("KinematicOff", 0.05f);
     }
 
