@@ -4,6 +4,7 @@ using UnityEngine;
 public class RespawnTrigger : MonoBehaviour
 {
     MovementScript movementScript;
+    DeathCounter deathCounter;
     AudioSource sound;
     [SerializeField] AudioSource DeathSound;
     GameObject Player;
@@ -11,9 +12,10 @@ public class RespawnTrigger : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Player = GameObject.Find("IdolCapsule");
+        Player = GameObject.FindGameObjectWithTag("Player");
         rb = Player.GetComponent<Rigidbody>();
         movementScript = Player.GetComponent<MovementScript>();
+        deathCounter = Player.GetComponent<DeathCounter>();
         sound = GetComponent<AudioSource>();
     }
 
@@ -39,7 +41,7 @@ public class RespawnTrigger : MonoBehaviour
         Debug.Log("should have moved");
         GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
         sound.Play();
-        movementScript.deaths++;
+        deathCounter.UpdateDeathCounter();
         Invoke("KinematicOff", 0.05f);
     }
 

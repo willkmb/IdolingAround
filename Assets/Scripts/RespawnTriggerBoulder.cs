@@ -3,6 +3,7 @@ using UnityEngine;
 public class RespawnTriggerBoulder : MonoBehaviour
 {
     MovementScript movementScript;
+    DeathCounter deathCounter;
     BoulderRoll boulderScript;
     AudioSource deathSound;
     GameObject Player;
@@ -10,9 +11,10 @@ public class RespawnTriggerBoulder : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Player = GameObject.Find("IdolCapsule");
+        Player = GameObject.FindGameObjectWithTag("Player");
         rb = Player.GetComponent<Rigidbody>();
         movementScript = Player.GetComponent<MovementScript>();
+        deathCounter = Player.GetComponent<DeathCounter>();
         boulderScript = GetComponentInParent<BoulderRoll>();
         deathSound = GetComponent<AudioSource>();
     }
@@ -40,6 +42,7 @@ public class RespawnTriggerBoulder : MonoBehaviour
         Player.transform.position = movementScript.respawnPoint.position;
         Debug.Log("should have moved");
         GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
+        deathCounter.UpdateDeathCounter();
         Invoke("KinematicOff", 0.05f);
     }
 

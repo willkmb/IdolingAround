@@ -35,9 +35,6 @@ public class MovementScript : MonoBehaviour
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
 
-    [Header("deaths")]
-    [SerializeField] TextMeshProUGUI deathText;
-    [HideInInspector] public int deaths;
 
     [Header("Jump Meter Colors")]
     [SerializeField] Color minChargeColor;
@@ -164,8 +161,6 @@ public class MovementScript : MonoBehaviour
             follow.Priority = 11;
             cam = follow;
         }
-
-        deathText.text = deaths.ToString();
     }
 
     private void OnCollisionStay(Collision collision)
