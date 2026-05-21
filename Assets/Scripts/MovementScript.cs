@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,6 +18,8 @@ public class MovementScript : MonoBehaviour
     public GameObject cube;
     public GameObject part;
     public Image charge;
+    public Image chargeHolder;
+    public Image chargeBlur;
     public bool isSpawning;
 
     [Header("Movement Settings")]
@@ -35,6 +38,12 @@ public class MovementScript : MonoBehaviour
     [Header("deaths")]
     [SerializeField] TextMeshProUGUI deathText;
     [HideInInspector] public int deaths;
+
+    [Header("Jump Meter Colors")]
+    [SerializeField] Color minChargeColor;
+    [SerializeField] Color maxChargeColor;
+    [SerializeField] Color holderMinChargeColor;
+    [SerializeField] Color holderMaxChargeColor;
 
     [Header("Score")]
     [SerializeField] TextMeshProUGUI currentTimeText;
@@ -315,6 +324,10 @@ public class MovementScript : MonoBehaviour
             }
 
             charge.fillAmount += 1.25f * Time.deltaTime;
+            float third = Mathf.InverseLerp(0.33f, 1f, charge.fillAmount);
+            charge.color = Color.Lerp(minChargeColor, maxChargeColor, third);
+            chargeHolder.color = Color.Lerp(holderMinChargeColor, holderMaxChargeColor, charge.fillAmount);
+            chargeBlur.color = Color.Lerp(holderMinChargeColor, holderMaxChargeColor, charge.fillAmount);
         }
 
         if (Input.GetKeyUp(KeyCode.Space) && coyoteTimer > 0f & !hasJumped)
@@ -444,10 +457,11 @@ public class MovementScript : MonoBehaviour
     private void HandleChargeDrain()
     {
         if (!drain) return;
-
         charge.fillAmount -= 1.75f * Time.deltaTime;
-
-        if (charge.fillAmount < 0.42f) drain = false;
+        charge.color = Color.Lerp(minChargeColor, maxChargeColor, charge.fillAmount);
+        chargeHolder.color = Color.Lerp(holderMinChargeColor, holderMaxChargeColor, charge.fillAmount);
+        chargeBlur.color = Color.Lerp(holderMinChargeColor, holderMaxChargeColor, charge.fillAmount);
+        if (charge.fillAmount <= 0) drain = false;
     }
 
     private void HandleRollingSound()
