@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2164087638341133704}
   - component: {fileID: 3402798283378481583}
   - component: {fileID: 6219993877634722653}
-  - component: {fileID: 7747019103603983402}
   - component: {fileID: 7689907284212585613}
   m_Layer: 0
   m_Name: Mesh
@@ -88,27 +87,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7747019103603983402
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4447895824314222373}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 1.6458758, y: 4.8751945, z: 1.6978381}
-  m_Center: {x: 0.0000032186508, y: 2.4375973, z: -0.0000021457672}
 --- !u!64 &7689907284212585613
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -142,7 +120,6 @@ GameObject:
   - component: {fileID: 7279405033414086968}
   - component: {fileID: 6193311837289875326}
   - component: {fileID: 2597857291528612697}
-  - component: {fileID: 217487505889760722}
   - component: {fileID: 2833558005814953078}
   m_Layer: 0
   m_Name: Mesh (1)
@@ -219,27 +196,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &217487505889760722
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5582222789923927352}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 2.362869, y: 0.95195425, z: 2.3628683}
-  m_Center: {x: -0.00000023841858, y: 0.48802578, z: 0}
 --- !u!64 &2833558005814953078
 MeshCollider:
   m_ObjectHideFlags: 0
