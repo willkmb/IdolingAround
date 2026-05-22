@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2741227592379296686}
   - component: {fileID: 1271440534338757643}
   - component: {fileID: 3909660093613576385}
+  - component: {fileID: 3922229832897197867}
   m_Layer: 0
   m_Name: LP_Pillar_Jungle_2
   m_TagString: Untagged
@@ -86,6 +87,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3922229832897197867
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3260917653437690132}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6099800089077584851, guid: 85bcab8eacdf2084e97e676e7244092b, type: 3}
 --- !u!1 &9088847800939999360
 GameObject:
   m_ObjectHideFlags: 0
