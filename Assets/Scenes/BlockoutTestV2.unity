@@ -28050,8 +28050,6 @@ MonoBehaviour:
   inAirControl: 0.8
   inAirControlSide: 1.2
   timerText: {fileID: 14623758}
-  deathText: {fileID: 531913702}
-  deaths: 0
   minChargeColor: {r: 0.41960785, g: 0.40784314, b: 0.34117648, a: 1}
   maxChargeColor: {r: 0.35686275, g: 0.22352941, b: 0.32156864, a: 1}
   holderMinChargeColor: {r: 1, g: 1, b: 1, a: 0}
@@ -156846,7 +156844,7 @@ MonoBehaviour:
   m_FillCenter: 1
   m_FillMethod: 3
   m_FillAmount: 0
-  m_FillClockwise: 0
+  m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
