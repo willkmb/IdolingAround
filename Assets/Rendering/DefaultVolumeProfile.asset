@@ -292,19 +292,19 @@ MonoBehaviour:
   active: 1
   redOutRedIn:
     m_OverrideState: 1
-    m_Value: 82
+    m_Value: 79
   redOutGreenIn:
     m_OverrideState: 1
-    m_Value: 12
+    m_Value: -16
   redOutBlueIn:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: -32
   greenOutRedIn:
     m_OverrideState: 1
     m_Value: 0
   greenOutGreenIn:
     m_OverrideState: 1
-    m_Value: 100
+    m_Value: 76
   greenOutBlueIn:
     m_OverrideState: 1
     m_Value: 0
@@ -710,7 +710,7 @@ MonoBehaviour:
   green:
     m_OverrideState: 1
     m_Value:
-      <length>k__BackingField: 2
+      <length>k__BackingField: 3
       m_Loop: 0
       m_ZeroValue: 0
       m_Range: 1
@@ -720,6 +720,15 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 0
           value: 0
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.43089432
+          value: 0.43089432
           inSlope: 1
           outSlope: 1
           tangentMode: 0
