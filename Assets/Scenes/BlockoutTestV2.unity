@@ -72423,7 +72423,7 @@ GameObject:
   - component: {fileID: 712909004}
   m_Layer: 0
   m_Name: Mesh
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72450,7 +72450,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 712909002}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 1ec6406efc2166f4ca91261544500e21, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -72489,6 +72489,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: cc4cc2284e95392468c8d5eadb032815, type: 2}
+  - {fileID: 2100000, guid: d014a95f23e957e4fa8093a4518cfc8d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
