@@ -34,9 +34,9 @@ public class RespawnTrigger : MonoBehaviour
 
     void Spawn()
     {
-        rb.isKinematic = true;
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+        rb.isKinematic = true;
         Player.transform.position = movementScript.respawnPoint.position;
         Debug.Log("should have moved");
         GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
