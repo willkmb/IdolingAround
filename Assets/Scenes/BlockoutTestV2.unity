@@ -9942,6 +9942,7 @@ PrefabInstance:
     - {fileID: 7652506046741695541, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
     - {fileID: 5826768797736238711, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
     - {fileID: 300144283043653362, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
+    - {fileID: 1875085006366166498, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4787466785949766218, guid: e95229b4abe3d8648aaba8b130377406, type: 3}
       insertIndex: 0
@@ -66330,6 +66331,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 484847556}
     m_Modifications:
+    - target: {fileID: 3382979696443093673, guid: 669f843bf10b1034ab5fa776028b9d11, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.45
+      objectReference: {fileID: 0}
     - target: {fileID: 7127788402129994382, guid: 669f843bf10b1034ab5fa776028b9d11, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -218110,7 +218115,8 @@ PrefabInstance:
       value: SetRespawnPoint (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2718224400077367315, guid: 669f843bf10b1034ab5fa776028b9d11, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 669f843bf10b1034ab5fa776028b9d11, type: 3}
