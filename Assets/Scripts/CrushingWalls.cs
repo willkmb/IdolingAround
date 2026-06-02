@@ -4,7 +4,6 @@ using UnityEngine;
 public class CrushingWalls : MonoBehaviour
 {
     MovementScript playerMovement;
-    [SerializeField] Animation deathAnim;
     public Animation[] anims;
     public TriggerScript[] triggers;
     bool hasAnimStarted;
@@ -36,14 +35,16 @@ public class CrushingWalls : MonoBehaviour
                 {
                     foreach (var anim in anims)
                     {
-                        //anim.Stop();
+                        anim.Stop();
+                        anim.gameObject.transform.position = Vector3.zero;
                     }
                     GameObject.FindWithTag("Player").GetComponent<Rigidbody>().isKinematic = true;
                     playerMovement.gameObject.transform.position = playerMovement.respawnPoint.transform.position;
                     GameObject.FindWithTag("Player").GetComponent<Rigidbody>().isKinematic = false;
-                    //deathAnim.Play();
                     Debug.Log("Idol is crushed");
                     idolCrushed = true;
+                    hasAnimStarted = false;
+
                 }
             }
 
