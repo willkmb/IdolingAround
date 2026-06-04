@@ -22,7 +22,7 @@ public class BreakVase : MonoBehaviour
                 (collision.gameObject.GetComponent<Rigidbody>() != null && collision.gameObject.GetComponent<Rigidbody>().linearVelocity.magnitude >= speedToBreak))
             {
                 BrokenVase = Instantiate(BrokenVase, this.transform.position, this.transform.rotation);
-                if(spawnGem) { gem = Instantiate(gem, new Vector3(this.transform.position.x, this.transform.position.y + 0.5f, this.transform.position.z), Quaternion.identity); }
+                if(spawnGem) { gem = Instantiate(gem, new Vector3(this.transform.position.x, this.transform.position.y + 0.75f, this.transform.position.z), Quaternion.identity); }
                 BrokenVase.GetComponent<PotSmash>().decaysOverTime = decaysOverTime;
                 BrokenVase.GetComponent<PotSmash>().timeUntilDecay = timeUntilObjDecay;
                 BrokenVase.GetComponent<PotSmash>().potVelocity = velocityUpdate;
