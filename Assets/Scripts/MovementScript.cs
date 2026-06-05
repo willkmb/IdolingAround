@@ -175,6 +175,7 @@ public class MovementScript : MonoBehaviour
             transform.position = respawnPoint.position;
             Debug.Log("resetting checkpoint");
             GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
+            rb.isKinematic = false;
         }
     }
 
