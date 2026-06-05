@@ -79,6 +79,8 @@ public class MovementScript : MonoBehaviour
     private bool following = true;
     private bool hasJumped;
     private float collisionCooldown = 0f;
+    private Vector3 storedFlipDirection = Vector3.zero;
+    private float flipDirTimer = 0f;
 
     #endregion
 
@@ -245,26 +247,45 @@ public class MovementScript : MonoBehaviour
             {
                 if (move > 0)
                 {
+                    if (flipped) Debug.Log("Stood up");
                     COM = Vector3.Lerp(COM, new Vector3(0, -0.3f, 0), 46f * Time.deltaTime);
-                    float closestDistance = Mathf.Infinity;
-                    Vector3 closestDirection = Vector3.zero;
+                    flipDirTimer -= Time.deltaTime;
 
-                    for (int i = 0; i < 8; i++)
+                    if (flipDirTimer <= 0f)
                     {
-                        float angle = i * 45f;
-                        Vector3 direction = Quaternion.Euler(0, angle, 0) * Vector3.forward;
-                        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, 15f))
+                        float closestDistance = Mathf.Infinity;
+                        float secondClosestDistance = Mathf.Infinity;
+                        Vector3 closestDirection = Vector3.zero;
+
+                        for (int i = 0; i < 8; i++)
                         {
-                            if (hit.distance < closestDistance)
+                            float angle = i * 45f;
+                            Vector3 direction = Quaternion.Euler(0, angle, 0) * Vector3.forward;
+                            if (Physics.Raycast(transform.position, direction, out RaycastHit hit, 15f))
                             {
-                                closestDistance = hit.distance;
-                                closestDirection = direction;
+                                if (hit.distance < closestDistance)
+                                {
+                                    secondClosestDistance = closestDistance;
+                                    closestDistance = hit.distance;
+                                    closestDirection = direction;
+                                }
+                                else if (hit.distance < secondClosestDistance) secondClosestDistance = hit.distance;
                             }
+                        }
+
+                        if ((secondClosestDistance - closestDistance) < 1.5f || closestDirection == Vector3.zero)
+                        {
+                            storedFlipDirection = transform.right;
+                            flipDirTimer = 0.5f;
+                        }
+                        else
+                        {
+                            storedFlipDirection = closestDirection;
+                            flipDirTimer = 0.2f;
                         }
                     }
 
-                    Vector3 toppleDir = closestDirection != Vector3.zero ? -closestDirection : cube.transform.forward;
-                    Vector3 torqueAxis = Vector3.Cross(Vector3.up, toppleDir).normalized;
+                    Vector3 torqueAxis = Vector3.Cross(Vector3.up, storedFlipDirection).normalized;
                     rb.AddTorque(torqueAxis * rollTorque);
                     flipped = false;
                 }
