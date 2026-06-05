@@ -4,7 +4,7 @@ public class RespawnTriggerBoulder : MonoBehaviour
 {
     MovementScript movementScript;
     DeathCounter deathCounter;
-    BoulderRoll boulderScript;
+    [SerializeField] BoulderRoll boulderScript;
     AudioSource deathSound;
     GameObject Player;
     Rigidbody rb;
@@ -15,7 +15,7 @@ public class RespawnTriggerBoulder : MonoBehaviour
         rb = Player.GetComponent<Rigidbody>();
         movementScript = Player.GetComponent<MovementScript>();
         deathCounter = Player.GetComponent<DeathCounter>();
-        boulderScript = GetComponentInParent<BoulderRoll>();
+        //boulderScript = GetComponentInParent<BoulderRoll>();
         deathSound = GetComponent<AudioSource>();
     }
 
