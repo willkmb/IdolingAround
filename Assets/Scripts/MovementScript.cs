@@ -161,6 +161,21 @@ public class MovementScript : MonoBehaviour
             follow.Priority = 11;
             cam = follow;
         }
+
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("MenuScene");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = true;
+            transform.position = respawnPoint.position;
+            Debug.Log("resetting checkpoint");
+            GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
+        }
     }
 
     private void OnCollisionStay(Collision collision)

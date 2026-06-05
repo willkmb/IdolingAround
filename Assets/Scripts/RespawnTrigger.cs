@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RespawnTrigger : MonoBehaviour
 {
@@ -17,6 +18,15 @@ public class RespawnTrigger : MonoBehaviour
         movementScript = Player.GetComponent<MovementScript>();
         deathCounter = Player.GetComponent<DeathCounter>();
         sound = GetComponent<AudioSource>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            Invoke("Spawn", 0f);
+            Debug.Log("respawning");
+        }
     }
 
     private void OnTriggerEnter(Collider col)
