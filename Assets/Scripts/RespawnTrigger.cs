@@ -4,29 +4,16 @@ using UnityEngine.SceneManagement;
 
 public class RespawnTrigger : MonoBehaviour
 {
-    MovementScript movementScript;
-    DeathCounter deathCounter;
-    AudioSource sound;
-    [SerializeField] AudioSource DeathSound;
     GameObject Player;
-    Rigidbody rb;
+    MovementScript movementScript;
+    RespawnPlayer respawnPlayer;
+    [SerializeField] AudioSource DeathSound;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        rb = Player.GetComponent<Rigidbody>();
         movementScript = Player.GetComponent<MovementScript>();
-        deathCounter = Player.GetComponent<DeathCounter>();
-        sound = GetComponent<AudioSource>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            Invoke("Spawn", 0f);
-            Debug.Log("respawning");
-        }
+        respawnPlayer = Player.GetComponent<RespawnPlayer>();
     }
 
     private void OnTriggerEnter(Collider col)
@@ -35,31 +22,12 @@ public class RespawnTrigger : MonoBehaviour
         {
             if (col.gameObject.layer == 6)
             {
-                movementScript.isSpawning = true;
                 DeathSound.Play();
-                Invoke("Spawn", 0.5f);
+                respawnPlayer.StartSpawn();
             }
         }
     }
 
-    void Spawn()
-    {
-        rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        rb.isKinematic = true;
-        Player.transform.position = movementScript.respawnPoint.position;
-        Debug.Log("should have moved");
-        GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
-        sound.Play();
-        deathCounter.UpdateDeathCounter();
-        Invoke("KinematicOff", 0.05f);
-    }
-
-    void KinematicOff()
-    {
-        rb.isKinematic = false;
-        movementScript.isSpawning = false;
-    }
 
 
 }

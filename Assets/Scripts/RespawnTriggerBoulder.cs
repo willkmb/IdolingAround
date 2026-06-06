@@ -2,19 +2,20 @@ using UnityEngine;
 
 public class RespawnTriggerBoulder : MonoBehaviour
 {
-    MovementScript movementScript;
-    DeathCounter deathCounter;
-    [SerializeField] BoulderRoll boulderScript;
-    AudioSource deathSound;
     GameObject Player;
-    Rigidbody rb;
+    MovementScript movementScript;
+    RespawnPlayer respawnPlayer;
+    [SerializeField] BoulderRoll boulderScript;
+
+    [SerializeField] AudioSource deathSound;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        rb = Player.GetComponent<Rigidbody>();
+
         movementScript = Player.GetComponent<MovementScript>();
-        deathCounter = Player.GetComponent<DeathCounter>();
+
         //boulderScript = GetComponentInParent<BoulderRoll>();
         deathSound = GetComponent<AudioSource>();
     }
@@ -27,29 +28,15 @@ public class RespawnTriggerBoulder : MonoBehaviour
             {
                 movementScript.isSpawning = true;
                 deathSound.Play();
-                Invoke("Spawn", 0.5f);
+                respawnPlayer.StartSpawn();
+                Invoke("SpawnBoulder", 0.5f);
             }
         }
     }
 
-    void Spawn()
+    void SpawnBoulder()
     {
         boulderScript.RespawnBoulder();
-
-        rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        rb.isKinematic = true;
-        Player.transform.position = movementScript.respawnPoint.position;
-        Debug.Log("should have moved");
-        GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
-        deathCounter.UpdateDeathCounter();
-        Invoke("KinematicOff", 0.05f);
-    }
-
-    void KinematicOff()
-    {
-        rb.isKinematic = false;
-        movementScript.isSpawning = false;
     }
 
 
