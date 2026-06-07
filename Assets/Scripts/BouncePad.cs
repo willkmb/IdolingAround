@@ -8,6 +8,7 @@ public class BouncePad : MonoBehaviour
     MovementScript movementScript;
     [SerializeField] Animation anim;
     Collider objCol;
+    private bool hasBounced;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,29 +17,28 @@ public class BouncePad : MonoBehaviour
 
     private void OnTriggerStay(Collider col)
     {
+        if (hasBounced) return;
         if (col.gameObject.GetComponent<MovementScript>() != null)
         {
             BouncePlayer();
             anim.Play();
+            hasBounced = true;
         }
 
-        else
+        else if (col.gameObject.GetComponent<Rigidbody>() != null)
         {
-            if (col.gameObject.GetComponent<Rigidbody>() != null)
-            {
-                objCol = col;
-                BounceObject();
-                anim.Play();
-            }
+            objCol = col;
+            BounceObject();
+            anim.Play();
         }
     }
 
+    private void OnTriggerExit(Collider other) { hasBounced = false; }
 
     void BouncePlayer()
     {
-        Vector3 vel = movementScript.gameObject.GetComponent<Rigidbody>().linearVelocity;
-        movementScript.gameObject.GetComponent<Rigidbody>().linearVelocity = new Vector3(vel.x, 0, vel.z);
-        movementScript.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * 100 * JumpMult, ForceMode.Impulse);
+        Rigidbody rb = movementScript.gameObject.GetComponent<Rigidbody>();
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, JumpMult, rb.linearVelocity.z);
         float pitch = Random.Range(0.80f, 1f);
         movementScript.sourceJump.pitch = pitch;
         movementScript.sourceJump.Play();
@@ -47,7 +47,6 @@ public class BouncePad : MonoBehaviour
     void BounceObject()
     {
         Rigidbody rb = objCol.gameObject.GetComponent<Rigidbody>();
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-        rb.AddForce(Vector3.up * ObjBounceMult, ForceMode.Impulse);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, ObjBounceMult, rb.linearVelocity.z);
     }
 }
