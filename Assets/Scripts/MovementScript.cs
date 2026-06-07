@@ -182,7 +182,7 @@ public class MovementScript : MonoBehaviour
         }
 
         stoodUp = Vector3.Dot(transform.up, Vector3.up) > 0.9f;
-        Debug.Log(stoodUp);
+        if (collisionCooldown > 0f) collisionCooldown -= Time.deltaTime;
     }
 
     private void OnCollisionStay(Collision collision)
@@ -251,7 +251,6 @@ public class MovementScript : MonoBehaviour
             {
                 if (move > 0)
                 {
-                    if (flipped) Debug.Log("Stood up");
                     COM = Vector3.Lerp(COM, new Vector3(0, -0.3f, 0), 46f * Time.deltaTime);
                     flipDirTimer -= Time.deltaTime;
 
@@ -494,7 +493,6 @@ public class MovementScript : MonoBehaviour
         Debug.DrawRay(cube.transform.position, cube.transform.forward * 3f, Color.blue);
         Debug.DrawRay(cube.transform.position, velDir * 3f, Color.red);
 
-        collisionCooldown -= Time.deltaTime;
         if (alignDot < 0f && Input.GetAxis("Vertical") > 0f && speed > 1.6f && canJump && collisionCooldown <= 0f) cube.transform.Rotate(Vector3.up, 180f, Space.World);
     }
 
