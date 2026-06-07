@@ -1491,8 +1491,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11302367}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.018625388, y: -0.022401992, z: 0.0059592603, w: 0.9995578}
-  m_LocalPosition: {x: 0.0000000010385897, y: 0.00000041544826, z: -0.00000012528163}
+  m_LocalRotation: {x: 0.0057592997, y: -0.037328612, z: 0.0118390005, w: 0.9992164}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -64987,8 +64987,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 510898761}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.057737187, y: -0.02908153, z: 0.013821933, w: 0.9978125}
-  m_LocalPosition: {x: -0.041524045, y: 0.7397613, z: 1.8454897}
+  m_LocalRotation: {x: 0.07055139, y: -0.014556576, z: 0.006918281, w: 0.997378}
+  m_LocalPosition: {x: -0.17258938, y: 0.85488653, z: 1.8825023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -70744,7 +70744,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 557508883}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.04176616, y: -0.014749987, z: 0.0064957165, w: 0.9989975}
+  m_LocalRotation: {x: 0.041765824, y: -0.014749987, z: 0.0064956327, w: 0.9989975}
   m_LocalPosition: {x: -0.17258938, y: 0.85488653, z: 1.8825023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -97663,8 +97663,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 753072878}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.03437555, y: -0.036974207, z: 0.012903271, w: 0.9986415}
-  m_LocalPosition: {x: 0.13158199, y: -0.11475222, z: -0.036331546}
+  m_LocalRotation: {x: 0.034375533, y: -0.036974218, z: 0.012903275, w: 0.9986415}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -131035,8 +131035,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1019139745}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0631536, y: -0.03658682, z: 0.01396393, w: 0.99723524}
-  m_LocalPosition: {x: 0.13158199, y: -0.11475222, z: -0.036331546}
+  m_LocalRotation: {x: 0.06315361, y: -0.03658682, z: 0.013963934, w: 0.99723524}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -175844,7 +175844,7 @@ Transform:
   m_GameObject: {fileID: 1322513113}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0073184683, y: 0.022522809, z: -0.005366209, w: 0.99970514}
-  m_LocalPosition: {x: -0.033872187, y: 0.7345844, z: 1.7055489}
+  m_LocalPosition: {x: 0.094666444, y: 0.6190231, z: 1.6616709}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -270893,6 +270893,10 @@ PrefabInstance:
       propertyPath: boulderScript
       value: 
       objectReference: {fileID: 770302167}
+    - target: {fileID: 2004916810369557731, guid: 4563a756563970b4bbeaa8fdeb9852ef, type: 3}
+      propertyPath: JumpMult
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2010273085131378498, guid: 4563a756563970b4bbeaa8fdeb9852ef, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.6723975
@@ -270920,6 +270924,10 @@ PrefabInstance:
     - target: {fileID: 2711865062992511697, guid: 4563a756563970b4bbeaa8fdeb9852ef, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.06983
+      objectReference: {fileID: 0}
+    - target: {fileID: 2836347170838776775, guid: 4563a756563970b4bbeaa8fdeb9852ef, type: 3}
+      propertyPath: JumpMult
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3110815000209727974, guid: 4563a756563970b4bbeaa8fdeb9852ef, type: 3}
       propertyPath: boulderScript
@@ -271133,6 +271141,10 @@ PrefabInstance:
       propertyPath: m_RenderingLayerMask
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5871203125136710816, guid: 4563a756563970b4bbeaa8fdeb9852ef, type: 3}
+      propertyPath: JumpMult
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5992939055311002492, guid: 4563a756563970b4bbeaa8fdeb9852ef, type: 3}
       propertyPath: boulderScript
       value: 
@@ -271253,6 +271265,10 @@ PrefabInstance:
       propertyPath: boulderScript
       value: 
       objectReference: {fileID: 770302167}
+    - target: {fileID: 8815746926914012331, guid: 4563a756563970b4bbeaa8fdeb9852ef, type: 3}
+      propertyPath: JumpMult
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8930757461154733155, guid: 4563a756563970b4bbeaa8fdeb9852ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.773102
