@@ -362,9 +362,10 @@ public class MovementScript : MonoBehaviour
             chargeBlur.color = Color.Lerp(holderMinChargeColor, holderMaxChargeColor, charge.fillAmount);
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) && coyoteTimer > 0f & !hasJumped)
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            jump(1f);
+            if(coyoteTimer > 0f && !hasJumped) jump(1f);
+            drain = true;
             jumpVel = 85f;
         }
     }

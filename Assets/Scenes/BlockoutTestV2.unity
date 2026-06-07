@@ -1491,7 +1491,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11302367}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00875502, y: 0.8463845, z: -0.52842337, w: -0.065768115}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.000001674658, y: -0.0000100139405, z: -0.000011404051}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -35972,8 +35972,8 @@ MonoBehaviour:
   inAirControl: 0.8
   inAirControlSide: 1.2
   timerText: {fileID: 14623758}
-  minChargeColor: {r: 0.41960785, g: 0.40784314, b: 0.34117648, a: 1}
-  maxChargeColor: {r: 0.35686275, g: 0.22352941, b: 0.32156864, a: 1}
+  minChargeColor: {r: 0.41960785, g: 0.40784314, b: 0.34117648, a: 0.5882353}
+  maxChargeColor: {r: 0.41960788, g: 0.40784317, b: 0.34117648, a: 1}
   holderMinChargeColor: {r: 1, g: 1, b: 1, a: 0}
   holderMaxChargeColor: {r: 1, g: 1, b: 1, a: 0.8666667}
   currentTimeText: {fileID: 1125946213}
@@ -133224,6 +133224,7 @@ MonoBehaviour:
   target: {fileID: 1567119335}
   offset: {x: 0, y: 0.6, z: 0}
   cam: {fileID: 2064541395}
+  padTop: 100
 --- !u!114 &1042406186
 MonoBehaviour:
   m_ObjectHideFlags: 0
