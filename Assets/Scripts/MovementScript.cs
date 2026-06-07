@@ -81,6 +81,7 @@ public class MovementScript : MonoBehaviour
     private float collisionCooldown = 0f;
     private Vector3 storedFlipDirection = Vector3.zero;
     private float flipDirTimer = 0f;
+    private bool stoodUp = true;
 
     #endregion
 
@@ -179,6 +180,9 @@ public class MovementScript : MonoBehaviour
             GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
             rb.isKinematic = false;
         }
+
+        stoodUp = Vector3.Dot(transform.up, Vector3.up) > 0.9f;
+        Debug.Log(stoodUp);
     }
 
     private void OnCollisionStay(Collision collision)
@@ -469,6 +473,13 @@ public class MovementScript : MonoBehaviour
 
     private void RotateCubeToVelocity()
     {
+        if (stoodUp)
+        {
+            Quaternion target = Quaternion.Euler(0, transform.localEulerAngles.y, 0);
+            cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, target, 15f * Time.deltaTime);
+            return;
+        }
+        
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         float speed = vel.magnitude;
 
