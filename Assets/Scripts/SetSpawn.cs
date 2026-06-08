@@ -5,6 +5,7 @@ public class SetSpawn : MonoBehaviour
     MovementScript movementScript;
     AudioSource sound;
     [SerializeField] ParticleSystem particle;
+    [SerializeField] ParticleSystem particleRock;
     [SerializeField] Transform respawnPoint;
 
 
@@ -12,7 +13,7 @@ public class SetSpawn : MonoBehaviour
     void Start()
     {
         movementScript = GameObject.FindFirstObjectByType<MovementScript>().GetComponent<MovementScript>();
-        particle = GetComponentInChildren<ParticleSystem>();
+        particleRock = GetComponentInChildren<ParticleSystem>();
         sound = GetComponent<AudioSource>();
     }
 
@@ -23,7 +24,7 @@ public class SetSpawn : MonoBehaviour
             respawnPoint.gameObject.transform.position = other.gameObject.transform.position;
             movementScript.respawnPoint = respawnPoint;
             sound.Play();
-            particle.gameObject.transform.position = other.gameObject.transform.position;
+            //particle.gameObject.transform.position = other.gameObject.transform.position;
             particle = GetComponentInChildren<ParticleSystem>();
             particle.Play();
             //Invoke("ParticleOff", 1f);
