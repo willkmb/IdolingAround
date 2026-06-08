@@ -81,6 +81,7 @@ public class MovementScript : MonoBehaviour
     private float collisionCooldown = 0f;
     private Vector3 storedFlipDirection = Vector3.zero;
     private float flipDirTimer = 0f;
+    private bool stoodUp = true;
 
     #endregion
 
@@ -169,7 +170,7 @@ public class MovementScript : MonoBehaviour
             SceneManager.LoadScene("MenuScene");
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (Input.GetKeyDown(KeyCode.Backspace) && rb.linearVelocity.magnitude < 0.25f)
         {
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
@@ -179,6 +180,9 @@ public class MovementScript : MonoBehaviour
             GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
             rb.isKinematic = false;
         }
+
+        stoodUp = Vector3.Dot(transform.up, Vector3.up) > 0.9f;
+        if (collisionCooldown > 0f) collisionCooldown -= Time.deltaTime;
     }
 
     private void OnCollisionStay(Collision collision)
@@ -247,7 +251,6 @@ public class MovementScript : MonoBehaviour
             {
                 if (move > 0)
                 {
-                    if (flipped) Debug.Log("Stood up");
                     COM = Vector3.Lerp(COM, new Vector3(0, -0.3f, 0), 46f * Time.deltaTime);
                     flipDirTimer -= Time.deltaTime;
 
@@ -469,6 +472,13 @@ public class MovementScript : MonoBehaviour
 
     private void RotateCubeToVelocity()
     {
+        if (stoodUp)
+        {
+            Quaternion target = Quaternion.Euler(0, transform.localEulerAngles.y, 0);
+            cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, target, 15f * Time.deltaTime);
+            return;
+        }
+        
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         float speed = vel.magnitude;
 
@@ -483,7 +493,6 @@ public class MovementScript : MonoBehaviour
         Debug.DrawRay(cube.transform.position, cube.transform.forward * 3f, Color.blue);
         Debug.DrawRay(cube.transform.position, velDir * 3f, Color.red);
 
-        collisionCooldown -= Time.deltaTime;
         if (alignDot < 0f && Input.GetAxis("Vertical") > 0f && speed > 1.6f && canJump && collisionCooldown <= 0f) cube.transform.Rotate(Vector3.up, 180f, Space.World);
     }
 
