@@ -4,7 +4,7 @@ public class RespawnTriggerBoulder : MonoBehaviour
 {
     GameObject Player;
     MovementScript movementScript;
-    RespawnPlayer respawnPlayer;
+    public RespawnPlayer respawnPlayer;
     [SerializeField] BoulderRoll boulderScript;
 
     [SerializeField] AudioSource deathSound;
