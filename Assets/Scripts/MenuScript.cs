@@ -7,8 +7,11 @@ public class MenuScript : MonoBehaviour
     [SerializeField] GameObject trans;
     [SerializeField] GameObject screen;
     [SerializeField] GameObject text;
+    private bool pressedPlay = false;
     public void playButton()
     {
+        if (pressedPlay) return;
+        pressedPlay = true;
         GameObject clicked = EventSystem.current.currentSelectedGameObject;
         clicked.GetComponent<Animation>().Play();
         clicked.GetComponent<AudioSource>().Play();
