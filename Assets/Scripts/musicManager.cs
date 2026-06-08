@@ -4,6 +4,6 @@ public class musicManager : MonoBehaviour
 {
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this);
     }
 }

@@ -19,6 +19,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 anim.Blend(state.name);
             }
         }
+        GetComponent<AudioSource>().Play();
     }
 
     public void OnPointerExit(PointerEventData eventData)
