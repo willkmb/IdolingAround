@@ -11,7 +11,6 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log($"Hover ENTER: {gameObject.name}");
         foreach (var anim in anims)
         {
             foreach (AnimationState state in anim)
@@ -24,7 +23,6 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log($"Hover EXIT: {gameObject.name}");
         foreach (var anim in anims)
         {
             foreach (AnimationState state in anim)
