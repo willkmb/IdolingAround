@@ -355,7 +355,7 @@ public class MovementScript : MonoBehaviour
         {
             if (jumpVel < 220f)
             {
-                jumpVel++;
+                jumpVel += 100f * Time.deltaTime;
             }
 
             charge.fillAmount += 1.25f * Time.deltaTime;
