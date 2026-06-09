@@ -6,32 +6,20 @@ public class CamPedestal : MonoBehaviour
 {
     [SerializeField] GameObject mainCam;
     [SerializeField] GameObject thisCam;
-    [SerializeField] GameObject CSIdol;
-    [SerializeField] GameObject GameIdol;
-    [SerializeField] Animation anim;
-    [SerializeField] Animation anim2;
-    [SerializeField] Animation trans;
-    [SerializeField] Animation UI;
-    [SerializeField] Animation tint;
-    [SerializeField] Animation cur;
-    [SerializeField] Animation high;
-    [SerializeField] Animation Res;
+    [SerializeField] GameObject endCam;
     [SerializeField] GameObject idol;
+    [SerializeField] GameObject trans;
+    [SerializeField] Animation screenTint;
+    [SerializeField] GameObject[] oldUI;
+    [SerializeField] UIAnimationScript oldUIAnim;
+    [SerializeField] GameObject newUI;
     BoxCollider col;
     private bool gamefin = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        col = GetComponent<BoxCollider>();
-    }
+    void Start() { col = GetComponent<BoxCollider>(); }
 
-    // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && gamefin)
-        {
-            restart();
-        }
+        if(Input.GetKeyDown(KeyCode.Space) && gamefin) restart();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,39 +31,30 @@ public class CamPedestal : MonoBehaviour
 
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        
-    }
-
     IEnumerator CamSwitch()
     {
-
         Debug.Log("idol black screen");
-        idol.GetComponent<MovementScript>().CheckScore();
-        trans.Play();
-        trans.gameObject.GetComponent<AudioSource>().Play();
-        //Time.timeScale = 0;
-        yield return new WaitForSeconds(0.5f);
-        CSIdol.SetActive(true);
-        GameIdol.SetActive(false);
+        
         mainCam.SetActive(false);
         thisCam.SetActive(true);
-        anim.Play();
-        anim2.Play();
-        Debug.Log("idol black screen2 - go to leaderboard");
-        col.enabled = false;
-        yield return new WaitForSeconds(2.25f);
-        UI.Play();
-        tint.Play();
-        tint.gameObject.GetComponent<AudioSource>().Play();
-        yield return new WaitForSeconds(0.5f);
-        cur.Play();
-        yield return new WaitForSeconds(0.35f);
-        high.Play();
-        Res.Play();
-        gamefin = true;
-
+        idol.GetComponent<MovementScript>().CheckScore();
+        idol.GetComponent<MovementScript>().enabled = false;
+        idol.GetComponent<Rigidbody>().isKinematic = true;
+        thisCam.GetComponent<Animation>().Play();
+        idol.GetComponent<Animation>().Play();
+        yield return new WaitForSeconds(3f);
+        
+        trans.GetComponent<Animation>().Play("TransIn");
+        yield return new WaitForSeconds(0.9f);
+        screenTint.Play();
+        yield return new WaitForSeconds(0.3f);
+        screenTint.gameObject.SetActive(false);
+        trans.GetComponent<Animation>().Play("Transout");
+        endCam.SetActive(true);
+        thisCam.SetActive(false);
+        Destroy(oldUIAnim);
+        foreach (var ui in oldUI) Destroy(ui);
+        newUI.SetActive(true);
     }
 
     void restart()
