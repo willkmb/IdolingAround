@@ -36,6 +36,7 @@ public class SetSpawnBoulder : MonoBehaviour
             //particle = GetComponentInChildren<ParticleSystem>();
             //particle.Play();
             totem.Play();
+            totem.gameObject.GetComponent<AudioSource>().Play();
             particleRock.Play();
             //Invoke("ParticleOff", 1f);
             boulderScript.boulderRespawnTime = boulderTime;
