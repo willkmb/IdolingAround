@@ -26,6 +26,7 @@ public class SetSpawn : MonoBehaviour
 
         sound.Play();
         totem.Play();
+        totem.gameObject.GetComponent<AudioSource>().Play();
         particleRock.Play();
         triggered = true;
     }
