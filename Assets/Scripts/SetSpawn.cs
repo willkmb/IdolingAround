@@ -2,37 +2,30 @@ using UnityEngine;
 
 public class SetSpawn : MonoBehaviour
 {
-    MovementScript movementScript;
-    AudioSource sound;
-    [SerializeField] ParticleSystem particle;
-    [SerializeField] ParticleSystem particleRock;
-    [SerializeField] Transform respawnPoint;
+    [SerializeField] private ParticleSystem particleRock;
+    [SerializeField] private Transform respawnPoint;
+    public Animation totem;
 
+    private MovementScript movementScript;
+    private AudioSource sound;
+    private bool triggered = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        movementScript = GameObject.FindFirstObjectByType<MovementScript>().GetComponent<MovementScript>();
-        particleRock = GetComponentInChildren<ParticleSystem>();
+        movementScript = FindFirstObjectByType<MovementScript>();
         sound = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 6)
-        {
-            respawnPoint.gameObject.transform.position = other.gameObject.transform.position;
-            movementScript.respawnPoint = respawnPoint;
-            sound.Play();
-            //particle.gameObject.transform.position = other.gameObject.transform.position;
-            particle = GetComponentInChildren<ParticleSystem>();
-            particle.Play();
-            //Invoke("ParticleOff", 1f);
-        }
-    }
+        if (other.gameObject.layer != 6) return;
+        if (triggered) return;
 
-    void ParticleOff()
-    {
-        //particle.SetActive(false);
+        respawnPoint.position = other.transform.position;
+        movementScript.respawnPoint = respawnPoint;
+        sound.Play();
+        totem.Play();
+        particleRock.Play();
+        triggered = true;
     }
 }
