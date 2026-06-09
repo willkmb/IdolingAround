@@ -152,6 +152,38 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &4868108474676467825
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2275332414010161342}
+  m_Layer: 0
+  m_Name: TotemParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2275332414010161342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4868108474676467825}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5962022826101700468}
+  m_Father: {fileID: 7127788402129994382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5285589837170436664
 GameObject:
   m_ObjectHideFlags: 0
@@ -5301,7 +5333,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4760867066645655682}
-  m_Father: {fileID: 7127788402129994382}
+  m_Father: {fileID: 2275332414010161342}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!111 &1145713153735237548
 Animation:
@@ -10243,7 +10275,7 @@ Transform:
   - {fileID: 8991032763890144830}
   - {fileID: 8602990002274778889}
   - {fileID: 753101302428813379}
-  - {fileID: 5962022826101700468}
+  - {fileID: 2275332414010161342}
   - {fileID: 8150619925030908668}
   - {fileID: 2090104772908144200}
   m_Father: {fileID: 0}
