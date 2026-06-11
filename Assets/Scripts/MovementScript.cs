@@ -45,6 +45,8 @@ public class MovementScript : MonoBehaviour
     [Header("Score")]
     [SerializeField] TextMeshProUGUI currentTimeText;
     [SerializeField] TextMeshProUGUI highScoreText;
+    [SerializeField] TextMeshProUGUI gemText;
+    [SerializeField] TextMeshProUGUI deathText;
 
     [Header("Voice Lines")]
     [SerializeField] AudioClip[] voiceLinesMove;
@@ -443,6 +445,8 @@ public class MovementScript : MonoBehaviour
 
         timerRunning = false;
         currentTimeText.text = FormatTime(timer);
+        gemText.text = this.GetComponent<GemCounter>().gems.ToString();
+        deathText.text = this.GetComponent<DeathCounter>().deaths.ToString();
 
         if (timer < highScore)
         {
