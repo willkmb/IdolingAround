@@ -21,10 +21,12 @@ public class SetSpawn : MonoBehaviour
         if (other.gameObject.layer != 6) return;
         if (triggered) return;
 
-        respawnPoint.position = other.transform.position;
+        //respawnPoint.position = other.transform.position;
         movementScript.respawnPoint = respawnPoint;
+
         sound.Play();
         totem.Play();
+        totem.gameObject.GetComponent<AudioSource>().Play();
         particleRock.Play();
         triggered = true;
     }

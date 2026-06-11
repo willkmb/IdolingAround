@@ -12,6 +12,9 @@ public class SetSpawnBoulder : MonoBehaviour
     //[SerializeField] int knotNumber;
     [SerializeField] int boulderTime;
 
+    [SerializeField] private ParticleSystem particleRock;
+    public Animation totem;
+    private bool triggered = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,13 +28,19 @@ public class SetSpawnBoulder : MonoBehaviour
     {
         if (other.gameObject.layer == 6)
         {
+            if (triggered) return;
+
             movementScript.respawnPoint = respawnPoint;
             sound.Play();
-            particle.gameObject.transform.position = other.gameObject.transform.position;
-            particle = GetComponentInChildren<ParticleSystem>();
-            particle.Play();
+            //particle.gameObject.transform.position = other.gameObject.transform.position;
+            //particle = GetComponentInChildren<ParticleSystem>();
+            //particle.Play();
+            totem.Play();
+            totem.gameObject.GetComponent<AudioSource>().Play();
+            particleRock.Play();
             //Invoke("ParticleOff", 1f);
             boulderScript.boulderRespawnTime = boulderTime;
+            triggered = true;
 
         }
     }

@@ -451,6 +451,11 @@ public class MovementScript : MonoBehaviour
             PlayerPrefs.Save();
             highScoreText.text = "Highscore: " + FormatTime(highScore);
         }
+        else
+        {
+            highScore = PlayerPrefs.GetFloat("HighScore");
+            highScoreText.text = "Highscore: " + FormatTime(highScore);
+        }
     }
 
     private string FormatTime(float t)
