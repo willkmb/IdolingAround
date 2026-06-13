@@ -301,7 +301,7 @@ public class MovementScript : MonoBehaviour
                 COM = Vector3.Lerp(COM, Vector3.zero, 12f * Time.deltaTime);
                 rb.angularDamping = 4;
                 flipped = true;
-                cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 53, 1.65f * Time.deltaTime);
+                cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 58, 1.65f * Time.deltaTime);
             }
 
             if (!canJump)
