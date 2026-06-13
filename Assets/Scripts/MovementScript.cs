@@ -58,6 +58,12 @@ public class MovementScript : MonoBehaviour
     [SerializeField] AudioSource sourceCol;
     [SerializeField] AudioSource rolling;
 
+    [Header("Decals")]
+    [SerializeField] Material[] grassMats;
+    [SerializeField] Material[] mudMats;
+    [SerializeField] ParticleSystem grassPart;
+    [SerializeField] ParticleSystem mudPart;
+
     #endregion
 
     #region Private Fields
@@ -84,7 +90,7 @@ public class MovementScript : MonoBehaviour
     private Vector3 storedFlipDirection = Vector3.zero;
     private float flipDirTimer = 0f;
     private bool stoodUp = true;
-    private Vector3 normForward = Vector3.forward;
+    private Vector3 committedForward = Vector3.forward;
 
     #endregion
 
@@ -143,6 +149,7 @@ public class MovementScript : MonoBehaviour
         RotateCubeToVelocity();
         UpdateHighScoreCache();
         HandleRollingSound();
+        CheckDecals();
 
         if (Input.GetMouseButtonDown(1))
         {
@@ -238,6 +245,9 @@ public class MovementScript : MonoBehaviour
             Gizmos.color = (dot > 0) ? Color.green : Color.red;
             Gizmos.DrawLine(cube.transform.position, cube.transform.position + vel.normalized * 2f);
         }
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(transform.position, new Vector3(0.8f, 3.5f, 0.8f));
     }
 
     #endregion
@@ -491,14 +501,19 @@ public class MovementScript : MonoBehaviour
 
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         float speed = vel.magnitude;
+
         if (speed < 0.01f) return;
 
         Vector3 velDir = vel.normalized;
-        if (Input.GetAxis("Vertical") > 0.1f && speed > 1f && collisionCooldown <= 0f)normForward = velDir;
-        cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation,Quaternion.LookRotation(normForward, Vector3.up),10f * Time.deltaTime);
+        float dot = Vector3.Dot(cube.transform.forward, velDir);
+        Quaternion targetRotation = dot > 0? Quaternion.LookRotation(velDir, Vector3.up): Quaternion.LookRotation(-velDir, Vector3.up);
+        cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime);
 
+        float alignDot = Vector3.Dot(cube.transform.forward, velDir);
         Debug.DrawRay(cube.transform.position, cube.transform.forward * 3f, Color.blue);
         Debug.DrawRay(cube.transform.position, velDir * 3f, Color.red);
+
+        if (alignDot < 0f && Input.GetAxis("Vertical") > 0f && speed > 1.6f && collisionCooldown <= 0f)cube.transform.Rotate(Vector3.up, 180f, Space.World);
     }
 
     private void HandleChargeDrain()
@@ -517,6 +532,51 @@ public class MovementScript : MonoBehaviour
 
         float target = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) ? 0.075f : 0f;
         rolling.volume = Mathf.MoveTowards(rolling.volume, target, 0.12f * Time.deltaTime);
+    }
+
+    private void CheckDecals()
+    {
+        if (!canJump || stoodUp)
+        {
+            grassPart.Stop();
+            mudPart.Stop();
+            return;
+        }
+        Collider[] colliders = Physics.OverlapBox(transform.position,new Vector3(0.8f, 3.5f, 0.8f),Quaternion.identity,~0,QueryTriggerInteraction.Collide);
+        bool onGrass = false;
+        bool onMud = false;
+
+        foreach (Collider col in colliders)
+        {
+            UnityEngine.Rendering.Universal.DecalProjector decal = col.GetComponent<UnityEngine.Rendering.Universal.DecalProjector>();
+            if (decal != null)
+            {
+                Material decalMat = decal.material;
+
+                foreach (Material grass in grassMats)
+                {
+                    if (decalMat == grass)
+                    {
+                        if (!grassPart.isPlaying) grassPart.Play();
+                        if (mudPart.isPlaying) mudPart.Stop();
+                        return;
+                    }
+                }
+
+                foreach (Material mud in mudMats)
+                {
+                    if (decalMat == mud)
+                    {
+                        if (!mudPart.isPlaying) mudPart.Play();
+                        if (grassPart.isPlaying) grassPart.Stop();
+                        return;
+                    }
+                }
+            }
+        }
+
+        grassPart.Stop();
+        mudPart.Stop();
     }
 
     #endregion
