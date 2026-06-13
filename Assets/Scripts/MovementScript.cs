@@ -84,6 +84,7 @@ public class MovementScript : MonoBehaviour
     private Vector3 storedFlipDirection = Vector3.zero;
     private float flipDirTimer = 0f;
     private bool stoodUp = true;
+    private Vector3 normForward = Vector3.forward;
 
     #endregion
 
@@ -490,25 +491,14 @@ public class MovementScript : MonoBehaviour
 
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         float speed = vel.magnitude;
-
         if (speed < 0.01f) return;
 
         Vector3 velDir = vel.normalized;
-        float dot = Vector3.Dot(cube.transform.forward, velDir);
-        Quaternion targetRotation = dot > 0
-            ? Quaternion.LookRotation(velDir, Vector3.up)
-            : Quaternion.LookRotation(-velDir, Vector3.up);
-        cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime);
+        if (Input.GetAxis("Vertical") > 0.1f && speed > 1f && collisionCooldown <= 0f)normForward = velDir;
+        cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation,Quaternion.LookRotation(normForward, Vector3.up),10f * Time.deltaTime);
 
-        float alignDot = Vector3.Dot(cube.transform.forward, velDir);
         Debug.DrawRay(cube.transform.position, cube.transform.forward * 3f, Color.blue);
         Debug.DrawRay(cube.transform.position, velDir * 3f, Color.red);
-
-        // Only change from your version: removed canJump from this condition.
-        // canJump becomes true too quickly after a wall bounce, re-enabling the
-        // snap before the cube has settled. collisionCooldown alone gates it.
-        if (alignDot < 0f && Input.GetAxis("Vertical") > 0f && speed > 1.6f && collisionCooldown <= 0f)
-            cube.transform.Rotate(Vector3.up, 180f, Space.World);
     }
 
     private void HandleChargeDrain()
