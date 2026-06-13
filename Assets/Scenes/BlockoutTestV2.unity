@@ -108998,13 +108998,13 @@ Transform:
   m_GameObject: {fileID: 747146622}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.014433114, z: -0, w: 0.9998959}
-  m_LocalPosition: {x: -443.073, y: 3.106, z: -184.047}
-  m_LocalScale: {x: 0.26637998, y: 0.26637995, z: 0.26637995}
+  m_LocalPosition: {x: -0.24402149, y: -0.090097494, z: -4.159478}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1304784918}
   - {fileID: 1385738659}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1567119335}
   m_LocalEulerAnglesHint: {x: 0, y: 1.654, z: 0}
 --- !u!4 &747230284 stripped
 Transform:
@@ -190679,7 +190679,7 @@ Transform:
   m_GameObject: {fileID: 1304784917}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.051505372, y: 15, z: -0.73507786}
+  m_LocalPosition: {x: -0.79, y: 15, z: 24.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -190778,7 +190778,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -237035,7 +237035,8 @@ Transform:
   m_LocalPosition: {x: -443.008, y: 3.13, z: -182.939}
   m_LocalScale: {x: 0.26637998, y: 0.26637995, z: 0.26637995}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 747146626}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1567119336
@@ -325678,7 +325679,6 @@ SceneRoots:
   - {fileID: 721752548}
   - {fileID: 2100584331}
   - {fileID: 1003245178}
-  - {fileID: 747146626}
   - {fileID: 288821122}
   - {fileID: 1967296003}
   - {fileID: 1299421244}
