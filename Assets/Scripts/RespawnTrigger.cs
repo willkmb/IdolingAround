@@ -8,6 +8,8 @@ public class RespawnTrigger : MonoBehaviour
     MovementScript movementScript;
     RespawnPlayer respawnPlayer;
     [SerializeField] AudioSource DeathSound;
+    [SerializeField] GameObject thisCutscene;
+    [SerializeField] float cutsceneLength;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,6 +25,11 @@ public class RespawnTrigger : MonoBehaviour
             if (col.gameObject.layer == 6)
             {
                 DeathSound.Play();
+                if (thisCutscene != null)
+                {
+                    respawnPlayer.cutsceneLength = cutsceneLength;
+                    respawnPlayer.cutscene = thisCutscene;
+                }
                 respawnPlayer.StartSpawn();
             }
         }

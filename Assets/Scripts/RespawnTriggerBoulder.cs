@@ -8,7 +8,8 @@ public class RespawnTriggerBoulder : MonoBehaviour
     [SerializeField] BoulderRoll boulderScript;
 
     [SerializeField] AudioSource deathSound;
-
+    [SerializeField] GameObject thisCutscene;
+    [SerializeField] float cutsceneLength;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,8 +29,14 @@ public class RespawnTriggerBoulder : MonoBehaviour
             {
                 movementScript.isSpawning = true;
                 deathSound.Play();
-                respawnPlayer.StartSpawn();
-                Invoke("SpawnBoulder", 0.5f);
+                if (thisCutscene != null)
+                {
+                    respawnPlayer.cutsceneLength = cutsceneLength;
+                    respawnPlayer.cutscene = thisCutscene;
+                    respawnPlayer.StartSpawn();
+                    Invoke("SpawnBoulder", cutsceneLength);
+                }
+
             }
         }
     }

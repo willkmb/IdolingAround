@@ -9,6 +9,11 @@ public class RespawnPlayer : MonoBehaviour
 
     [SerializeField] AudioSource respawnSound;
 
+    [SerializeField] GameObject mainCamera;
+    public GameObject cutscene;
+    public float cutsceneLength;
+
+    [SerializeField] Animation transition1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,7 +36,17 @@ public class RespawnPlayer : MonoBehaviour
     public void StartSpawn()
     {
         movementScript.isSpawning = true;
-        Invoke("Spawn", 0.5f);
+        if (cutscene != null)
+        {
+            mainCamera.SetActive(false);
+            cutscene.SetActive(true);
+            transition1.Play();
+            Invoke("Spawn", cutsceneLength);
+        }
+        else
+        {
+            Invoke("Spawn", 0.25f);
+        }
     }
 
     public void StartSpawnOnKeyDown()
@@ -42,6 +57,7 @@ public class RespawnPlayer : MonoBehaviour
 
     void Spawn()
     {
+        transition1.Play();
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         rb.isKinematic = true;
@@ -55,7 +71,14 @@ public class RespawnPlayer : MonoBehaviour
 
     void KinematicOff()
     {
+        if (cutscene != null)
+        {
+            mainCamera.SetActive(true);
+            cutscene.SetActive(false);
+            cutscene = null;
+        }
         rb.isKinematic = false;
         movementScript.isSpawning = false;
+
     }
 }
