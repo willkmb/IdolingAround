@@ -83,7 +83,6 @@ public class LocalLeaderboard : MonoBehaviour
             PlayerPrefs.Save();
             entries.Clear();
             RefreshList();
-            Debug.Log("Cleared. Entry count: " + entries.Count + " Text count: " + entryText.Length);
         }
     }
 }
