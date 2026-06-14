@@ -93,6 +93,7 @@ public class CamPedestal : MonoBehaviour
 
     public void nextArrowClick()
     {
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
         nextArrow.GetComponent<Animation>().Play("NextArrowClick");
         nextArrow.GetComponent<AudioSource>().Play();
         StartCoroutine(LB());
@@ -121,6 +122,8 @@ public class CamPedestal : MonoBehaviour
         trans.GetComponent<Animation>().Play("TransIn");
         transSound.Play();
         yield return new WaitForSeconds(0.9f);
+        screenTint.Play();
+        yield return new WaitForSeconds(0.3f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
