@@ -248,7 +248,7 @@ public class MovementScript : MonoBehaviour
         }
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, new Vector3(0.8f, 3.5f, 0.8f));
+        Gizmos.DrawWireCube(transform.position, new Vector3(0.8f, 1f, 0.8f));
     }
 
     #endregion
@@ -544,7 +544,7 @@ public class MovementScript : MonoBehaviour
             onMud = false;
             return;
         }
-        Collider[] colliders = Physics.OverlapBox(transform.position,new Vector3(0.8f, 3.5f, 0.8f),Quaternion.identity,~0,QueryTriggerInteraction.Collide);
+        Collider[] colliders = Physics.OverlapBox(transform.position,new Vector3(0.8f, 1f, 0.8f),Quaternion.identity,~0,QueryTriggerInteraction.Collide);
 
         foreach (Collider col in colliders)
         {
