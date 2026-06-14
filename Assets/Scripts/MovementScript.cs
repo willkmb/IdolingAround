@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class MovementScript : MonoBehaviour
 {
@@ -543,29 +544,29 @@ public class MovementScript : MonoBehaviour
             return;
         }
         Collider[] colliders = Physics.OverlapBox(transform.position,new Vector3(0.8f, 3.5f, 0.8f),Quaternion.identity,~0,QueryTriggerInteraction.Collide);
-        bool onGrass = false;
-        bool onMud = false;
 
         foreach (Collider col in colliders)
         {
+            List<Material> curMats = new List<Material>();
             UnityEngine.Rendering.Universal.DecalProjector decal = col.GetComponent<UnityEngine.Rendering.Universal.DecalProjector>();
-            if (decal != null)
-            {
-                Material decalMat = decal.material;
+            if(decal != null) curMats.Add(decal.material);
+            Renderer rend = col.GetComponent<Renderer>();
+            if (rend != null) curMats.AddRange(rend.sharedMaterials);
 
+            foreach(Material mat in curMats)
+            {
                 foreach (Material grass in grassMats)
                 {
-                    if (decalMat == grass)
+                    if(mat == grass)
                     {
                         if (!grassPart.isPlaying) grassPart.Play();
                         if (mudPart.isPlaying) mudPart.Stop();
                         return;
                     }
                 }
-
-                foreach (Material mud in mudMats)
+                foreach(Material mud in mudMats)
                 {
-                    if (decalMat == mud)
+                    if(mat == mud)
                     {
                         if (!mudPart.isPlaying) mudPart.Play();
                         if (grassPart.isPlaying) grassPart.Stop();
