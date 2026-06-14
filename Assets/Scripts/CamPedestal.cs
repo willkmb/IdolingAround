@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CamPedestal : MonoBehaviour
 {
@@ -107,6 +108,7 @@ public class CamPedestal : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         curText.GetComponent<Animation>().Play();
         highscore.GetComponent<Animation>().Play();
+        nextArrow.GetComponentInParent<Button>().enabled = false;
         foreach(var go in gemDeath) go.GetComponent<Animation>().Play();
         foreach(var tmp in gemDeathText) tmp.GetComponent<Animation>().Play();
         leaderboard.GetComponent<Animation>().Play();
