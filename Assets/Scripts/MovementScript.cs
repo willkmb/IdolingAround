@@ -91,7 +91,7 @@ public class MovementScript : MonoBehaviour
     private Vector3 storedFlipDirection = Vector3.zero;
     private float flipDirTimer = 0f;
     private bool stoodUp = true;
-    private Vector3 committedForward = Vector3.forward;
+    private bool onMud = false;
 
     #endregion
 
@@ -128,7 +128,7 @@ public class MovementScript : MonoBehaviour
         HandleTurning(move, turning);
         HandleCameraFOV(move);
 
-        if (Input.GetAxis("Vertical") < 0f)
+        if (Input.GetAxis("Vertical") < 0f && !onMud)
         {
             Vector3 horizontalVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
@@ -541,6 +541,7 @@ public class MovementScript : MonoBehaviour
         {
             grassPart.Stop();
             mudPart.Stop();
+            onMud = false;
             return;
         }
         Collider[] colliders = Physics.OverlapBox(transform.position,new Vector3(0.8f, 3.5f, 0.8f),Quaternion.identity,~0,QueryTriggerInteraction.Collide);
@@ -570,6 +571,7 @@ public class MovementScript : MonoBehaviour
                     {
                         if (!mudPart.isPlaying) mudPart.Play();
                         if (grassPart.isPlaying) grassPart.Stop();
+                        onMud = true;
                         return;
                     }
                 }
@@ -578,6 +580,7 @@ public class MovementScript : MonoBehaviour
 
         grassPart.Stop();
         mudPart.Stop();
+        onMud = false;
     }
 
     #endregion
