@@ -178,7 +178,7 @@ public class MovementScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene("MenuScene");
+            SceneManager.LoadScene(0);
         }
 
         if (Input.GetKeyDown(KeyCode.Backspace) && rb.linearVelocity.magnitude < 0.25f)

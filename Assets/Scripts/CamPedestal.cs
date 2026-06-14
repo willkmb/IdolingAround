@@ -23,14 +23,20 @@ public class CamPedestal : MonoBehaviour
     [SerializeField]GameObject[] fadeTextLB;
     [SerializeField] GameObject spacing;
     [SerializeField] AudioSource transSound;
+    [SerializeField] GameObject restartText;
     BoxCollider col;
     private bool gamefin = false;
     private bool needToClick = false;
+    private bool canRestart = false;
     void Start() { col = GetComponent<BoxCollider>(); }
 
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space) && gamefin) restart();
+        if(canRestart && Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(reloadScene());
+        }
         if (!needToClick) return;
         if (Cursor.lockState != CursorLockMode.None || !Cursor.visible)
         {
@@ -106,5 +112,16 @@ public class CamPedestal : MonoBehaviour
         spacing.GetComponent<Animation>().Play();
         foreach (var fo in fadeObjectsLB) fo.GetComponent<Animation>().Play();
         foreach (var ft in fadeTextLB) ft.GetComponent<Animation>().Play();
+        yield return new WaitForSeconds(1.25f);
+        restartText.GetComponent<Animation>().Play();
+        canRestart = true;
     }
+    IEnumerator reloadScene()
+    {
+        trans.GetComponent<Animation>().Play("TransIn");
+        transSound.Play();
+        yield return new WaitForSeconds(0.9f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
 }
