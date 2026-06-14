@@ -13,13 +13,30 @@ public class CamPedestal : MonoBehaviour
     [SerializeField] GameObject[] oldUI;
     [SerializeField] UIAnimationScript oldUIAnim;
     [SerializeField] GameObject newUI;
+    [SerializeField] GameObject nextArrow;
+    [SerializeField] GameObject curText;
+    [SerializeField] GameObject highscore;
+    [SerializeField] GameObject[] gemDeath;
+    [SerializeField] GameObject[] gemDeathText;
+    [SerializeField] GameObject leaderboard;
+    [SerializeField] GameObject[] fadeObjectsLB;
+    [SerializeField]GameObject[] fadeTextLB;
+    [SerializeField] GameObject spacing;
+    [SerializeField] AudioSource transSound;
     BoxCollider col;
     private bool gamefin = false;
+    private bool needToClick = false;
     void Start() { col = GetComponent<BoxCollider>(); }
 
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space) && gamefin) restart();
+        if (!needToClick) return;
+        if (Cursor.lockState != CursorLockMode.None || !Cursor.visible)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -45,21 +62,49 @@ public class CamPedestal : MonoBehaviour
         yield return new WaitForSeconds(3f);
         
         trans.GetComponent<Animation>().Play("TransIn");
+        transSound.Play();
         yield return new WaitForSeconds(0.9f);
         screenTint.Play();
         yield return new WaitForSeconds(0.3f);
         screenTint.gameObject.SetActive(false);
         trans.GetComponent<Animation>().Play("Transout");
+        transSound.Play();
         endCam.SetActive(true);
         thisCam.SetActive(false);
         Destroy(oldUIAnim);
         foreach (var ui in oldUI) Destroy(ui);
         newUI.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        nextArrow.GetComponent<Animation>().Blend("NextArrowFadeIn");
+        needToClick = true;
     }
 
     void restart()
     {
         SceneManager.LoadScene(0);
         Cursor.visible = true;
+    }
+
+    public void nextArrowClick()
+    {
+        nextArrow.GetComponent<Animation>().Play("NextArrowClick");
+        nextArrow.GetComponent<AudioSource>().Play();
+        StartCoroutine(LB());
+        
+    }
+
+    IEnumerator LB()
+    {
+        yield return new WaitForSeconds(0.1f);
+        nextArrow.GetComponent<Animation>().Play("NextArrowFadeOut");
+        yield return new WaitForSeconds(0.2f);
+        curText.GetComponent<Animation>().Play();
+        highscore.GetComponent<Animation>().Play();
+        foreach(var go in gemDeath) go.GetComponent<Animation>().Play();
+        foreach(var tmp in gemDeathText) tmp.GetComponent<Animation>().Play();
+        leaderboard.GetComponent<Animation>().Play();
+        spacing.GetComponent<Animation>().Play();
+        foreach (var fo in fadeObjectsLB) fo.GetComponent<Animation>().Play();
+        foreach (var ft in fadeTextLB) ft.GetComponent<Animation>().Play();
     }
 }
