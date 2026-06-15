@@ -83,7 +83,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 78a306809b06e564c8b169f6fc993eb7, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 80acce3dcb2ca4741a43a8a4079cee5f, type: 2}
+      objectReference: {fileID: 2100000, guid: b0f959183a6247b469a506e34a66c506, type: 2}
     - target: {fileID: 919132149155446097, guid: 78a306809b06e564c8b169f6fc993eb7, type: 3}
       propertyPath: m_Name
       value: Satchel_1
@@ -102,7 +102,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 78a306809b06e564c8b169f6fc993eb7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6302718769234351556}
+      addedObject: {fileID: 456332237545048457}
   m_SourcePrefab: {fileID: 100100000, guid: 78a306809b06e564c8b169f6fc993eb7, type: 3}
 --- !u!4 &6925770631666755680 stripped
 Transform:
@@ -114,7 +114,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 78a306809b06e564c8b169f6fc993eb7, type: 3}
   m_PrefabInstance: {fileID: 7464715061780090763}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &6302718769234351556
+--- !u!64 &456332237545048457
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,4 +135,4 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: -3758573805739257388, guid: 78a306809b06e564c8b169f6fc993eb7, type: 3}
+  m_Mesh: {fileID: 6788383922943872000, guid: 78a306809b06e564c8b169f6fc993eb7, type: 3}
