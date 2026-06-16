@@ -65,6 +65,8 @@ public class MovementScript : MonoBehaviour
     [SerializeField] ParticleSystem grassPart;
     [SerializeField] ParticleSystem mudPart;
 
+    [Header("Respawn")]
+    public bool canRespawn = true;
     #endregion
 
     #region Private Fields
@@ -84,7 +86,7 @@ public class MovementScript : MonoBehaviour
     private bool flipped;
     private bool canJump;
     private bool drain;
-    private bool timerRunning = true;
+    public bool timerRunning = true;
     private bool following = true;
     private bool hasJumped;
     private float collisionCooldown = 0f;
@@ -181,7 +183,7 @@ public class MovementScript : MonoBehaviour
             SceneManager.LoadScene(0);
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace) && rb.linearVelocity.magnitude < 0.25f)
+        if (Input.GetKeyDown(KeyCode.Backspace) && rb.linearVelocity.magnitude < 0.25f && canRespawn)
         {
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;

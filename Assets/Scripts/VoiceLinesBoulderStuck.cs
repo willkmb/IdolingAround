@@ -9,39 +9,47 @@ public class VoiceLinesBoulderStuck : MonoBehaviour
     [SerializeField] int minTime;
     [SerializeField] int maxTime;
 
-    bool isNearby;
+    float waitTimeCountdown;
+    public bool isNearby = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         voiceSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        StartCoroutine(Talk());
-        isNearby = true;
+        if (other.gameObject.CompareTag("Player"))
+        {
+            isNearby = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        isNearby = false;
+        if (other.gameObject.CompareTag("Player"))
+        {
+            isNearby = false;
+        }
     }
 
-    IEnumerator Talk()
+    private void FixedUpdate()
     {
-        while (isNearby)
+        if (!voiceSource.isPlaying)
         {
-            yield return new WaitForSeconds(Random.Range(minTime, maxTime));
-            Debug.Log("talking");
-            voiceSource.clip = audioClips[Random.Range(0, audioClips.Length - 1)];
-            voiceSource.Play();
+            if (isNearby)
+            {
+                if (waitTimeCountdown <= 0)
+                {
+                    voiceSource.clip = audioClips[Random.Range(0, audioClips.Length - 1)];
+                    voiceSource.Play();
+                    waitTimeCountdown = Random.Range(minTime, maxTime);
+                }
+                else
+                {
+                    waitTimeCountdown -= Time.fixedDeltaTime;
+                }
+            }
         }
-        yield return null;
     }
 }

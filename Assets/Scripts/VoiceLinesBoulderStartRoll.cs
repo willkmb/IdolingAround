@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class VoiceLinesBoulderStartRoll : MonoBehaviour
 {
+    [SerializeField] Animation boulderRock;
     [SerializeField] Animation boulderRoll;
     [SerializeField] AudioClip[] audioClips;
     AudioSource voiceSource;
@@ -14,25 +15,32 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
 
     public IEnumerator Cutscene()
     {
-        voiceSource.clip = audioClips[0];
-        voiceSource.Play();
-        yield return new WaitForSeconds[(int)audioClips[0].length];
-        voiceSource.clip = audioClips[1];
-        voiceSource.Play();
-        yield return new WaitForSeconds[(int)audioClips[1].length];
-        voiceSource.clip = audioClips[2];
-        voiceSource.Play();
-        yield return new WaitForSeconds[(int)audioClips[2].length];
-        voiceSource.clip = audioClips[3];
-        voiceSource.Play();
-        yield return new WaitForSeconds[(int)audioClips[3].length];
-        voiceSource.clip = audioClips[4];
-        voiceSource.Play();
-        yield return new WaitForSeconds[(int)audioClips[4].length];
-        voiceSource.clip = audioClips[5];
-        voiceSource.Play();
-        yield return new WaitForSeconds[(int)audioClips[5].length];
-        boulderRoll.Play();
+        boulderRock.Play();
+        yield return null;
+
+        //1.Loop through each AudioClip
+        for (int i = 0; i < audioClips.Length; i++)
+        {
+            //2.Assign current AudioClip to audiosource
+            voiceSource.clip = audioClips[i];
+
+            //3.Play Audio
+            voiceSource.Play();
+
+            if (audioClips[i] == audioClips[audioClips.Length - 1])
+            {
+                boulderRock.Stop();
+                boulderRoll.Play();
+            }
+            //4.Wait for it to finish playing
+            while (voiceSource.isPlaying)
+            {
+                yield return null;
+            }
+
+            //5. Go back to #2 and play the next audio in the adClips array
+        }
+
         yield return null;
     }
 }

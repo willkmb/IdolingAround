@@ -25,6 +25,9 @@ public class CamPedestal : MonoBehaviour
     [SerializeField] GameObject spacing;
     [SerializeField] AudioSource transSound;
     [SerializeField] GameObject restartText;
+
+    [SerializeField] MovementScript movementScript;
+
     BoxCollider col;
     private bool gamefin = false;
     private bool needToClick = false;
@@ -50,6 +53,7 @@ public class CamPedestal : MonoBehaviour
     {
         if (other.gameObject.layer == 6)
         {
+            movementScript.canRespawn = false;
             StartCoroutine(CamSwitch());
         }
 
@@ -84,6 +88,7 @@ public class CamPedestal : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         nextArrow.GetComponent<Animation>().Blend("NextArrowFadeIn");
         needToClick = true;
+        movementScript.enabled = false;
     }
 
     void restart()

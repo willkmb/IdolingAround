@@ -9,6 +9,7 @@ public class VoiceLinesBoulderChase : MonoBehaviour
     [SerializeField] int minTime;
     [SerializeField] int maxTime;
 
+    float waitTimeCountdown;
     public bool isNearby;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,13 +17,23 @@ public class VoiceLinesBoulderChase : MonoBehaviour
         voiceSource = GetComponent<AudioSource>();
     }
 
-    public IEnumerator Talk()
+    private void FixedUpdate()
     {
-        while (isNearby)
+        if (!voiceSource.isPlaying)
         {
-            yield return new WaitForSeconds(Random.Range(minTime, maxTime));
-            voiceSource.clip = audioClips[Random.Range(0, audioClips.Length - 1)];
+            if (isNearby)
+            {
+                if (waitTimeCountdown <= 0)
+                {
+                    voiceSource.clip = audioClips[Random.Range(0, audioClips.Length - 1)];
+                    voiceSource.Play();
+                    waitTimeCountdown = Random.Range(minTime, maxTime);
+                }
+                else
+                {
+                    waitTimeCountdown -= Time.fixedDeltaTime;
+                }
+            }
         }
-        yield return null;
     }
 }
