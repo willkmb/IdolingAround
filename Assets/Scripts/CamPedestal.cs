@@ -65,6 +65,7 @@ public class CamPedestal : MonoBehaviour
         
         mainCam.SetActive(false);
         thisCam.SetActive(true);
+        idol.GetComponent<RespawnPlayer>().enabled = false;
         idol.GetComponent<MovementScript>().CheckScore();
         idol.GetComponent<MovementScript>().enabled = false;
         idol.GetComponent<Rigidbody>().isKinematic = true;
