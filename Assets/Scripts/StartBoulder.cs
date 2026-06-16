@@ -11,6 +11,8 @@ public class StartBoulder : MonoBehaviour
     [SerializeField] GameObject cutscene;
     [SerializeField] Animation boulderAnim;
     [SerializeField] Animation transition1;
+    [SerializeField] VoiceLinesBoulderStartRoll startRollVoicelines;
+    [SerializeField] VoiceLinesBoulderChase chaseVoicelines;
     bool hasStarted;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,6 +34,7 @@ public class StartBoulder : MonoBehaviour
             mainCamera.SetActive(false);
             cutscene.SetActive(true);
             transition1.Play();
+            StartCoroutine(startRollVoicelines.Cutscene());
             StartCoroutine(StartBoulderRoll());
             hasStarted = true;
         }
@@ -40,13 +43,15 @@ public class StartBoulder : MonoBehaviour
 
     IEnumerator StartBoulderRoll()
     {
-        yield return new WaitForSeconds(3f);
+
+        yield return new WaitForSeconds(35f);
         transition1.Play();
         cutscene.SetActive(false);
         mainCamera.SetActive(true);
         splineAnim.Play();
         boulderAnim.Play();
-
+        chaseVoicelines.isNearby = true;
+        StartCoroutine(chaseVoicelines.Talk());
         yield return null;
     }
 }

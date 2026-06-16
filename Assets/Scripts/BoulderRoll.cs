@@ -5,6 +5,9 @@ using UnityEngine.Splines;
 
 public class BoulderRoll : MonoBehaviour
 {
+    [SerializeField] VoiceLinesBoulderChase chaseVoicelines;
+    [SerializeField] AudioSource voiceSource;
+    [SerializeField] AudioClip audioClip;
     [HideInInspector] public Transform boulderRespawn;
     [HideInInspector] public float boulderRespawnTime;
     SplineAnimate splineAnim;
@@ -13,6 +16,8 @@ public class BoulderRoll : MonoBehaviour
     Rigidbody rb;
 
     float targetDistance;
+
+    bool isEndOfCorridor;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,10 +28,18 @@ public class BoulderRoll : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (splineAnim.Duration - splineAnim.ElapsedTime < 0.1f)
+        if (!isEndOfCorridor)
         {
-            rollAnim.Stop();
+            if (splineAnim.Duration - splineAnim.ElapsedTime < 0.1f)
+            {
+                chaseVoicelines.isNearby = false;
+                voiceSource.clip = audioClip;
+                voiceSource.Play();
+                rollAnim.Stop();
+                isEndOfCorridor = true;
+            }
         }
+
     }
 
     public void RespawnBoulder()
