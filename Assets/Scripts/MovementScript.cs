@@ -461,6 +461,8 @@ public class MovementScript : MonoBehaviour
         currentTimeText.text = FormatTime(timer);
         gemText.text = this.GetComponent<GemCounter>().gems.ToString();
         deathText.text = this.GetComponent<DeathCounter>().deaths.ToString();
+        PlayerPrefs.SetFloat("LastRunTime", timer);
+        PlayerPrefs.Save();
 
         if (timer < highScore)
         {

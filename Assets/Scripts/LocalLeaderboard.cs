@@ -24,7 +24,7 @@ public class LocalLeaderboard : MonoBehaviour
         string name = nameInput.text;
         if (string.IsNullOrEmpty(name)) return;
 
-        float time = PlayerPrefs.GetFloat("HighScore", 0f);
+        float time = PlayerPrefs.GetFloat("LastRunTime", 0f);
         entries.Add((name.ToLower(), time));
         entries.Sort((a,b) => a.time.CompareTo(b.time));
         if(entries.Count > maxEntries) entries.RemoveRange(maxEntries, entries.Count - maxEntries);

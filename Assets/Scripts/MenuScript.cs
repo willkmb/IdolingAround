@@ -88,4 +88,13 @@ public class MenuScript : MonoBehaviour
         tintAnim["TintMenuAnim"].time = tintAnim["TintMenuAnim"].length;
         tintAnim.Play("TintMenuAnim");
     }
+
+    private void Update()
+    {
+        if (Cursor.lockState != CursorLockMode.None || !Cursor.visible)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
 }
