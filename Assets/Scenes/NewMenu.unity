@@ -34608,6 +34608,8 @@ MonoBehaviour:
   mudMats: []
   grassPart: {fileID: 0}
   mudPart: {fileID: 0}
+  canRespawn: 1
+  timerRunning: 1
 --- !u!136 &288821119
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -173752,6 +173754,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeathSound: {fileID: 1913597094}
+  thisCutscene: {fileID: 0}
+  cutsceneLength: 0
 --- !u!65 &1365632858
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -232952,6 +232956,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeathSound: {fileID: 1913597094}
+  thisCutscene: {fileID: 0}
+  cutsceneLength: 0
 --- !u!65 &1844140395
 BoxCollider:
   m_ObjectHideFlags: 0
