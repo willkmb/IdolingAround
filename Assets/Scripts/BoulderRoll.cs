@@ -7,12 +7,13 @@ public class BoulderRoll : MonoBehaviour
 {
     [SerializeField] VoiceLinesBoulderChase chaseVoicelines;
     [SerializeField] AudioSource voiceSource;
+    
     [SerializeField] AudioClip audioClip;
     [HideInInspector] public Transform boulderRespawn;
     [HideInInspector] public float boulderRespawnTime;
     SplineAnimate splineAnim;
     Animation rollAnim;
-
+    AudioSource rollSource;
     Rigidbody rb;
 
     float targetDistance;
@@ -24,6 +25,7 @@ public class BoulderRoll : MonoBehaviour
         splineAnim = GetComponent<SplineAnimate>();
         rb = GetComponent<Rigidbody>();
         rollAnim = GetComponentInChildren<Animation>();
+        rollSource = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -36,6 +38,8 @@ public class BoulderRoll : MonoBehaviour
                 voiceSource.clip = audioClip;
                 voiceSource.Play();
                 rollAnim.Stop();
+                rollSource.loop = false;
+                rollSource.Stop();
                 isEndOfCorridor = true;
             }
         }
