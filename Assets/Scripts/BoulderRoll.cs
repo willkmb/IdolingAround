@@ -9,6 +9,8 @@ public class BoulderRoll : MonoBehaviour
     [SerializeField] AudioSource voiceSource;
     
     [SerializeField] AudioClip audioClip;
+    [SerializeField] GameObject boulderKillTrigger;
+    [SerializeField] GameObject boulderInvisWall;
     [HideInInspector] public Transform boulderRespawn;
     [HideInInspector] public float boulderRespawnTime;
     SplineAnimate splineAnim;
@@ -40,6 +42,8 @@ public class BoulderRoll : MonoBehaviour
                 rollAnim.Stop();
                 rollSource.loop = false;
                 rollSource.Stop();
+                boulderKillTrigger.SetActive(false);
+                boulderInvisWall.SetActive(true);
                 isEndOfCorridor = true;
             }
         }
