@@ -13,6 +13,7 @@ public class BoulderRoll : MonoBehaviour
     [SerializeField] GameObject boulderInvisWall;
     [HideInInspector] public Transform boulderRespawn;
     [HideInInspector] public float boulderRespawnTime;
+    [SerializeField] StartBoulderTrigger trig;
     SplineAnimate splineAnim;
     Animation rollAnim;
     AudioSource rollSource;
@@ -52,7 +53,7 @@ public class BoulderRoll : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (Input.GetKeyDown(KeyCode.Backspace) && trig.hasEntered)
         {
             Debug.Log("Respawning Boulder");
 
