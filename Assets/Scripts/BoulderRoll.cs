@@ -52,7 +52,14 @@ public class BoulderRoll : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace) && boulderRespawn != null) RespawnBoulder();
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            Debug.Log("Respawning Boulder");
+
+            splineAnim.Pause();
+            splineAnim.ElapsedTime = boulderRespawnTime;
+            splineAnim.Play();
+        }
     }
 
     public void RespawnBoulder()
