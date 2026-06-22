@@ -184,17 +184,6 @@ public class MovementScript : MonoBehaviour
             SceneManager.LoadScene(0);
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace) && rb.linearVelocity.magnitude < 0.25f && canRespawn)
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            rb.isKinematic = true;
-            transform.position = respawnPoint.position;
-            Debug.Log("resetting checkpoint");
-            GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
-            rb.isKinematic = false;
-        }
-
         stoodUp = Vector3.Dot(transform.up, Vector3.up) > 0.9f;
         if (collisionCooldown > 0f) collisionCooldown -= Time.deltaTime;
     }

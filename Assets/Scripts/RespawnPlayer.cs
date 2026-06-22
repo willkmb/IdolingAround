@@ -26,7 +26,7 @@ public class RespawnPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (Input.GetKeyDown(KeyCode.Backspace)&& !movementScript.isSpawning && movementScript.canRespawn)
         {
             Invoke("StartSpawnOnKeyDown", 0f);
             Debug.Log("respawning");
@@ -62,8 +62,9 @@ public class RespawnPlayer : MonoBehaviour
         rb.angularVelocity = Vector3.zero;
         rb.isKinematic = true;
         this.transform.position = movementScript.respawnPoint.position;
+        this.transform.rotation = Quaternion.Euler(0f, movementScript.respawnPoint.eulerAngles.y, 0f);
         Debug.Log("should have moved");
-        GameObject.Find("CameraTarget").transform.rotation = Quaternion.identity;
+        GameObject.Find("CameraTarget").transform.rotation = Quaternion.Euler(0f, movementScript.respawnPoint.eulerAngles.y, 0f);
         respawnSound.Play();
         deathCounter.UpdateDeathCounter();
         Invoke("KinematicOff", 0.05f);
