@@ -501,16 +501,18 @@ public class MovementScript : MonoBehaviour
         if (speed < 0.01f) return;
 
         Vector3 velDir = vel.normalized;
-        float dot = Vector3.Dot(cube.transform.forward, velDir);
-        Quaternion targetRotation = dot > 0? Quaternion.LookRotation(velDir, Vector3.up): Quaternion.LookRotation(-velDir, Vector3.up);
+        float alignDot = Vector3.Dot(cube.transform.forward, velDir);
+        float v = Input.GetAxis("Vertical");
+        bool forwardInput = v > 0.2f;
+
+        bool velocityIsForward = Vector3.Dot(velDir, transform.forward) > 0.25f;
+        Quaternion targetRotation = alignDot > 0f ? Quaternion.LookRotation(velDir, Vector3.up) : Quaternion.LookRotation(-velDir, Vector3.up);
+
         cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime);
 
-        float alignDot = Vector3.Dot(cube.transform.forward, velDir);
-        Debug.DrawRay(cube.transform.position, cube.transform.forward * 3f, Color.blue);
-        Debug.DrawRay(cube.transform.position, velDir * 3f, Color.red);
-
-        if (alignDot < 0f && Input.GetAxis("Vertical") > 0f && speed > 1.6f && collisionCooldown <= 0f)cube.transform.Rotate(Vector3.up, 180f, Space.World);
+        if (alignDot < 0f && forwardInput && velocityIsForward && speed > 1.6f &&collisionCooldown <= 0f) cube.transform.Rotate(Vector3.up, 180f, Space.World);
     }
+
 
     private void HandleChargeDrain()
     {
