@@ -95,6 +95,8 @@ public class MovementScript : MonoBehaviour
     private float flipDirTimer = 0f;
     private bool stoodUp = true;
     private bool onMud = false;
+    private bool started = false;
+    private bool cubeFrozen = true;
 
     #endregion
 
@@ -186,6 +188,12 @@ public class MovementScript : MonoBehaviour
 
         stoodUp = Vector3.Dot(transform.up, Vector3.up) > 0.9f;
         if (collisionCooldown > 0f) collisionCooldown -= Time.deltaTime;
+
+        if(!started && Input.GetKeyDown(KeyCode.W))
+        {
+            started = true;
+            StartCoroutine(FreezeCube());
+        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -486,31 +494,74 @@ public class MovementScript : MonoBehaviour
         if (activeScene.buildIndex == 1) part.transform.position = transform.position;
     }
 
+    private float forwardVelTimer = 0f;
+
     private void RotateCubeToVelocity()
     {
+        if (cubeFrozen) return;
+        // If cube is upright, just align to body rotation
         if (stoodUp)
         {
             Quaternion target = Quaternion.Euler(0, transform.localEulerAngles.y, 0);
             cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, target, 15f * Time.deltaTime);
+            forwardVelTimer = 0f;
             return;
         }
 
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         float speed = vel.magnitude;
 
-        if (speed < 0.01f) return;
+        if (speed < 0.01f)
+        {
+            forwardVelTimer = 0f;
+            return;
+        }
 
         Vector3 velDir = vel.normalized;
         float alignDot = Vector3.Dot(cube.transform.forward, velDir);
-        float v = Input.GetAxis("Vertical");
-        bool forwardInput = v > 0.2f;
 
-        bool velocityIsForward = Vector3.Dot(velDir, transform.forward) > 0.25f;
-        Quaternion targetRotation = alignDot > 0f ? Quaternion.LookRotation(velDir, Vector3.up) : Quaternion.LookRotation(-velDir, Vector3.up);
+        // Input deadzone
+        float v = Input.GetAxis("Vertical");
+        bool forwardInput = v > 0.25f;
+
+        // Only consider velocity forward if it's consistently forward
+        bool velForwardInstant = Vector3.Dot(velDir, transform.forward) > 0.35f;
+
+        // Track how long velocity has been forward
+        if (velForwardInstant)
+            forwardVelTimer += Time.deltaTime;
+        else
+            forwardVelTimer = 0f;
+
+        // Smooth rotation toward velocity direction
+        Quaternion targetRotation = alignDot > 0f ?
+            Quaternion.LookRotation(velDir, Vector3.up) :
+            Quaternion.LookRotation(-velDir, Vector3.up);
 
         cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime);
 
-        if (alignDot < 0f && forwardInput && velocityIsForward && speed > 1.6f &&collisionCooldown <= 0f) cube.transform.Rotate(Vector3.up, 180f, Space.World);
+        // Flip only if:
+        // - cube is facing backwards
+        // - player is intentionally moving forward
+        // - velocity has been forward for at least 0.12s
+        // - velocity is stable (not bouncing)
+        // - not braking
+        // - not sideways
+        if (alignDot < 0f &&
+            forwardInput &&
+            forwardVelTimer > 0.12f &&
+            speed > 1.6f &&
+            collisionCooldown <= 0f)
+        {
+            cube.transform.Rotate(Vector3.up, 180f, Space.World);
+        }
+    }
+
+    public IEnumerator FreezeCube()
+    {
+        cubeFrozen = true;
+        yield return new WaitForSeconds(2f);
+        cubeFrozen = false;
     }
 
 
