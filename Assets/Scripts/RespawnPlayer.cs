@@ -57,7 +57,7 @@ public class RespawnPlayer : MonoBehaviour
 
     void Spawn()
     {
-        movementScript.StartCoroutine(movementScript.FreezeCube());
+        movementScript.StartCoroutine(movementScript.FreezeCube(2f));
         transition1.Play();
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;

@@ -192,7 +192,7 @@ public class MovementScript : MonoBehaviour
         if(!started && Input.GetKeyDown(KeyCode.W))
         {
             started = true;
-            StartCoroutine(FreezeCube());
+            StartCoroutine(FreezeCube(2f));
         }
     }
 
@@ -216,7 +216,11 @@ public class MovementScript : MonoBehaviour
     {
         Vector3 normal = collision.contacts[0].normal;
         bool isWall = Vector3.Dot(normal, Vector3.up) < 0.5f;
-        if (isWall) collisionCooldown = 1.5f;
+        if (isWall)
+        {
+            collisionCooldown = 1.5f;
+            StartCoroutine(FreezeCube(0.5f));
+        }
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         if (vel.magnitude > 2.75f)
         {
@@ -499,7 +503,7 @@ public class MovementScript : MonoBehaviour
     private void RotateCubeToVelocity()
     {
         if (cubeFrozen) return;
-        // If cube is upright, just align to body rotation
+
         if (stoodUp)
         {
             Quaternion target = Quaternion.Euler(0, transform.localEulerAngles.y, 0);
@@ -519,48 +523,22 @@ public class MovementScript : MonoBehaviour
 
         Vector3 velDir = vel.normalized;
         float alignDot = Vector3.Dot(cube.transform.forward, velDir);
-
-        // Input deadzone
         float v = Input.GetAxis("Vertical");
         bool forwardInput = v > 0.25f;
-
-        // Only consider velocity forward if it's consistently forward
         bool velForwardInstant = Vector3.Dot(velDir, transform.forward) > 0.35f;
 
-        // Track how long velocity has been forward
-        if (velForwardInstant)
-            forwardVelTimer += Time.deltaTime;
-        else
-            forwardVelTimer = 0f;
+        if (velForwardInstant) forwardVelTimer += Time.deltaTime;
+        else forwardVelTimer = 0f;
 
-        // Smooth rotation toward velocity direction
-        Quaternion targetRotation = alignDot > 0f ?
-            Quaternion.LookRotation(velDir, Vector3.up) :
-            Quaternion.LookRotation(-velDir, Vector3.up);
-
+        Quaternion targetRotation = alignDot > 0f ? Quaternion.LookRotation(velDir, Vector3.up) : Quaternion.LookRotation(-velDir, Vector3.up);
         cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime);
-
-        // Flip only if:
-        // - cube is facing backwards
-        // - player is intentionally moving forward
-        // - velocity has been forward for at least 0.12s
-        // - velocity is stable (not bouncing)
-        // - not braking
-        // - not sideways
-        if (alignDot < 0f &&
-            forwardInput &&
-            forwardVelTimer > 0.12f &&
-            speed > 1.6f &&
-            collisionCooldown <= 0f)
-        {
-            cube.transform.Rotate(Vector3.up, 180f, Space.World);
-        }
+        if (alignDot < 0f && forwardInput && forwardVelTimer > 0.12f && speed > 1.6f &&collisionCooldown <= 0f) cube.transform.Rotate(Vector3.up, 180f, Space.World);
     }
 
-    public IEnumerator FreezeCube()
+    public IEnumerator FreezeCube(float waitTime)
     {
         cubeFrozen = true;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(waitTime);
         cubeFrozen = false;
     }
 
