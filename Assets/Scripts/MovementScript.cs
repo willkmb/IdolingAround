@@ -30,7 +30,8 @@ public class MovementScript : MonoBehaviour
     [SerializeField] float jumpVel = 8f;
     [SerializeField] float jumpVelFor = 8f;
     [SerializeField] float coyote = 0.2f;
-    [SerializeField] float inAirControl = 5f;
+    [SerializeField] float inAirControlForward = 5f;
+    [SerializeField] float inAirControlBackward = 5f;
     [SerializeField] float inAirControlSide = 5f;
 
     [Header("Timer")]
@@ -322,7 +323,8 @@ public class MovementScript : MonoBehaviour
             {
                 Vector3 airForward = Vector3.ProjectOnPlane(cube.transform.forward, Vector3.up).normalized;
                 Vector3 airSideways = Vector3.ProjectOnPlane(cube.transform.right, Vector3.up).normalized;
-                rb.AddForce(airForward * move * inAirControl, ForceMode.Acceleration);
+                float forwardControl = move > 0f ? inAirControlForward : inAirControlBackward;
+                rb.AddForce(airForward * move * forwardControl, ForceMode.Acceleration);
                 rb.AddForce(airSideways * Input.GetAxis("Horizontal") * inAirControlSide, ForceMode.Acceleration);
             }
         }
