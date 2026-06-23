@@ -33,6 +33,7 @@ public class MovementScript : MonoBehaviour
     [SerializeField] float inAirControlForward = 5f;
     [SerializeField] float inAirControlBackward = 5f;
     [SerializeField] float inAirControlSide = 5f;
+    [SerializeField] float stoodUpDelay = 0.4f;
 
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
@@ -97,6 +98,7 @@ public class MovementScript : MonoBehaviour
     private bool onMud = false;
     private bool started = false;
     private bool cubeFrozen = false;
+    private Coroutine freezeCube;
 
     #endregion
 
@@ -214,10 +216,15 @@ public class MovementScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        StartCoroutine(FreezeCube(1f));
         Vector3 normal = collision.contacts[0].normal;
         bool isWall = Vector3.Dot(normal, Vector3.up) < 0.5f;
-        if (isWall) collisionCooldown = 1.5f;
+        if (isWall)
+        {
+            collisionCooldown = 1.5f;
+            if (freezeCube != null) StopCoroutine(freezeCube);
+            freezeCube = StartCoroutine(FreezeCube(1f));
+        }
+
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         if (vel.magnitude > 2.75f)
         {
@@ -311,7 +318,7 @@ public class MovementScript : MonoBehaviour
             else
             {
                 rb.AddTorque(transform.up * move * rollTorque, ForceMode.Acceleration);
-                COM = Vector3.Lerp(COM, Vector3.zero, 12f * Time.deltaTime);
+                COM = Vector3.Lerp(COM, Vector3.zero, stoodUpDelay * Time.deltaTime);
                 rb.angularDamping = 4;
                 flipped = true;
                 cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 63, 0.55f * Time.deltaTime);
@@ -526,6 +533,7 @@ public class MovementScript : MonoBehaviour
     public IEnumerator FreezeCube(float waitTime)
     {
         cubeFrozen = true;
+        Debug.Log("cube frozen");
         yield return new WaitForSeconds(waitTime);
         cubeFrozen = false;
     }
