@@ -95,6 +95,8 @@ public class MovementScript : MonoBehaviour
     private float flipDirTimer = 0f;
     private bool stoodUp = true;
     private bool onMud = false;
+    private bool started = false;
+    private bool cubeFrozen = false;
 
     #endregion
 
@@ -184,6 +186,12 @@ public class MovementScript : MonoBehaviour
             SceneManager.LoadScene(0);
         }
 
+        if(Input.GetKeyDown(KeyCode.W) && !started)
+        {
+            started = true;
+            StartCoroutine(FreezeCube(2f));
+        }
+
         stoodUp = Vector3.Dot(transform.up, Vector3.up) > 0.9f;
         if (collisionCooldown > 0f) collisionCooldown -= Time.deltaTime;
     }
@@ -206,6 +214,7 @@ public class MovementScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        StartCoroutine(FreezeCube(1f));
         Vector3 normal = collision.contacts[0].normal;
         bool isWall = Vector3.Dot(normal, Vector3.up) < 0.5f;
         if (isWall) collisionCooldown = 1.5f;
@@ -513,7 +522,12 @@ public class MovementScript : MonoBehaviour
         if (alignDot < 0f && forwardInput && velocityIsForward && speed > 1.6f &&collisionCooldown <= 0f) cube.transform.Rotate(Vector3.up, 180f, Space.World);
     }
 
-
+    public IEnumerator FreezeCube(float waitTime)
+    {
+        cubeFrozen = true;
+        yield return new WaitForSeconds(waitTime);
+        cubeFrozen = false;
+    }
     private void HandleChargeDrain()
     {
         if (!drain) return;
