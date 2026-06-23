@@ -497,6 +497,7 @@ public class MovementScript : MonoBehaviour
 
     private void RotateCubeToVelocity()
     {
+        if (cubeFrozen) return;
         if (stoodUp)
         {
             Quaternion target = Quaternion.Euler(0, transform.localEulerAngles.y, 0);
