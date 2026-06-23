@@ -96,7 +96,7 @@ public class MovementScript : MonoBehaviour
     private bool stoodUp = true;
     private bool onMud = false;
     private bool started = false;
-    private bool cubeFrozen = true;
+    private bool cubeFrozen = false;
 
     #endregion
 
@@ -186,14 +186,14 @@ public class MovementScript : MonoBehaviour
             SceneManager.LoadScene(0);
         }
 
-        stoodUp = Vector3.Dot(transform.up, Vector3.up) > 0.9f;
-        if (collisionCooldown > 0f) collisionCooldown -= Time.deltaTime;
-
-        if(!started && Input.GetKeyDown(KeyCode.W))
+        if(Input.GetKeyDown(KeyCode.W) && !started)
         {
             started = true;
             StartCoroutine(FreezeCube(2f));
         }
+
+        stoodUp = Vector3.Dot(transform.up, Vector3.up) > 0.9f;
+        if (collisionCooldown > 0f) collisionCooldown -= Time.deltaTime;
     }
 
     private void OnCollisionStay(Collision collision)
@@ -214,13 +214,10 @@ public class MovementScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        StartCoroutine(FreezeCube(1f));
         Vector3 normal = collision.contacts[0].normal;
         bool isWall = Vector3.Dot(normal, Vector3.up) < 0.5f;
-        if (isWall)
-        {
-            collisionCooldown = 1.5f;
-            StartCoroutine(FreezeCube(0.5f));
-        }
+        if (isWall) collisionCooldown = 1.5f;
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         if (vel.magnitude > 2.75f)
         {
@@ -498,41 +495,32 @@ public class MovementScript : MonoBehaviour
         if (activeScene.buildIndex == 1) part.transform.position = transform.position;
     }
 
-    private float forwardVelTimer = 0f;
-
     private void RotateCubeToVelocity()
     {
         if (cubeFrozen) return;
-
         if (stoodUp)
         {
             Quaternion target = Quaternion.Euler(0, transform.localEulerAngles.y, 0);
             cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, target, 15f * Time.deltaTime);
-            forwardVelTimer = 0f;
             return;
         }
 
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         float speed = vel.magnitude;
 
-        if (speed < 0.01f)
-        {
-            forwardVelTimer = 0f;
-            return;
-        }
+        if (speed < 0.01f) return;
 
         Vector3 velDir = vel.normalized;
         float alignDot = Vector3.Dot(cube.transform.forward, velDir);
         float v = Input.GetAxis("Vertical");
-        bool forwardInput = v > 0.25f;
-        bool velForwardInstant = Vector3.Dot(velDir, transform.forward) > 0.35f;
+        bool forwardInput = v > 0.2f;
 
-        if (velForwardInstant) forwardVelTimer += Time.deltaTime;
-        else forwardVelTimer = 0f;
-
+        bool velocityIsForward = Vector3.Dot(velDir, transform.forward) > 0.25f;
         Quaternion targetRotation = alignDot > 0f ? Quaternion.LookRotation(velDir, Vector3.up) : Quaternion.LookRotation(-velDir, Vector3.up);
+
         cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime);
-        if (alignDot < 0f && forwardInput && forwardVelTimer > 0.12f && speed > 1.6f &&collisionCooldown <= 0f) cube.transform.Rotate(Vector3.up, 180f, Space.World);
+
+        if (alignDot < 0f && forwardInput && velocityIsForward && speed > 1.6f &&collisionCooldown <= 0f) cube.transform.Rotate(Vector3.up, 180f, Space.World);
     }
 
     public IEnumerator FreezeCube(float waitTime)
@@ -541,8 +529,6 @@ public class MovementScript : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         cubeFrozen = false;
     }
-
-
     private void HandleChargeDrain()
     {
         if (!drain) return;
