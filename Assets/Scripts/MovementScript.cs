@@ -199,6 +199,7 @@ public class MovementScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.W))
         {
+            if (!started) return;
             if (freezeCube != null) StopCoroutine(freezeCube);
             freezeCube = StartCoroutine(FreezeCube(0.35f));
         }
