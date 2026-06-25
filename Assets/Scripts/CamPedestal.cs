@@ -25,7 +25,7 @@ public class CamPedestal : MonoBehaviour
     [SerializeField] GameObject spacing;
     [SerializeField] AudioSource transSound;
     [SerializeField] GameObject restartText;
-
+ 
     [SerializeField] MovementScript movementScript;
 
     BoxCollider col;
@@ -57,6 +57,12 @@ public class CamPedestal : MonoBehaviour
             StartCoroutine(CamSwitch());
         }
 
+    }
+
+    public void startEndScreen()
+    {
+        movementScript.canRespawn = false;
+        StartCoroutine(CamSwitch());
     }
 
     IEnumerator CamSwitch()

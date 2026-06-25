@@ -37,6 +37,9 @@ public class MovementScript : MonoBehaviour
 
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
+    [SerializeField] float startingTime = 60f;
+    private bool timerEnded = false;
+    [SerializeField] CamPedestal endScreen;
 
 
     [Header("Jump Meter Colors")]
@@ -99,6 +102,8 @@ public class MovementScript : MonoBehaviour
     private bool started = false;
     private bool cubeFrozen = false;
     private Coroutine freezeCube;
+    private float distanceTravelled = 0f;
+    private Vector3 lastPosition;
 
     #endregion
 
@@ -113,6 +118,9 @@ public class MovementScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = maxSpeed;
 
+        timer = startingTime;
+        lastPosition = transform.position;
+
         if (activeScene.buildIndex == 1)
         {
             LoadHighScore();
@@ -124,6 +132,10 @@ public class MovementScript : MonoBehaviour
     private void FixedUpdate()
     {
         rb.centerOfMass = COM;
+
+        float moved = Vector3.Distance(transform.position, lastPosition);
+        distanceTravelled += moved;
+        lastPosition = transform.position;
 
         Vector3 camForward = cam.transform.forward;
         camForward = Vector3.ProjectOnPlane(camForward, Vector3.up).normalized;
@@ -188,7 +200,7 @@ public class MovementScript : MonoBehaviour
             SceneManager.LoadScene(0);
         }
 
-        if(Input.GetKeyDown(KeyCode.W) && !started)
+        if (Input.GetKeyDown(KeyCode.W) && !started)
         {
             started = true;
             StartCoroutine(FreezeCube(2f));
@@ -199,7 +211,7 @@ public class MovementScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.W))
         {
-            if (!started) return;
+
             if (freezeCube != null) StopCoroutine(freezeCube);
             freezeCube = StartCoroutine(FreezeCube(0.35f));
         }
@@ -397,7 +409,7 @@ public class MovementScript : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            if(coyoteTimer > 0f && !hasJumped) jump(1f);
+            if (coyoteTimer > 0f && !hasJumped) jump(1f);
             drain = true;
             jumpVel = 85f;
         }
@@ -432,7 +444,21 @@ public class MovementScript : MonoBehaviour
     {
         if (timerRunning)
         {
-            timer += Time.deltaTime;
+            timer -= Time.deltaTime;
+
+            if (timer <= 0f)
+            {
+                timer = 0f;
+                timerRunning = false;
+
+                if (!timerEnded)
+                {
+                    timerEnded = true;
+                    Debug.Log("Timer ended");
+                    endScreen.startEndScreen();
+                    // hook anything else here, e.g. CheckScore(); or trigger a lose state
+                }
+            }
         }
 
         int mins = Mathf.FloorToInt(timer / 60f);
@@ -534,7 +560,7 @@ public class MovementScript : MonoBehaviour
 
         cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime);
 
-        if (alignDot < 0f && forwardInput && velocityIsForward && speed > 1.6f &&collisionCooldown <= 0f) cube.transform.Rotate(Vector3.up, 180f, Space.World);
+        if (alignDot < 0f && forwardInput && velocityIsForward && speed > 1.6f && collisionCooldown <= 0f) cube.transform.Rotate(Vector3.up, 180f, Space.World);
     }
 
     public IEnumerator FreezeCube(float waitTime)
@@ -571,30 +597,30 @@ public class MovementScript : MonoBehaviour
             onMud = false;
             return;
         }
-        Collider[] colliders = Physics.OverlapBox(transform.position,new Vector3(0.8f, 1f, 0.8f),Quaternion.identity,~0,QueryTriggerInteraction.Collide);
+        Collider[] colliders = Physics.OverlapBox(transform.position, new Vector3(0.8f, 1f, 0.8f), Quaternion.identity, ~0, QueryTriggerInteraction.Collide);
 
         foreach (Collider col in colliders)
         {
             List<Material> curMats = new List<Material>();
             UnityEngine.Rendering.Universal.DecalProjector decal = col.GetComponent<UnityEngine.Rendering.Universal.DecalProjector>();
-            if(decal != null) curMats.Add(decal.material);
+            if (decal != null) curMats.Add(decal.material);
             Renderer rend = col.GetComponent<Renderer>();
             if (rend != null) curMats.AddRange(rend.sharedMaterials);
 
-            foreach(Material mat in curMats)
+            foreach (Material mat in curMats)
             {
                 foreach (Material grass in grassMats)
                 {
-                    if(mat == grass)
+                    if (mat == grass)
                     {
                         if (!grassPart.isPlaying) grassPart.Play();
                         if (mudPart.isPlaying) mudPart.Stop();
                         return;
                     }
                 }
-                foreach(Material mud in mudMats)
+                foreach (Material mud in mudMats)
                 {
-                    if(mat == mud)
+                    if (mat == mud)
                     {
                         if (!mudPart.isPlaying) mudPart.Play();
                         if (grassPart.isPlaying) grassPart.Stop();
@@ -608,6 +634,25 @@ public class MovementScript : MonoBehaviour
         grassPart.Stop();
         mudPart.Stop();
         onMud = false;
+    }
+
+    /// <summary>
+    /// FIX: this was missing entirely, which is why LocalLeaderboard.cs failed to
+    /// compile (it calls movement.GetDistance()). A compile error anywhere in the
+    /// project stops Play Mode from running properly, which is why nothing was
+    /// showing on the end screen / leaderboard.
+    /// </summary>
+    public float GetDistance() => distanceTravelled;
+
+    /// <summary>
+    /// Optional helper: call this on respawn/restart if you want distanceTravelled
+    /// to represent "distance for this attempt" rather than a lifetime total.
+    /// Not called automatically since no respawn method was provided in this script.
+    /// </summary>
+    public void ResetDistance()
+    {
+        distanceTravelled = 0f;
+        lastPosition = transform.position;
     }
 
     #endregion
