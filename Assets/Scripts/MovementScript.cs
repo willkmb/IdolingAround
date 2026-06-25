@@ -85,7 +85,7 @@ public class MovementScript : MonoBehaviour
     private float lastVoice = -Mathf.Infinity;
     private float camTimer = 0f;
 
-    private bool flipped;
+    [HideInInspector] public bool flipped;
     private bool canJump;
     private bool drain;
     public bool timerRunning = true;
@@ -196,6 +196,12 @@ public class MovementScript : MonoBehaviour
 
         stoodUp = Vector3.Dot(transform.up, Vector3.up) > 0.9f;
         if (collisionCooldown > 0f) collisionCooldown -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.W))
+        {
+            if (freezeCube != null) StopCoroutine(freezeCube);
+            freezeCube = StartCoroutine(FreezeCube(0.35f));
+        }
     }
 
     private void OnCollisionStay(Collision collision)
