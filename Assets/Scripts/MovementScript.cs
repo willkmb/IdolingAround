@@ -351,7 +351,9 @@ public class MovementScript : MonoBehaviour
     {
         if (turning != 0 && flipped && move != 0)
         {
-            transform.Rotate(Vector3.up, turning * turnSpeed * Time.deltaTime, Space.World);
+            float reverseFactor = Mathf.Sign(move); //reverse turning
+            transform.Rotate(Vector3.up, turning * turnSpeed * reverseFactor * Time.deltaTime, Space.World); // reverse turning
+            //transform.Rotate(Vector3.up, turning * turnSpeed * Time.deltaTime, Space.World);
         }
     }
 
