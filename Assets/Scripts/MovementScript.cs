@@ -11,6 +11,8 @@ public class MovementScript : MonoBehaviour
 {
     #region Inspector Fields
 
+    public bool inverted = false;
+
     [Header("References")]
     public Transform respawnPoint;
     public CinemachineVirtualCamera cam;
@@ -351,9 +353,15 @@ public class MovementScript : MonoBehaviour
     {
         if (turning != 0 && flipped && move != 0)
         {
-            float reverseFactor = Mathf.Sign(move); //reverse turning
-            transform.Rotate(Vector3.up, turning * turnSpeed * reverseFactor * Time.deltaTime, Space.World); // reverse turning
-            //transform.Rotate(Vector3.up, turning * turnSpeed * Time.deltaTime, Space.World);
+            if (!inverted)
+            {
+                transform.Rotate(Vector3.up, turning * turnSpeed * Time.deltaTime, Space.World);
+            }
+            else
+            {
+                float reverseFactor = Mathf.Sign(move);
+                transform.Rotate(Vector3.up, turning * turnSpeed * reverseFactor * Time.deltaTime, Space.World);
+            }
         }
     }
 
