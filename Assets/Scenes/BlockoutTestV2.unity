@@ -131946,26 +131946,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 667991785}
-  - component: {fileID: 667991784}
   m_Layer: 6
   m_Name: ProgressPath
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &667991784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 667991783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5141106acd2488b49bfe739fd4af40b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_IsActive: 0
 --- !u!4 &667991785
 Transform:
   m_ObjectHideFlags: 0
@@ -254621,7 +254608,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 55
     OrthographicSize: 5
-    NearClipPlane: 0.3
+    NearClipPlane: 0.75
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
@@ -325807,7 +325794,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 48
     OrthographicSize: 5
-    NearClipPlane: 0.3
+    NearClipPlane: 0.75
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
@@ -388023,7 +388010,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.75
   far clip plane: 1000
   field of view: 48
   orthographic: 0
