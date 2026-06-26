@@ -205,7 +205,7 @@ public class MovementScript : MonoBehaviour
         {
             if (!started) return;
             if (freezeCube != null) StopCoroutine(freezeCube);
-            freezeCube = StartCoroutine(FreezeCube(0.35f));
+            freezeCube = StartCoroutine(FreezeCube(0.5f));
         }
     }
 
@@ -233,7 +233,7 @@ public class MovementScript : MonoBehaviour
         {
             collisionCooldown = 1.5f;
             if (freezeCube != null) StopCoroutine(freezeCube);
-            freezeCube = StartCoroutine(FreezeCube(1f));
+            freezeCube = StartCoroutine(FreezeCube(1.2f));
         }
 
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
