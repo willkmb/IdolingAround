@@ -348,7 +348,7 @@ public class MovementScript : MonoBehaviour
         else
         {
             rb.angularDamping = 2.25f;
-            if (Time.time - lastMoved >= standDelay && rb.angularVelocity.magnitude < 1f)
+            if (Time.time - lastMoved >= standDelay)
             {
                 COM = Vector3.Lerp(COM, new Vector3(0, -1f, 0), StandUpSpeed * Time.deltaTime);
             }
