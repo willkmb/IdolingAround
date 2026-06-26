@@ -35,7 +35,8 @@ public class MovementScript : MonoBehaviour
     [SerializeField] float inAirControlForward = 5f;
     [SerializeField] float inAirControlBackward = 5f;
     [SerializeField] float inAirControlSide = 5f;
-    [SerializeField] float stoodUpDelay = 0.4f;
+    [SerializeField] private float standDelay = 5f;
+    [SerializeField] float StandUpSpeed = 0.4f;
 
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
@@ -101,6 +102,7 @@ public class MovementScript : MonoBehaviour
     private bool started = false;
     private bool cubeFrozen = false;
     private Coroutine freezeCube;
+    private float lastMoved;
 
     #endregion
 
@@ -276,6 +278,7 @@ public class MovementScript : MonoBehaviour
     {
         if (move != 0)
         {
+            lastMoved = Time.time;
             float uprightAmount = Vector3.Dot(transform.up, Vector3.up);
 
             if (uprightAmount > 0.7f)
@@ -327,7 +330,7 @@ public class MovementScript : MonoBehaviour
             else
             {
                 rb.AddTorque(transform.up * move * rollTorque, ForceMode.Acceleration);
-                COM = Vector3.Lerp(COM, Vector3.zero, stoodUpDelay * Time.deltaTime);
+                COM = Vector3.Lerp(COM, Vector3.zero, StandUpSpeed * Time.deltaTime);
                 rb.angularDamping = 4;
                 flipped = true;
                 cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, 63, 0.55f * Time.deltaTime);
@@ -342,10 +345,13 @@ public class MovementScript : MonoBehaviour
                 rb.AddForce(airSideways * Input.GetAxis("Horizontal") * inAirControlSide, ForceMode.Acceleration);
             }
         }
-        else if (rb.angularVelocity.magnitude < 1f)
+        else
         {
-            COM = new Vector3(0, -1f, 0);
             rb.angularDamping = 2.25f;
+            if (Time.time - lastMoved >= standDelay && rb.angularVelocity.magnitude < 1f)
+            {
+                COM = Vector3.Lerp(COM, new Vector3(0, -1f, 0), StandUpSpeed * Time.deltaTime);
+            }
         }
     }
 
