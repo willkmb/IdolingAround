@@ -4,25 +4,42 @@ using UnityEngine;
 public class CollectGem : MonoBehaviour
 {
     [SerializeField] GameObject[] gems;
+    [SerializeField] float speed;
+    [SerializeField] float step;
+    [SerializeField] float floatDistance;
+    GameObject thisGem;
     GameObject player;
     GemCounter gemCounter;
-    public AudioSource sfx;
+    AudioSource sfx;
     bool isCollected;
     private void Start()
     {
-        gems[Random.Range(0, gems.Length - 1)].SetActive(true);
+        thisGem = gems[Random.Range(0, gems.Length - 1)];
+        thisGem.SetActive(true);
         player = GameObject.FindGameObjectWithTag("Player");
         gemCounter = player.GetComponent<GemCounter>();
         sfx = GetComponent<AudioSource>();
         StartCoroutine(TriggerOn());
     }
+
+    private void Update()
+    {
+        if (Vector3.Distance(transform.position, player.transform.position) < floatDistance && Vector3.Distance(transform.position, player.transform.position) > 0.05f && !isCollected)
+        {
+            float distPercent = Mathf.Clamp(Vector3.Distance(transform.position, player.transform.position) / floatDistance, 0.25f, 1f);
+            step = speed * distPercent * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (!isCollected)
         {
             sfx.Play();
             gemCounter.UpdateGemCounter();
-            this.gameObject.SetActive(false);
+            thisGem.SetActive(false);
+            GetComponent<BoxCollider>().enabled = false;
             isCollected = true;
         }
 
@@ -30,7 +47,7 @@ public class CollectGem : MonoBehaviour
 
     IEnumerator TriggerOn()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.75f);
         this.GetComponent<BoxCollider>().enabled = true;
         yield return null;
     }

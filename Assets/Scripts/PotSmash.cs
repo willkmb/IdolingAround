@@ -6,11 +6,10 @@ using Random = UnityEngine.Random;
 
 public class PotSmash : MonoBehaviour
 {
-    public ObjectDecay[] childObjDecay;
+    ObjectDecay[] childObjDecay;
     AudioSource sound;
-    public bool decaysOverTime;
-    public float timeUntilDecay;
-    public Vector3 potVelocity;
+    [HideInInspector] public bool decaysOverTime;
+    [HideInInspector] public Vector3 potVelocity;
     [SerializeField] float minPitch;
     [SerializeField] float maxPitch;
     [SerializeField] float minDecayMult;
@@ -50,9 +49,6 @@ public class PotSmash : MonoBehaviour
                     Debug.Log("setting vase shard");
                     Random.InitState((int)DateTime.Now.Ticks);
                     decay.GetComponent<Rigidbody>().linearVelocity = potVelocity;
-                    decay.timeUntilDecay = timeUntilDecay;
-                    float mult = Random.Range(minDecayMult, maxDecayMult);
-                    decay.mult = mult;
                 }
             }
             yield return null;

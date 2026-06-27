@@ -8,11 +8,14 @@ public class BouncePad : MonoBehaviour
     MovementScript movementScript;
     [SerializeField] Animation anim;
     Collider objCol;
+    AudioSource padSFX;
+
     private bool hasBounced;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         movementScript = GameObject.FindFirstObjectByType<MovementScript>().GetComponent<MovementScript>();
+        padSFX = GetComponent<AudioSource>();
     }
 
     private void OnTriggerStay(Collider col)
@@ -39,13 +42,16 @@ public class BouncePad : MonoBehaviour
     {
         Rigidbody rb = movementScript.gameObject.GetComponent<Rigidbody>();
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, JumpMult, rb.linearVelocity.z);
-        float pitch = Random.Range(0.80f, 1f);
-        movementScript.sourceJump.pitch = pitch;
-        movementScript.sourceJump.Play();
+        //float pitch = Random.Range(0.80f, 1f);
+        //padSFX.pitch = pitch;
+        padSFX.Play();
+        //movementScript.sourceJump.pitch = pitch;
+        //movementScript.sourceJump.Play();
     }
 
     void BounceObject()
     {
+        padSFX.Play();
         Rigidbody rb = objCol.gameObject.GetComponent<Rigidbody>();
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, ObjBounceMult, rb.linearVelocity.z);
     }

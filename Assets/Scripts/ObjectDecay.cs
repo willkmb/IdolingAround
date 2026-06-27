@@ -4,21 +4,23 @@ using UnityEngine;
 public class ObjectDecay : MonoBehaviour
 {
     public float timeUntilDecay;
-    public float mult;
     Animation anim;
 
     private void OnEnable()
     {
         anim = GetComponent<Animation>();
+        timeUntilDecay = timeUntilDecay * Random.Range(0.75f, 1.5f);
         Invoke("StartObjDecay", 0.1f);
     }
 
     public void StartObjDecay()
     {
-        Invoke("DecayObj", timeUntilDecay * mult);
+        StartCoroutine(DecayObj());
     }
-    void DecayObj()
+
+    IEnumerator DecayObj()
     {
+        yield return new WaitForSeconds(timeUntilDecay);
         anim.Play();
         Invoke("DisableObj", anim.clip.length);
     }
