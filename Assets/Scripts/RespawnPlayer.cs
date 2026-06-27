@@ -63,7 +63,7 @@ public class RespawnPlayer : MonoBehaviour
         rb.angularVelocity = Vector3.zero;
         rb.isKinematic = true;
         this.transform.position = movementScript.respawnPoint.position;
-        this.transform.rotation = Quaternion.Euler(0f, movementScript.respawnPoint.eulerAngles.y, 0f);
+        movementScript.respawnOnSide(movementScript.respawnPoint.eulerAngles.y);
         Debug.Log("should have moved");
         GameObject.Find("CameraTarget").transform.rotation = Quaternion.Euler(0f, movementScript.respawnPoint.eulerAngles.y, 0f);
         respawnSound.Play();

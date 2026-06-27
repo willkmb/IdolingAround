@@ -103,6 +103,7 @@ public class MovementScript : MonoBehaviour
     private bool cubeFrozen = false;
     private Coroutine freezeCube;
     private float lastMoved;
+    private bool justRespawned = false;
 
     #endregion
 
@@ -208,6 +209,13 @@ public class MovementScript : MonoBehaviour
             if (freezeCube != null) StopCoroutine(freezeCube);
             freezeCube = StartCoroutine(FreezeCube(0.5f));
         }
+
+        if (justRespawned && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)))
+        {
+            justRespawned = false;
+            rb.constraints = RigidbodyConstraints.None;
+        }
+
     }
 
     private void OnCollisionStay(Collision collision)
@@ -561,6 +569,20 @@ public class MovementScript : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         cubeFrozen = false;
     }
+    public void respawnOnSide(float rot)
+    {
+        transform.rotation = Quaternion.Euler(90f, rot + 90f, 0f);
+        cube.transform.rotation = Quaternion.Euler(90f, rot + 90f, 0f);
+
+        flipped = true;
+        started = false;
+        justRespawned = true;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        lastMoved = Time.time;
+        flipDirTimer = 0f;
+        COM = new Vector3(0, -0.3f, 0);
+    }
+
     private void HandleChargeDrain()
     {
         if (!drain) return;
