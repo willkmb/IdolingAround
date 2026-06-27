@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PotSmash : MonoBehaviour
 {
@@ -28,6 +30,7 @@ public class PotSmash : MonoBehaviour
     {
         if (decaysOverTime)
         {
+            /*
             int decayInt = Random.Range(0, 2);
             if (decayInt == 0)
             {
@@ -37,21 +40,22 @@ public class PotSmash : MonoBehaviour
             {
                 decaysOverTime = false;
             }
+            */
 
             if (decaysOverTime)
             {
 
-                foreach (var decay in childObjDecay)
+                foreach (ObjectDecay decay in childObjDecay)
                 {
+                    Debug.Log("setting vase shard");
+                    Random.InitState((int)DateTime.Now.Ticks);
                     decay.GetComponent<Rigidbody>().linearVelocity = potVelocity;
                     decay.timeUntilDecay = timeUntilDecay;
                     float mult = Random.Range(minDecayMult, maxDecayMult);
                     decay.mult = mult;
-                    yield return new WaitForSeconds(0.1f);
-                    decay.StartObjDecay();
                 }
             }
-
+            yield return null;
         }
 
 

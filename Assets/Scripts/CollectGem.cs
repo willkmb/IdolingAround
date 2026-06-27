@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CollectGem : MonoBehaviour
@@ -5,7 +6,7 @@ public class CollectGem : MonoBehaviour
     [SerializeField] GameObject[] gems;
     GameObject player;
     GemCounter gemCounter;
-    AudioSource sfx;
+    public AudioSource sfx;
     bool isCollected;
     private void Start()
     {
@@ -13,22 +14,24 @@ public class CollectGem : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         gemCounter = player.GetComponent<GemCounter>();
         sfx = GetComponent<AudioSource>();
-        Invoke("TriggerOn", 0.5f);
+        StartCoroutine(TriggerOn());
     }
     private void OnTriggerStay(Collider other)
     {
         if (!isCollected)
         {
-            gemCounter.UpdateGemCounter();
             sfx.Play();
+            gemCounter.UpdateGemCounter();
             this.gameObject.SetActive(false);
             isCollected = true;
         }
 
     }
 
-    void TriggerOn()
+    IEnumerator TriggerOn()
     {
+        yield return new WaitForSeconds(0.5f);
         this.GetComponent<BoxCollider>().enabled = true;
+        yield return null;
     }
 }

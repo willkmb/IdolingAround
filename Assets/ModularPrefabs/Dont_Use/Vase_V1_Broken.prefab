@@ -153,8 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUntilDecay: 5
-  minDecayMult: 0
-  maxDecayMult: 0
+  mult: 0
 --- !u!111 &5817120155500506436
 Animation:
   m_ObjectHideFlags: 0
@@ -325,8 +324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUntilDecay: 5
-  minDecayMult: 0
-  maxDecayMult: 0
+  mult: 0
 --- !u!111 &5923141445355636714
 Animation:
   m_ObjectHideFlags: 0
@@ -497,8 +495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUntilDecay: 5
-  minDecayMult: 0
-  maxDecayMult: 0
+  mult: 0
 --- !u!111 &2689270515566476183
 Animation:
   m_ObjectHideFlags: 0
@@ -669,8 +666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUntilDecay: 5
-  minDecayMult: 0
-  maxDecayMult: 0
+  mult: 0
 --- !u!111 &7999477582433717547
 Animation:
   m_ObjectHideFlags: 0
@@ -841,8 +837,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUntilDecay: 5
-  minDecayMult: 0
-  maxDecayMult: 0
+  mult: 0
 --- !u!111 &8502435178832702718
 Animation:
   m_ObjectHideFlags: 0
@@ -1013,8 +1008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUntilDecay: 5
-  minDecayMult: 0
-  maxDecayMult: 0
+  mult: 0
 --- !u!111 &4788888113879371335
 Animation:
   m_ObjectHideFlags: 0
@@ -1185,8 +1179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUntilDecay: 5
-  minDecayMult: 0
-  maxDecayMult: 0
+  mult: 0
 --- !u!111 &4593897350538897772
 Animation:
   m_ObjectHideFlags: 0
@@ -1258,7 +1251,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childObjDecay: []
+  decaysOverTime: 0
   timeUntilDecay: 0
+  potVelocity: {x: 0, y: 0, z: 0}
   minPitch: 0.95
   maxPitch: 1.2
   minDecayMult: 0.75
@@ -1276,7 +1271,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 0fcec7a273e24af4795e8db464f197c0, type: 3}
   m_Resource: {fileID: 8300000, guid: 0fcec7a273e24af4795e8db464f197c0, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1285,9 +1280,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0
-  MaxDistance: 15
+  MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 2
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1531,8 +1526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUntilDecay: 5
-  minDecayMult: 0
-  maxDecayMult: 0
+  mult: 0
 --- !u!111 &5941273054754178990
 Animation:
   m_ObjectHideFlags: 0

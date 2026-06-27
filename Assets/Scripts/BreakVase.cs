@@ -3,16 +3,16 @@ using UnityEngine;
 public class BreakVase : MonoBehaviour
 {
     [SerializeField] GameObject BrokenVase;
-    [SerializeField] GameObject gem;
-    [SerializeField] bool spawnGem;
-
     [SerializeField] float speedToBreak;
-    [SerializeField] bool hasSpawned;
-
+   
     [SerializeField] bool decaysOverTime;
     [SerializeField] float timeUntilObjDecay;
 
-    public Vector3 velocityUpdate;
+    [SerializeField] GameObject gem;
+    [SerializeField] bool spawnGem;
+
+    bool hasSpawned;
+    Vector3 velocityUpdate;
 
     private void OnCollisionEnter(Collision collision)
     {

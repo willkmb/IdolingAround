@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class ObjectDecay : MonoBehaviour
 {
-    [HideInInspector] public float timeUntilDecay;
-    [HideInInspector] public float mult;
+    public float timeUntilDecay;
+    public float mult;
     Animation anim;
 
     private void OnEnable()
     {
         anim = GetComponent<Animation>();
+        Invoke("StartObjDecay", 0.1f);
     }
 
     public void StartObjDecay()
