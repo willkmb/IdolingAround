@@ -38,7 +38,7 @@ public class StartBoulder : MonoBehaviour
             cutscene.SetActive(true);
             transition1.Play();
             movementScript.timerRunning = false;
-            StartCoroutine(StartBoulderRoll());
+            movementScript.canRespawn = false;
             Invoke("PlayerKinematic", 0.5f);
             hasStarted = true;
         }
@@ -49,12 +49,11 @@ public class StartBoulder : MonoBehaviour
         playerRB.isKinematic = true;
     }
 
-    IEnumerator StartBoulderRoll()
+    public IEnumerator StartBoulderRoll()
     {
-
-        yield return new WaitForSeconds(38f);
         playerRB.isKinematic = false;
         movementScript.timerRunning = true;
+        movementScript.canRespawn = true;
         transition1.Play();
         cutscene.SetActive(false);
         mainCamera.SetActive(true);

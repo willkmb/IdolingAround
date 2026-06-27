@@ -6,12 +6,24 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
     [SerializeField] Animation boulderRock;
     [SerializeField] Animation boulderRoll;
     [SerializeField] AudioClip[] audioClips;
+    [SerializeField] StartBoulder startBoulder;
+
     AudioSource voiceSource;
     private void OnEnable()
     {
         voiceSource = GetComponent<AudioSource>();
         StartCoroutine(Cutscene());
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            StopCoroutine(Cutscene());
+            StartCoroutine(startBoulder.StartBoulderRoll());
+        }
+    }
+
 
     public IEnumerator Cutscene()
     {
@@ -40,7 +52,7 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
 
             //5. Go back to #2 and play the next audio in the adClips array
         }
-
+        StartCoroutine(startBoulder.StartBoulderRoll());
         yield return null;
     }
 }

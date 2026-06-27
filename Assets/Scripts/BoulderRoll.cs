@@ -58,7 +58,7 @@ public class BoulderRoll : MonoBehaviour
             Debug.Log("Respawning Boulder");
 
             splineAnim.Pause();
-            splineAnim.ElapsedTime = boulderRespawnTime;
+            if (splineAnim.ElapsedTime > boulderRespawnTime) { splineAnim.ElapsedTime = boulderRespawnTime; }            
             splineAnim.Play();
         }
     }
