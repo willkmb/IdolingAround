@@ -37,6 +37,7 @@ public class MovementScript : MonoBehaviour
     [SerializeField] float inAirControlSide = 5f;
     [SerializeField] private float standDelay = 5f;
     [SerializeField] float StandUpSpeed = 0.4f;
+    [SerializeField] float groundImpactThresh = 6f;
 
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
@@ -238,11 +239,22 @@ public class MovementScript : MonoBehaviour
     {
         Vector3 normal = collision.contacts[0].normal;
         bool isWall = Vector3.Dot(normal, Vector3.up) < 0.5f;
+        bool isGround = Vector3.Dot(normal, Vector3.up) > 0.5f;
         if (isWall)
         {
             collisionCooldown = 1.5f;
             if (freezeCube != null) StopCoroutine(freezeCube);
             freezeCube = StartCoroutine(FreezeCube(1.2f));
+        }
+
+        if (isGround)
+        {
+            float impactVel = collision.relativeVelocity.magnitude;
+            if(impactVel > groundImpactThresh)
+            {
+                if (freezeCube != null) StopCoroutine(freezeCube);
+                freezeCube = StartCoroutine(FreezeCube(0.5f));
+            }
         }
 
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
