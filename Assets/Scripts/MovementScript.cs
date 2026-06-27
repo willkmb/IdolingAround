@@ -199,6 +199,7 @@ public class MovementScript : MonoBehaviour
         }
 
         stoodUp = Vector3.Dot(transform.up, Vector3.up) > 0.9f;
+        if (stoodUp) started = false;
         if (collisionCooldown > 0f) collisionCooldown -= Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.W))
