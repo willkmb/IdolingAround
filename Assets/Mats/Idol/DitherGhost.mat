@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NewOutlineMat
-  m_Shader: {fileID: -6465566751694194690, guid: 412cc5308299a5b419c2be6cd321eb6d, type: 3}
+  m_Name: DitherGhost
+  m_Shader: {fileID: -6465566751694194690, guid: 8a7cddc34ad7b884f908c4e83a7825da, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -18,7 +18,8 @@ Material:
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -37,9 +38,23 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _OutlineThickness: 1.16
-    - _ThreshHold: 2.52
+    - _Dither: 1.59
+    - _QueueControl: 0
+    - _QueueOffset: 0
     m_Colors:
-    - _OutlineColour: {r: 0.05882348, g: 0.19999993, b: 0.25490192, a: 1}
+    - _BaseCol: {r: 0.21568628, g: 0.6117647, b: 0.38634652, a: 0.89411765}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!114 &1509285080511395418
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 10

@@ -25,6 +25,7 @@ public class MovementScript : MonoBehaviour
     public Image chargeBlur;
     public bool isSpawning;
     [SerializeField] ExhibitionVerToggle ex;
+    [SerializeField] ghostRecorder ghost;
 
     [Header("Movement Settings")]
     [SerializeField] float rollTorque = 20f;
@@ -104,6 +105,7 @@ public class MovementScript : MonoBehaviour
     private bool stoodUp = true;
     private bool onMud = false;
     private bool started = false;
+    private bool startedRecording = false;
     private bool cubeFrozen = false;
     private Coroutine freezeCube;
     private float lastMoved;
@@ -120,7 +122,6 @@ public class MovementScript : MonoBehaviour
         Application.targetFrameRate = 200;
 
         if (ex.ExhibitionMode) timer = countdownTime;
-
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = maxSpeed;
 
@@ -199,10 +200,19 @@ public class MovementScript : MonoBehaviour
             SceneManager.LoadScene(0);
         }
 
-        if(Input.GetKeyDown(KeyCode.W) && !started)
+        if(Input.GetKeyDown(KeyCode.W))
         {
-            started = true;
-            StartCoroutine(FreezeCube(2f));
+            if (!started)
+            {
+                started = true;
+                StartCoroutine(FreezeCube(2f));
+            }
+
+            if (!startedRecording)
+            {
+                startedRecording = true;
+                ghost.startRecording();
+            }
         }
 
         stoodUp = Vector3.Dot(transform.up, Vector3.up) > 0.9f;
@@ -483,6 +493,7 @@ public class MovementScript : MonoBehaviour
                     if (!timeUp)
                     {
                         Debug.Log("times Up");
+                        ghost.stopRecording();
                         endScreen.callEndScreen();
                         timeUp = true;
                     }
