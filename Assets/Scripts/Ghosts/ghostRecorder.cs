@@ -14,7 +14,6 @@ public class ghostRecorder : MonoBehaviour
     private int frames = 0;
     private int frameCount = 3;
     private bool recording = false;
-    private bool paused = false;
 
     public static string selectedId = "";
 
@@ -115,7 +114,7 @@ public class ghostRecorder : MonoBehaviour
 
     private void Update()
     {
-        if(!recording || paused) return;
+        if(!recording) return;
 
         frames++;
         if(frames >= frameCount)
@@ -126,7 +125,4 @@ public class ghostRecorder : MonoBehaviour
             frames = 0;
         }
     }
-
-    public void PauseRecording() { paused = true; }
-    public void ResumeRecording() { paused = false; }
 }
