@@ -34,10 +34,11 @@ public class ghostRecorder : MonoBehaviour
         string posString = "";
         string rotString = "";
         string timeString = "";
+        float startTime = timestamp[0];
 
-        foreach(Vector3 pos in positions) posString += pos.x + "#" + pos.y + "#" + pos.z + "|";
+        foreach (Vector3 pos in positions) posString += pos.x + "#" + pos.y + "#" + pos.z + "|";
         foreach (Vector3 rot in rotations) rotString += rot.x + "#" + rot.y + "#" + rot.z + "|";
-        foreach (float time in timestamp) timeString += time + "|";
+        foreach (float time in timestamp) timeString += (time - startTime) + "|";
 
         PlayerPrefs.SetString("ghostPos", posString);
         PlayerPrefs.SetString("ghostRot", rotString);

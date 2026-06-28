@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ghostPlay : MonoBehaviour
 {
+    [SerializeField] float playbackSpeed = 1f;
     private List<Vector3> positions = new List<Vector3>();
     private List<Vector3> rotations = new List<Vector3>();
     private List<float> timestamp = new List<float>();
@@ -25,7 +26,7 @@ public class ghostPlay : MonoBehaviour
             float time = 0f;
             while (time < 1f)
             {
-                time += Time.deltaTime / interpolateTime;
+                time += Time.deltaTime * playbackSpeed / interpolateTime;
                 if (i + 1 >= positions.Count)
                 {
                     this.gameObject.SetActive(false);

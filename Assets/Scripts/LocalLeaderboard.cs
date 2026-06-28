@@ -103,6 +103,7 @@ public class LocalLeaderboard : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.C))
         {
             PlayerPrefs.DeleteKey("HighScore");
+            PlayerPrefs.DeleteKey("HighscoreDistance");
             PlayerPrefs.DeleteKey("LeaderBoardCount");
             PlayerPrefs.DeleteKey("DistLBCount");
             for (int i = 0; i < maxEntries; i++)
