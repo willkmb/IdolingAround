@@ -1,11 +1,11 @@
 using Cinemachine;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class MovementScript : MonoBehaviour
 {
@@ -75,6 +75,14 @@ public class MovementScript : MonoBehaviour
     [SerializeField] ParticleSystem grassPart;
     [SerializeField] ParticleSystem mudPart;
 
+    [Header("Squash & Stretch")]
+    [SerializeField] Transform squashHolder;
+    [SerializeField] Transform playerMesh;
+    [SerializeField] float jumpStretch = 1.15f;
+    [SerializeField] float landSquash = 0.85f;
+    [SerializeField] float resetSpeed = 10f;
+    private Coroutine squashStretch;
+
     [Header("Respawn")]
     public bool canRespawn = true;
     #endregion
@@ -111,6 +119,7 @@ public class MovementScript : MonoBehaviour
     private float lastMoved;
     private bool justRespawned = false;
     private bool timeUp = false;
+    private Vector3 meshOffset;
 
     #endregion
 
@@ -133,6 +142,7 @@ public class MovementScript : MonoBehaviour
         }
 
         StartCoroutine(voices());
+        meshOffset = transform.InverseTransformPoint(playerMesh.position);
     }
 
     private void FixedUpdate()
@@ -234,6 +244,9 @@ public class MovementScript : MonoBehaviour
             rb.constraints = RigidbodyConstraints.None;
         }
 
+        squashHolder.rotation = Quaternion.identity;
+        playerMesh.rotation = transform.rotation;
+        playerMesh.position = transform.TransformPoint(meshOffset);
     }
 
     private void OnCollisionStay(Collision collision)
@@ -271,6 +284,12 @@ public class MovementScript : MonoBehaviour
             {
                 if (freezeCube != null) StopCoroutine(freezeCube);
                 freezeCube = StartCoroutine(FreezeCube(0.5f));
+            }
+
+            if (!canJump)
+            {
+                if (squashStretch != null) StopCoroutine(squashStretch);
+                squashStretch = StartCoroutine(SquashStretch(landSquash));
             }
         }
 
@@ -470,6 +489,8 @@ public class MovementScript : MonoBehaviour
         canJump = false;
         hasJumped = true;
         StartCoroutine(ResetJump());
+        if (squashStretch != null) StopCoroutine(squashStretch);
+        squashStretch = StartCoroutine(SquashStretch(jumpStretch));
     }
 
     IEnumerator ResetJump()
@@ -716,6 +737,19 @@ public class MovementScript : MonoBehaviour
         grassPart.Stop();
         mudPart.Stop();
         onMud = false;
+    }
+
+    IEnumerator SquashStretch(float scale)
+    {
+        float xzScale = 2f - scale;
+        squashHolder.localScale = new Vector3(xzScale, scale, xzScale);
+
+        while (Vector3.Distance(squashHolder.localScale, Vector3.one) > 0.01f)
+        {
+            squashHolder.localScale = Vector3.Lerp(squashHolder.localScale, Vector3.one, resetSpeed * Time.deltaTime);
+            yield return null;
+        }
+        squashHolder.localScale = Vector3.one;
     }
 
     #endregion
