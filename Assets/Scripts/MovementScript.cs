@@ -83,6 +83,10 @@ public class MovementScript : MonoBehaviour
     [SerializeField] float resetSpeed = 10f;
     private Coroutine squashStretch;
 
+    [Header("Camera Shake")]
+    [SerializeField] CinemachineImpulseSource impulse;
+    [SerializeField] float impactThreshold = 8f;
+
     [Header("Respawn")]
     public bool canRespawn = true;
     #endregion
@@ -228,7 +232,7 @@ public class MovementScript : MonoBehaviour
         }
 
         stoodUp = Vector3.Dot(transform.up, Vector3.up) > 0.9f;
-        if (stoodUp) started = false;
+        //if (stoodUp) started = false;
         if (collisionCooldown > 0f) collisionCooldown -= Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.W))
@@ -270,6 +274,13 @@ public class MovementScript : MonoBehaviour
         Vector3 normal = collision.contacts[0].normal;
         bool isWall = Vector3.Dot(normal, Vector3.up) < 0.5f;
         bool isGround = Vector3.Dot(normal, Vector3.up) > 0.5f;
+
+        float impactSpeed = collision.relativeVelocity.magnitude;
+        if (impactSpeed > impactThreshold)
+        {
+            impulse.GenerateImpulse();
+        }
+
         if (isWall)
         {
             collisionCooldown = 1.5f;
@@ -655,7 +666,6 @@ public class MovementScript : MonoBehaviour
     public IEnumerator FreezeCube(float waitTime)
     {
         cubeFrozen = true;
-        Debug.Log("cube frozen");
         yield return new WaitForSeconds(waitTime);
         cubeFrozen = false;
     }
