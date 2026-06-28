@@ -1,14 +1,17 @@
-using UnityEngine;
-using TMPro;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LocalLeaderboard : MonoBehaviour
 {
     private TMP_InputField nameInput;
-    private List<(string name, float value)> entries = new List<(string, float)>();
+    private List<(string name, float value, string ghostId)> entries = new List<(string, float, string)>();
     private int maxEntries = 8;
     private bool hasEntered = false;
     [SerializeField] TextMeshProUGUI[] entryText;
+    [SerializeField] Button[] ghostButtons;
     [SerializeField] ExhibitionVerToggle ex;
 
     void Start()
@@ -17,6 +20,12 @@ public class LocalLeaderboard : MonoBehaviour
         nameInput.characterLimit = 4;
         loadEntries();
         RefreshList();
+
+        for (int i = 0; i < ghostButtons.Length; i++)
+        {
+            int index = i;
+            ghostButtons[i].onClick.AddListener(() => playGhost(index));
+        }
     }
 
     public void enterName()
@@ -25,17 +34,20 @@ public class LocalLeaderboard : MonoBehaviour
         string name = nameInput.text;
         if (string.IsNullOrEmpty(name)) return;
 
+        string ghostId = System.Guid.NewGuid().ToString();
+        ghostRecorder.SaveGhost(ghostId);
+
         float value;
         if (ex.ExhibitionMode)
         {
             value = PlayerPrefs.GetFloat("LastRunDist", 0f);
-            entries.Add((name.ToLower(), value));
+            entries.Add((name.ToLower(), value, ghostId));
             entries.Sort((a, b) => b.value.CompareTo(a.value));
         }
         else
         {
             value = PlayerPrefs.GetFloat("LastRunTime", 0f);
-            entries.Add((name.ToLower(), value));
+            entries.Add((name.ToLower(), value, ghostId));
             entries.Sort((a, b) => a.value.CompareTo(b.value));
         }
 
@@ -44,6 +56,13 @@ public class LocalLeaderboard : MonoBehaviour
         nameInput.text = "";
         hasEntered = true;
         RefreshList();
+    }
+
+    public void playGhost(int index)
+    {
+        if (index >= entries.Count) return;
+        ghostRecorder.selectedId = entries[index].ghostId;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void saveEntries()
@@ -55,6 +74,7 @@ public class LocalLeaderboard : MonoBehaviour
             {
                 PlayerPrefs.SetString($"DistLBName_{i}", entries[i].name);
                 PlayerPrefs.SetFloat($"DistLBValue_{i}", entries[i].value);
+                PlayerPrefs.SetString($"DistLBGhost_{i}", entries[i].ghostId);
             }
         }
         else
@@ -64,6 +84,7 @@ public class LocalLeaderboard : MonoBehaviour
             {
                 PlayerPrefs.SetString($"LBName_{i}", entries[i].name);
                 PlayerPrefs.SetFloat($"LBTime_{i}", entries[i].value);
+                PlayerPrefs.SetString($"LBGhost_{i}", entries[i].ghostId);
             }
         }
         PlayerPrefs.Save();
@@ -75,12 +96,12 @@ public class LocalLeaderboard : MonoBehaviour
         if (ex.ExhibitionMode)
         {
             int count = PlayerPrefs.GetInt("DistLBCount", 0);
-            for (int i = 0; i < count; i++)entries.Add((PlayerPrefs.GetString($"DistLBName_{i}", ""), PlayerPrefs.GetFloat($"DistLBValue_{i}", 0f)));
+            for (int i = 0; i < count; i++)entries.Add((PlayerPrefs.GetString($"DistLBName_{i}", ""), PlayerPrefs.GetFloat($"DistLBValue_{i}", 0f), PlayerPrefs.GetString($"DistLBGhost_{i}", "")));
         }
         else
         {
             int count = PlayerPrefs.GetInt("LeaderBoardCount", 0);
-            for (int i = 0; i < count; i++)entries.Add((PlayerPrefs.GetString($"LBName_{i}", ""), PlayerPrefs.GetFloat($"LBTime_{i}", 0f)));
+            for (int i = 0; i < count; i++)entries.Add((PlayerPrefs.GetString($"LBName_{i}", ""), PlayerPrefs.GetFloat($"LBTime_{i}", 0f), PlayerPrefs.GetString($"LBGhost_{i}", ""))); ;
         }
         RefreshList();
     }
@@ -95,6 +116,20 @@ public class LocalLeaderboard : MonoBehaviour
                 else entryText[i].text = $"{i + 1}. {entries[i].name} - {Mathf.FloorToInt(entries[i].value / 60f):00}:{Mathf.FloorToInt(entries[i].value % 60f):00}";
             }
             else entryText[i].text = $"{i + 1}. ----";
+
+            if (i < ghostButtons.Length)
+            {
+                bool hasGhost = i < entries.Count && !string.IsNullOrEmpty(entries[i].ghostId);
+                ghostButtons[i].interactable = hasGhost;
+
+                Image buttonImg = ghostButtons[i].GetComponent<Image>();
+                foreach (Image img in ghostButtons[i].GetComponentsInChildren<Image>())
+                {
+                    Color col = img.color;
+                    col.a = hasGhost ? 1f : 0.5f;
+                    img.color = col;
+                }
+            }
         }
     }
 

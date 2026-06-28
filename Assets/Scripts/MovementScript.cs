@@ -121,6 +121,8 @@ public class MovementScript : MonoBehaviour
         activeScene = SceneManager.GetActiveScene();
         Application.targetFrameRate = 200;
 
+        ghost.startRecording();
+
         if (ex.ExhibitionMode) timer = countdownTime;
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = maxSpeed;
@@ -211,7 +213,7 @@ public class MovementScript : MonoBehaviour
             if (!startedRecording)
             {
                 startedRecording = true;
-                ghost.startRecording();
+                //ghost.startRecording();
             }
         }
 

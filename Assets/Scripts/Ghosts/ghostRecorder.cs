@@ -15,6 +15,8 @@ public class ghostRecorder : MonoBehaviour
     private int frameCount = 3;
     private bool recording = false;
 
+    public static string selectedId = "";
+
     public void startRecording()
     {
         positions.Clear();
@@ -46,17 +48,47 @@ public class ghostRecorder : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public static void SaveGhost(string id)
+    {
+        string posString = "";
+        string rotString = "";
+        string timeString = "";
+        float startTime = timestamp[0];
+
+        foreach (Vector3 pos in positions) posString += pos.x + "#" + pos.y + "#" + pos.z + "|";
+        foreach (Vector3 rot in rotations) rotString += rot.x + "#" + rot.y + "#" + rot.z + "|";
+        foreach (float time in timestamp) timeString += (time - startTime) + "|";
+
+        PlayerPrefs.SetString("ghostPos_" + id, posString);
+        PlayerPrefs.SetString("ghostRot_" + id, rotString);
+        PlayerPrefs.SetString("ghostTime_" + id, timeString);
+        PlayerPrefs.Save();
+    }
+
     public static void load()
     {
         positions.Clear();
         rotations.Clear();
         timestamp.Clear();
 
-        if (!PlayerPrefs.HasKey("ghostPos") || !PlayerPrefs.HasKey("ghostRot") || !PlayerPrefs.HasKey("ghostTime")) return;
+        if (string.IsNullOrEmpty(selectedId)) return;
 
-        string[] posFrames = PlayerPrefs.GetString("ghostPos").Split('|');
-        string[] rotFrames = PlayerPrefs.GetString("ghostRot").Split('|');
-        string[] timeFrames = PlayerPrefs.GetString("ghostTime").Split('|');
+        string posKey = "ghostPos";
+        string rotKey = "ghostRot";
+        string timeKey = "ghostTime";
+        if (!string.IsNullOrEmpty(selectedId))
+        {
+            posKey += "_" + selectedId;
+            rotKey += "_" + selectedId;
+            timeKey += "_" + selectedId;
+            selectedId = "";
+        }
+
+        if (!PlayerPrefs.HasKey(posKey) || !PlayerPrefs.HasKey(rotKey) || !PlayerPrefs.HasKey(timeKey)) return;
+
+        string[] posFrames = PlayerPrefs.GetString(posKey).Split('|');
+        string[] rotFrames = PlayerPrefs.GetString(rotKey).Split('|');
+        string[] timeFrames = PlayerPrefs.GetString(timeKey).Split('|');
 
         foreach(string pos in posFrames)
         {

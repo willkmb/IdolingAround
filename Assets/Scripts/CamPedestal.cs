@@ -22,6 +22,7 @@ public class CamPedestal : MonoBehaviour
     [SerializeField] GameObject leaderboard;
     [SerializeField] GameObject[] fadeObjectsLB;
     [SerializeField]GameObject[] fadeTextLB;
+    [SerializeField] GameObject[] ghostButtons;
     [SerializeField] GameObject spacing;
     [SerializeField] AudioSource transSound;
     [SerializeField] GameObject restartText;
@@ -133,6 +134,7 @@ public class CamPedestal : MonoBehaviour
         spacing.GetComponent<Animation>().Play();
         foreach (var fo in fadeObjectsLB) fo.GetComponent<Animation>().Play();
         foreach (var ft in fadeTextLB) ft.GetComponent<Animation>().Play();
+        foreach (var button in ghostButtons) button.SetActive(true);
         yield return new WaitForSeconds(1.25f);
         restartText.GetComponent<Animation>().Play();
         canRestart = true;
