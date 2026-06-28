@@ -27,11 +27,13 @@ public class CamPedestal : MonoBehaviour
     [SerializeField] GameObject restartText;
 
     [SerializeField] MovementScript movementScript;
+    [SerializeField] checkProgressScript dist;
 
     BoxCollider col;
     private bool gamefin = false;
     private bool needToClick = false;
     private bool canRestart = false;
+    private bool hasEnded = false;
     void Start() { col = GetComponent<BoxCollider>(); }
 
     void Update()
@@ -51,12 +53,22 @@ public class CamPedestal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 6)
+        if (other.gameObject.layer == 6 && !hasEnded)
         {
             movementScript.canRespawn = false;
             StartCoroutine(CamSwitch());
+            hasEnded = true;
         }
 
+    }
+
+    public void callEndScreen()
+    {
+        if (hasEnded) return;
+        dist.ended = true;
+        movementScript.canRespawn = false;
+        StartCoroutine(CamSwitch());
+        hasEnded = true;
     }
 
     IEnumerator CamSwitch()

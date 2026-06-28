@@ -24,6 +24,7 @@ public class MovementScript : MonoBehaviour
     public Image chargeHolder;
     public Image chargeBlur;
     public bool isSpawning;
+    [SerializeField] ExhibitionVerToggle ex;
 
     [Header("Movement Settings")]
     [SerializeField] float rollTorque = 20f;
@@ -41,7 +42,8 @@ public class MovementScript : MonoBehaviour
 
     [Header("Timer")]
     [SerializeField] TextMeshProUGUI timerText;
-
+    [SerializeField] float countdownTime = 300f;
+    [SerializeField] CamPedestal endScreen;
 
     [Header("Jump Meter Colors")]
     [SerializeField] Color minChargeColor;
@@ -54,6 +56,7 @@ public class MovementScript : MonoBehaviour
     [SerializeField] TextMeshProUGUI highScoreText;
     [SerializeField] TextMeshProUGUI gemText;
     [SerializeField] TextMeshProUGUI deathText;
+    [SerializeField] checkProgressScript dist;
 
     [Header("Voice Lines")]
     [SerializeField] AudioClip[] voiceLinesMove;
@@ -105,6 +108,7 @@ public class MovementScript : MonoBehaviour
     private Coroutine freezeCube;
     private float lastMoved;
     private bool justRespawned = false;
+    private bool timeUp = false;
 
     #endregion
 
@@ -113,8 +117,9 @@ public class MovementScript : MonoBehaviour
     private void Start()
     {
         activeScene = SceneManager.GetActiveScene();
-
         Application.targetFrameRate = 200;
+
+        if (ex.ExhibitionMode) timer = countdownTime;
 
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = maxSpeed;
@@ -469,7 +474,24 @@ public class MovementScript : MonoBehaviour
     {
         if (timerRunning)
         {
-            timer += Time.deltaTime;
+            if (ex.ExhibitionMode)
+            {
+                timer -= Time.deltaTime;
+                if(timer <= 0f)
+                {
+                    timer = 0f;
+                    if (!timeUp)
+                    {
+                        Debug.Log("times Up");
+                        endScreen.callEndScreen();
+                        timeUp = true;
+                    }
+                }
+            }
+            else
+            {
+                timer += Time.deltaTime;
+            }
         }
 
         int mins = Mathf.FloorToInt(timer / 60f);
@@ -507,25 +529,47 @@ public class MovementScript : MonoBehaviour
     public void CheckScore()
     {
         if (!timerRunning) return;
-
         timerRunning = false;
-        currentTimeText.text = FormatTime(timer);
-        gemText.text = this.GetComponent<GemCounter>().gems.ToString();
-        deathText.text = this.GetComponent<DeathCounter>().deaths.ToString();
-        PlayerPrefs.SetFloat("LastRunTime", timer);
-        PlayerPrefs.Save();
 
-        if (timer < highScore)
+        if (ex.ExhibitionMode)
         {
-            highScore = timer;
-            PlayerPrefs.SetFloat("HighScore", highScore);
+            float distTravelled = dist.bestDist;
+            currentTimeText.text = distTravelled.ToString("F1") + " m";
+            gemText.text = this.GetComponent<GemCounter>().gems.ToString();
+            deathText.text = this.GetComponent<DeathCounter>().deaths.ToString();
+            PlayerPrefs.SetFloat("LastRunDist", distTravelled);
             PlayerPrefs.Save();
-            highScoreText.text = "Highscore: " + FormatTime(highScore);
+            float bestDistance = PlayerPrefs.HasKey("HighscoreDistance") ? PlayerPrefs.GetFloat("HighscoreDistance") : 0f;
+
+            if (distTravelled > bestDistance)
+            {
+                bestDistance = distTravelled;
+                PlayerPrefs.SetFloat("HighscoreDistance", bestDistance);
+                PlayerPrefs.Save();
+            }
+
+            highScoreText.text = "Highscore: " + bestDistance.ToString("F1") + " m";
         }
         else
         {
-            highScore = PlayerPrefs.GetFloat("HighScore");
-            highScoreText.text = "Highscore: " + FormatTime(highScore);
+            currentTimeText.text = FormatTime(timer);
+            gemText.text = this.GetComponent<GemCounter>().gems.ToString();
+            deathText.text = this.GetComponent<DeathCounter>().deaths.ToString();
+            PlayerPrefs.SetFloat("LastRunTime", timer);
+            PlayerPrefs.Save();
+
+            if (timer < highScore)
+            {
+                highScore = timer;
+                PlayerPrefs.SetFloat("HighScore", highScore);
+                PlayerPrefs.Save();
+                highScoreText.text = "Highscore: " + FormatTime(highScore);
+            }
+            else
+            {
+                highScore = PlayerPrefs.GetFloat("HighScore");
+                highScoreText.text = "Highscore: " + FormatTime(highScore);
+            }
         }
     }
 

@@ -4,13 +4,14 @@ using TMPro;
 
 public class checkProgressScript : MonoBehaviour
 {
-    public Transform[] wp;
-    public Transform player;
-    public TextMeshProUGUI distText;
+    [SerializeField] Transform[] wp;
+    [SerializeField] Transform player;
+    [SerializeField] TextMeshProUGUI distText;
+    [HideInInspector] public bool ended = false;
 
     private int nextWp = 1;
     private float[] distToWp;
-    private float bestDist = 0f;
+    [HideInInspector] public float bestDist = 0f;
 
     void Start()
     {
@@ -24,6 +25,7 @@ public class checkProgressScript : MonoBehaviour
 
     void Update()
     {
+        if (ended) return;
         Vector3 PrevWp = wpGroundPos(wp[this.nextWp - 1].position);
         Vector3 nextWp = wpGroundPos(wp[this.nextWp].position);
         Vector3 groundPos = wpGroundPos(player.position);
