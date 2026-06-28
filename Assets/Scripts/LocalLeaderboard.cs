@@ -91,7 +91,7 @@ public class LocalLeaderboard : MonoBehaviour
         {
             if (i < entries.Count)
             {
-                if (ex.ExhibitionMode) entryText[i].text = $"{i + 1}. {entries[i].name} - {entries[i].value:F1} m";
+                if (ex.ExhibitionMode) entryText[i].text = $"{i + 1}. {entries[i].name} - {entries[i].value:F1}m";
                 else entryText[i].text = $"{i + 1}. {entries[i].name} - {Mathf.FloorToInt(entries[i].value / 60f):00}:{Mathf.FloorToInt(entries[i].value % 60f):00}";
             }
             else entryText[i].text = $"{i + 1}. ----";

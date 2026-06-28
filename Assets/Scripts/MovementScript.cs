@@ -534,7 +534,7 @@ public class MovementScript : MonoBehaviour
         if (ex.ExhibitionMode)
         {
             float distTravelled = dist.bestDist;
-            currentTimeText.text = distTravelled.ToString("F1") + " m";
+            currentTimeText.text = distTravelled.ToString("F1") + "m";
             gemText.text = this.GetComponent<GemCounter>().gems.ToString();
             deathText.text = this.GetComponent<DeathCounter>().deaths.ToString();
             PlayerPrefs.SetFloat("LastRunDist", distTravelled);
@@ -548,7 +548,7 @@ public class MovementScript : MonoBehaviour
                 PlayerPrefs.Save();
             }
 
-            highScoreText.text = "Highscore: " + bestDistance.ToString("F1") + " m";
+            highScoreText.text = "Highscore: " + bestDistance.ToString("F1") + "m";
         }
         else
         {
