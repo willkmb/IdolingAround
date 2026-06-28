@@ -16,6 +16,7 @@ public class StartBoulder : MonoBehaviour
     [SerializeField] VoiceLinesBoulderStartRoll startRollVoicelines;
     [SerializeField] VoiceLinesBoulderChase chaseVoicelines;
     [SerializeField] AudioSource rollSound;
+    [SerializeField] ghostRecorder ghost;
     bool hasStarted;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -39,6 +40,7 @@ public class StartBoulder : MonoBehaviour
             transition1.Play();
             movementScript.timerRunning = false;
             movementScript.canRespawn = false;
+            ghost.PauseRecording();
             Invoke("PlayerKinematic", 0.5f);
             hasStarted = true;
         }
@@ -61,6 +63,7 @@ public class StartBoulder : MonoBehaviour
         boulderAnim.Play();
         chaseVoicelines.isNearby = true;
         rollSound.Play();
+        ghost.ResumeRecording();
         yield return null;
     }
 }
