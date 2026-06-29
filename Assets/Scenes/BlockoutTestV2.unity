@@ -2151,7 +2151,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11302367}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0017921188, y: -0.009265993, z: 0.0038422733, w: 0.99994814}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -57058,7 +57058,8 @@ MonoBehaviour:
   landSquash: 0.9
   resetSpeed: 7.25
   impulse: {fileID: 288821128}
-  impactThreshold: 5.5
+  impactThreshold: 1
+  impulseStrengthDivider: 300
   canRespawn: 1
   flipped: 0
   timerRunning: 1
@@ -201984,7 +201985,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1019139745}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05565669, y: -0.009029956, z: 0.0043682484, w: 0.9983996}
+  m_LocalRotation: {x: 0.055656686, y: -0.009029955, z: 0.004368248, w: 0.99839956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -206805,7 +206806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081c42371e71dcd4c987ee59789ee888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playbackSpeed: 1.095
+  playbackSpeed: 1
 --- !u!23 &1049320601
 MeshRenderer:
   m_ObjectHideFlags: 0

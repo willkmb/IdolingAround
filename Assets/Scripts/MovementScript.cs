@@ -86,6 +86,7 @@ public class MovementScript : MonoBehaviour
     [Header("Camera Shake")]
     [SerializeField] CinemachineImpulseSource impulse;
     [SerializeField] float impactThreshold = 8f;
+    [SerializeField] float impulseStrengthDivider = 3f;
 
     [Header("Respawn")]
     public bool canRespawn = true;
@@ -278,7 +279,7 @@ public class MovementScript : MonoBehaviour
         float impactSpeed = collision.relativeVelocity.magnitude;
         if (impactSpeed > impactThreshold)
         {
-            impulse.GenerateImpulse();
+            impulse.GenerateImpulse(collision.relativeVelocity / impulseStrengthDivider);
         }
 
         if (isWall)
