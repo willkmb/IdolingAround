@@ -20,10 +20,11 @@ public class ghostPlay : MonoBehaviour
 
     IEnumerator playback()
     {
+        float carry = 0f;
         for (int i = 0; i < positions.Count - 1; i++)
         {
-            float interpolateTime = timestamp[i+1] - timestamp[i];
-            float time = 0f;
+            float interpolateTime = timestamp[i + 1] - timestamp[i];
+            float time = carry / interpolateTime;
             while (time < 1f)
             {
                 time += Time.deltaTime * playbackSpeed / interpolateTime;
@@ -32,10 +33,11 @@ public class ghostPlay : MonoBehaviour
                     this.gameObject.SetActive(false);
                     yield break;
                 }
-                transform.position = Vector3.Lerp(positions[i], positions[i+1], time);
+                transform.position = Vector3.Lerp(positions[i], positions[i + 1], time);
                 transform.rotation = Quaternion.Lerp(Quaternion.Euler(rotations[i]), Quaternion.Euler(rotations[i + 1]), time);
                 yield return null;
             }
+            carry = (time - 1f) * interpolateTime;
         }
         this.gameObject.SetActive(false);
     }

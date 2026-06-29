@@ -12,7 +12,7 @@ public class ghostRecorder : MonoBehaviour
     public static List<float> timestamp = new List<float>();
 
     private int frames = 0;
-    private int frameCount = 3;
+    private int frameCount = 10;
     private bool recording = false;
 
     public static string selectedId = "";
