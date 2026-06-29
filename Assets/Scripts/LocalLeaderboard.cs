@@ -7,12 +7,15 @@ using UnityEngine.UI;
 public class LocalLeaderboard : MonoBehaviour
 {
     private TMP_InputField nameInput;
-    private List<(string name, float value, string ghostId)> entries = new List<(string, float, string)>();
+    private List<(string name, float value, string ghostId, int gems, int deaths)> entries = new List<(string, float, string, int, int)>();
     private int maxEntries = 8;
     private bool hasEntered = false;
     [SerializeField] TextMeshProUGUI[] entryText;
+    [SerializeField] TextMeshProUGUI[] gemText;
+    [SerializeField] TextMeshProUGUI[] deathText;
     [SerializeField] Button[] ghostButtons;
     [SerializeField] ExhibitionVerToggle ex;
+    [SerializeField] GameObject player;
 
     void Start()
     {
@@ -37,17 +40,20 @@ public class LocalLeaderboard : MonoBehaviour
         string ghostId = System.Guid.NewGuid().ToString();
         ghostRecorder.SaveGhost(ghostId);
 
+        int gems = player.GetComponent<GemCounter>().gems;
+        int deaths = player.GetComponent<DeathCounter>().deaths;
+
         float value;
         if (ex.ExhibitionMode)
         {
             value = PlayerPrefs.GetFloat("LastRunDist", 0f);
-            entries.Add((name.ToLower(), value, ghostId));
+            entries.Add((name.ToLower(), value, ghostId, gems, deaths));
             entries.Sort((a, b) => b.value.CompareTo(a.value));
         }
         else
         {
             value = PlayerPrefs.GetFloat("LastRunTime", 0f);
-            entries.Add((name.ToLower(), value, ghostId));
+            entries.Add((name.ToLower(), value, ghostId, gems, deaths));
             entries.Sort((a, b) => a.value.CompareTo(b.value));
         }
 
@@ -75,6 +81,8 @@ public class LocalLeaderboard : MonoBehaviour
                 PlayerPrefs.SetString($"DistLBName_{i}", entries[i].name);
                 PlayerPrefs.SetFloat($"DistLBValue_{i}", entries[i].value);
                 PlayerPrefs.SetString($"DistLBGhost_{i}", entries[i].ghostId);
+                PlayerPrefs.SetInt($"DistLBGems_{i}", entries[i].gems);
+                PlayerPrefs.SetInt($"DistLBDeaths_{i}", entries[i].deaths);
             }
         }
         else
@@ -85,6 +93,8 @@ public class LocalLeaderboard : MonoBehaviour
                 PlayerPrefs.SetString($"LBName_{i}", entries[i].name);
                 PlayerPrefs.SetFloat($"LBTime_{i}", entries[i].value);
                 PlayerPrefs.SetString($"LBGhost_{i}", entries[i].ghostId);
+                PlayerPrefs.SetInt($"LBGems_{i}", entries[i].gems);
+                PlayerPrefs.SetInt($"LBDeaths_{i}", entries[i].deaths);
             }
         }
         PlayerPrefs.Save();
@@ -96,12 +106,12 @@ public class LocalLeaderboard : MonoBehaviour
         if (ex.ExhibitionMode)
         {
             int count = PlayerPrefs.GetInt("DistLBCount", 0);
-            for (int i = 0; i < count; i++)entries.Add((PlayerPrefs.GetString($"DistLBName_{i}", ""), PlayerPrefs.GetFloat($"DistLBValue_{i}", 0f), PlayerPrefs.GetString($"DistLBGhost_{i}", "")));
+            for (int i = 0; i < count; i++)entries.Add((PlayerPrefs.GetString($"DistLBName_{i}", ""), PlayerPrefs.GetFloat($"DistLBValue_{i}", 0f), PlayerPrefs.GetString($"DistLBGhost_{i}", ""),PlayerPrefs.GetInt($"DistLBGems_{i}", 0), PlayerPrefs.GetInt($"DistLBDeaths_{i}", 0)));
         }
         else
         {
             int count = PlayerPrefs.GetInt("LeaderBoardCount", 0);
-            for (int i = 0; i < count; i++)entries.Add((PlayerPrefs.GetString($"LBName_{i}", ""), PlayerPrefs.GetFloat($"LBTime_{i}", 0f), PlayerPrefs.GetString($"LBGhost_{i}", ""))); ;
+            for (int i = 0; i < count; i++)entries.Add((PlayerPrefs.GetString($"LBName_{i}", ""), PlayerPrefs.GetFloat($"LBTime_{i}", 0f), PlayerPrefs.GetString($"LBGhost_{i}", ""), PlayerPrefs.GetInt($"LBGems_{i}", 0),PlayerPrefs.GetInt($"LBDeaths_{i}", 0))); ;
         }
         RefreshList();
     }
@@ -116,6 +126,22 @@ public class LocalLeaderboard : MonoBehaviour
                 else entryText[i].text = $"{i + 1}. {entries[i].name} - {Mathf.FloorToInt(entries[i].value / 60f):00}:{Mathf.FloorToInt(entries[i].value % 60f):00}";
             }
             else entryText[i].text = $"{i + 1}. ----";
+
+            if(i < gemText.Length)
+            {
+                gemText[i].text = i < entries.Count ? entries[i].gems.ToString() : "-";
+                Color gemCol = gemText[i].color;
+                gemCol.a = i < entries.Count ? 1f : 0.5f;
+                gemText[i].color = gemCol;
+            }
+
+            if (i < deathText.Length)
+            {
+                deathText[i].text = i < entries.Count ? entries[i].deaths.ToString() : "-";
+                Color deathCol = deathText[i].color;
+                deathCol.a = i < entries.Count ? 1f : 0.5f;
+                deathText[i].color = deathCol;
+            }
 
             if (i < ghostButtons.Length)
             {
@@ -145,8 +171,14 @@ public class LocalLeaderboard : MonoBehaviour
             {
                 PlayerPrefs.DeleteKey($"LBName_{i}");
                 PlayerPrefs.DeleteKey($"LBTime_{i}");
+                PlayerPrefs.DeleteKey($"LBGhost_{i}");
+                PlayerPrefs.DeleteKey($"LBGems_{i}");
+                PlayerPrefs.DeleteKey($"LBDeaths_{i}");
                 PlayerPrefs.DeleteKey($"DistLBName_{i}");
                 PlayerPrefs.DeleteKey($"DistLBValue_{i}");
+                PlayerPrefs.DeleteKey($"DistLBGhost_{i}");
+                PlayerPrefs.DeleteKey($"DistLBGems_{i}");
+                PlayerPrefs.DeleteKey($"DistLBDeaths_{i}");
             }
             PlayerPrefs.Save();
             entries.Clear();
