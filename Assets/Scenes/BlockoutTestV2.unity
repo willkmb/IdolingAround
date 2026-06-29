@@ -57010,7 +57010,7 @@ MonoBehaviour:
   StandUpSpeed: 12
   groundImpactThresh: 6
   timerText: {fileID: 14623758}
-  countdownTime: 300
+  countdownTime: 65
   endScreen: {fileID: 1161334216}
   minChargeColor: {r: 0.3254902, g: 0.21176471, b: 0.21568628, a: 0.5882353}
   maxChargeColor: {r: 0.3254902, g: 0.21176471, b: 0.21568628, a: 1}
@@ -57058,8 +57058,8 @@ MonoBehaviour:
   landSquash: 0.9
   resetSpeed: 7.25
   impulse: {fileID: 288821128}
-  impactThreshold: 1
-  impulseStrengthDivider: 375
+  impactThreshold: 3
+  impulseStrengthDivider: 500
   canRespawn: 1
   flipped: 0
   timerRunning: 1
@@ -135942,7 +135942,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66130828de3413847915ef475a69bdcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExhibitionMode: 1
+  ExhibitionMode: 0
+  ghost: {fileID: 1049320600}
 --- !u!1001 &668326039
 PrefabInstance:
   m_ObjectHideFlags: 0

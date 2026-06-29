@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ghostPlay : MonoBehaviour
 {
-    [SerializeField] float playbackSpeed = 1f;
+    public float playbackSpeed = 1f;
     private List<Vector3> positions = new List<Vector3>();
     private List<Vector3> rotations = new List<Vector3>();
     private List<float> timestamp = new List<float>();
