@@ -779,7 +779,11 @@ public class MovementScript : MonoBehaviour
 
         while (true)
         {
-            if (activeScene.buildIndex != 1) yield break;
+            if (activeScene.buildIndex != 1)
+            {
+                Debug.Log("WrongScene");
+                yield break;
+            }
 
             Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
             bool isMoving = vel.magnitude > 2.75f;
