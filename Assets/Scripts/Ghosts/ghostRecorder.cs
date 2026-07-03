@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Data;
 using System.Runtime.CompilerServices;
@@ -12,7 +11,8 @@ public class ghostRecorder : MonoBehaviour
     public static List<float> timestamp = new List<float>();
 
     private int frames = 0;
-    private int frameCount = 5;
+    [Range(1f, 20f)]
+    [SerializeField]private int frameCount = 5;
     private bool recording = false;
 
     public static string selectedId = "";
