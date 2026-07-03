@@ -103,7 +103,7 @@ public class CamPedestal : MonoBehaviour
         newUI.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         //nextArrow.GetComponent<Animation>().Blend("NextArrowFadeIn");
-        //needToClick = true;
+        needToClick = true;
         movementScript.enabled = false;
         yield return new WaitForSeconds(2.5f);
         StartCoroutine(LB());

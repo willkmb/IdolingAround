@@ -8,9 +8,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 246667608129061623, guid: 9937fb56da1454c4a9c858ad29846263, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 246667608129061623, guid: 9937fb56da1454c4a9c858ad29846263, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ba17a0008d87b044fb6dd76cb84f978a, type: 2}
+    - target: {fileID: 246667608129061623, guid: 9937fb56da1454c4a9c858ad29846263, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ffc4034fb3f93e14fb425d293db53d29, type: 2}
     - target: {fileID: 375247607204560377, guid: 9937fb56da1454c4a9c858ad29846263, type: 3}
       propertyPath: m_Name
       value: P_Plant Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 375247607204560377, guid: 9937fb56da1454c4a9c858ad29846263, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 706741262610660442, guid: 9937fb56da1454c4a9c858ad29846263, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6495728847852034296, guid: 9937fb56da1454c4a9c858ad29846263, type: 3}
       propertyPath: m_LocalPosition.x
