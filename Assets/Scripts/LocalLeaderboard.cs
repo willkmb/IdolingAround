@@ -184,5 +184,7 @@ public class LocalLeaderboard : MonoBehaviour
             entries.Clear();
             RefreshList();
         }
+
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Return)) enterName();
     }
 }

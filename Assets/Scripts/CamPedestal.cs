@@ -26,6 +26,7 @@ public class CamPedestal : MonoBehaviour
     [SerializeField] GameObject spacing;
     [SerializeField] AudioSource transSound;
     [SerializeField] GameObject restartText;
+    [SerializeField] GameObject jumpCharge;
 
     [SerializeField] MovementScript movementScript;
     [SerializeField] checkProgressScript dist;
@@ -75,7 +76,8 @@ public class CamPedestal : MonoBehaviour
     IEnumerator CamSwitch()
     {
         Debug.Log("idol black screen");
-        
+
+        jumpCharge.SetActive(false);
         mainCam.SetActive(false);
         thisCam.SetActive(true);
         idol.GetComponent<RespawnPlayer>().enabled = false;
@@ -100,9 +102,11 @@ public class CamPedestal : MonoBehaviour
         foreach (var ui in oldUI) Destroy(ui);
         newUI.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        nextArrow.GetComponent<Animation>().Blend("NextArrowFadeIn");
-        needToClick = true;
+        //nextArrow.GetComponent<Animation>().Blend("NextArrowFadeIn");
+        //needToClick = true;
         movementScript.enabled = false;
+        yield return new WaitForSeconds(2.5f);
+        StartCoroutine(LB());
     }
 
     void restart()

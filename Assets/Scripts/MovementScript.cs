@@ -252,6 +252,11 @@ public class MovementScript : MonoBehaviour
         squashHolder.rotation = Quaternion.identity;
         playerMesh.rotation = transform.rotation;
         playerMesh.position = transform.TransformPoint(meshOffset);
+
+        if(Input.GetKeyDown(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.I))
+        {
+            inverted = !inverted;
+        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -466,8 +471,9 @@ public class MovementScript : MonoBehaviour
 
     private void HandleJumpInput()
     {
-        if (Input.GetKey(KeyCode.Space) && coyoteTimer > 0f && !hasJumped)
+        if (Input.GetKey(KeyCode.Space) && !hasJumped)
         {
+            drain = false;
             if (jumpVel < 220f)
             {
                 jumpVel += 100f * Time.deltaTime;
