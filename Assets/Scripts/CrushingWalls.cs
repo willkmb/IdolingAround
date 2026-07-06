@@ -29,25 +29,20 @@ public class CrushingWalls : MonoBehaviour
     {
         if (hasAnimStarted)
         {
-            if (!idolCrushed)
+            if (triggers.All(triggers => triggers.inTrigger == true))
             {
-                if (triggers.All(triggers => triggers.inTrigger == true))
+                foreach (var anim in anims)
                 {
-                    foreach (var anim in anims)
-                    {
-                        anim.Stop();
-                        anim.gameObject.transform.position = Vector3.zero;
-                    }
-                    GameObject.FindWithTag("Player").GetComponent<Rigidbody>().isKinematic = true;
-                    playerMovement.gameObject.transform.position = playerMovement.respawnPoint.transform.position;
-                    GameObject.FindWithTag("Player").GetComponent<Rigidbody>().isKinematic = false;
-                    Debug.Log("Idol is crushed");
-                    idolCrushed = true;
-                    hasAnimStarted = false;
-
+                    anim.Stop();
+                    anim.gameObject.transform.localPosition = Vector3.zero;
                 }
+                //[replace with link to respawn player script]
+                GameObject.FindWithTag("Player").GetComponent<Rigidbody>().isKinematic = true;
+                playerMovement.gameObject.transform.position = playerMovement.respawnPoint.transform.position;
+                GameObject.FindWithTag("Player").GetComponent<Rigidbody>().isKinematic = false;
+                Debug.Log("Idol is crushed");
+                hasAnimStarted = false;
             }
-
         }
     }
 
