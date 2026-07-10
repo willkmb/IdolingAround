@@ -76,6 +76,7 @@ public class MovementScript : MonoBehaviour
     [SerializeField] ParticleSystem mudPart;
 
     [Header("Squash & Stretch")]
+    [HideInInspector] public bool canSquashAndStretch;
     [SerializeField] Transform squashHolder;
     [SerializeField] Transform playerMesh;
     [SerializeField] float jumpStretch = 1.15f;
@@ -148,6 +149,7 @@ public class MovementScript : MonoBehaviour
 
         StartCoroutine(voices());
         meshOffset = transform.InverseTransformPoint(playerMesh.position);
+        canSquashAndStretch = true;
     }
 
     private void FixedUpdate()
@@ -507,6 +509,7 @@ public class MovementScript : MonoBehaviour
         canJump = false;
         hasJumped = true;
         StartCoroutine(ResetJump());
+        canSquashAndStretch = true;
         if (squashStretch != null) StopCoroutine(squashStretch);
         squashStretch = StartCoroutine(SquashStretch(jumpStretch));
     }
@@ -758,15 +761,18 @@ public class MovementScript : MonoBehaviour
 
     IEnumerator SquashStretch(float scale)
     {
-        float xzScale = 2f - scale;
-        squashHolder.localScale = new Vector3(xzScale, scale, xzScale);
-
-        while (Vector3.Distance(squashHolder.localScale, Vector3.one) > 0.01f)
+        if (canSquashAndStretch)
         {
-            squashHolder.localScale = Vector3.Lerp(squashHolder.localScale, Vector3.one, resetSpeed * Time.deltaTime);
-            yield return null;
+            float xzScale = 2f - scale;
+            squashHolder.localScale = new Vector3(xzScale, scale, xzScale);
+
+            while (Vector3.Distance(squashHolder.localScale, Vector3.one) > 0.01f)
+            {
+                squashHolder.localScale = Vector3.Lerp(squashHolder.localScale, Vector3.one, resetSpeed * Time.deltaTime);
+                yield return null;
+            }
+            squashHolder.localScale = Vector3.one;
         }
-        squashHolder.localScale = Vector3.one;
     }
 
     #endregion

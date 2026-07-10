@@ -11,11 +11,13 @@ public class SinkingPlatform : MonoBehaviour
     Vector3 currentPos;
     Vector3 lastPos;
     Vector3 posDifference;
+    MovementScript movementScript;
     Rigidbody rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        rb = FindFirstObjectByType<MovementScript>().gameObject.GetComponent<Rigidbody>();
+        movementScript = FindFirstObjectByType<MovementScript>();
+        rb = movementScript.gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -39,6 +41,7 @@ public class SinkingPlatform : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             isSinking = true;
+            Invoke("CanNotSquash", 0.1f);
         }
     }
 
@@ -47,6 +50,12 @@ public class SinkingPlatform : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             isSinking = false;
+            movementScript.canSquashAndStretch = true;
         }
+    }
+
+    void CanNotSquash()
+    {
+        movementScript.canSquashAndStretch = false;
     }
 }
