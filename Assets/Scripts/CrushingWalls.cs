@@ -1,63 +1,116 @@
+using System.Collections;
 using System.Linq;
+using System.Net;
 using UnityEngine;
 
 public class CrushingWalls : MonoBehaviour
 {
-    MovementScript playerMovement;
-    public Animation[] anims;
-    public TriggerScript[] triggers;
-    bool hasAnimStarted;
-    bool idolCrushed;
+    RespawnPlayer respawnScript;
+    [SerializeField] float timeToClose;
+    [SerializeField] GameObject[] walls;
+    [SerializeField] GameObject midPoint1;
+    [SerializeField] GameObject midPoint2;
+    [SerializeField] TriggerScript[] crushTriggers;
+    [SerializeField] TriggerScript throughTrigger;
+    bool hasStartedMove;
+    bool idolThrough;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerMovement = FindFirstObjectByType<MovementScript>();
-        anims = GetComponentsInChildren<Animation>();
-        triggers = GetComponentsInChildren<TriggerScript>();
+        respawnScript = FindFirstObjectByType<RespawnPlayer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckCrushed();
+        if (!idolThrough)
+        {
+            CheckCrushed();
+
+            if (throughTrigger.inTrigger)
+            {
+                idolThrough = true;
+            }
+
+        }
+
+        if (hasStartedMove)
+        {
+            WallsMoveIn();
+        }
+        else
+        {
+            WallsMoveOut();
+        }
+
     }
 
 
     void CheckCrushed()
     {
-        if (hasAnimStarted)
+        if (hasStartedMove)
         {
-            if (triggers.All(triggers => triggers.inTrigger == true))
+            if (crushTriggers.All(triggers => triggers.inTrigger == true))
             {
-                foreach (var anim in anims)
-                {
-                    anim.Stop();
-                    anim.gameObject.transform.localPosition = Vector3.zero;
-                }
-                //[replace with link to respawn player script]
-                GameObject.FindWithTag("Player").GetComponent<Rigidbody>().isKinematic = true;
-                playerMovement.gameObject.transform.position = playerMovement.respawnPoint.transform.position;
-                GameObject.FindWithTag("Player").GetComponent<Rigidbody>().isKinematic = false;
-                Debug.Log("Idol is crushed");
-                hasAnimStarted = false;
+                respawnScript.StartSpawn();
+                hasStartedMove = false;
             }
         }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if(!hasAnimStarted)
+            if(!hasStartedMove)
             {
-                foreach(var anim in anims)
-                {
-                    anim.Play();
-                }
-                hasAnimStarted = true;
+                hasStartedMove = true;
             }
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            if (hasStartedMove && !idolThrough)
+            {
+                hasStartedMove = false;
+            }
+        }
+    }
+    void WallsMoveIn()
+    {
+        if (Vector3.Distance(walls[0].transform.localPosition, midPoint1.transform.localPosition) > 0.05f)
+        {
+            walls[0].transform.localPosition = Vector3.MoveTowards(walls[0].transform.localPosition, midPoint1.transform.localPosition, timeToClose * Time.deltaTime);
+        }
+        else { walls[0].transform.localPosition = midPoint1.transform.localPosition; }
+
+        if (Vector3.Distance(walls[1].transform.localPosition, midPoint2.transform.localPosition) > 0.05f)
+        {
+            walls[1].transform.localPosition = Vector3.MoveTowards(walls[1].transform.localPosition, midPoint2.transform.localPosition, timeToClose * Time.deltaTime);
+        }
+        else { walls[1].transform.localPosition = midPoint2.transform.localPosition; }
+
+    }
+
+    void WallsMoveOut()
+    {
+        if (Vector3.Distance(walls[0].transform.localPosition, Vector3.zero) > 0.05f)
+        {
+            walls[0].transform.localPosition = Vector3.MoveTowards(walls[0].transform.localPosition, midPoint2.transform.localPosition, timeToClose * Time.deltaTime);
+        }
+        else { walls[0].transform.localPosition = midPoint1.transform.localPosition; }
+
+        if (Vector3.Distance(walls[1].transform.localPosition, midPoint2.transform.localPosition) > 0.05f)
+        {
+            walls[1].transform.localPosition = Vector3.MoveTowards(walls[1].transform.localPosition, midPoint2.transform.localPosition, timeToClose * Time.deltaTime);
+        }
+        else { walls[1].transform.localPosition = midPoint2.transform.localPosition; }
+    }
+
 }
