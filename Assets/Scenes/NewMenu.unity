@@ -34810,6 +34810,7 @@ MonoBehaviour:
   mudMats: []
   grassPart: {fileID: 0}
   mudPart: {fileID: 0}
+  canSquashAndStretch: 0
   squashHolder: {fileID: 0}
   playerMesh: {fileID: 0}
   jumpStretch: 1.15
@@ -34817,6 +34818,7 @@ MonoBehaviour:
   resetSpeed: 10
   impulse: {fileID: 0}
   impactThreshold: 8
+  impulseStrengthDivider: 3
   canRespawn: 1
   flipped: 0
   timerRunning: 1
@@ -56693,7 +56695,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -220.1, y: -80.10001}
+  m_AnchoredPosition: {x: -220.1, y: -121.90002}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &457045967
@@ -58938,7 +58940,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: options
+  m_text: levels
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb56254730d2f1f4587d9f16dbb721a4, type: 2}
   m_sharedMaterial: {fileID: 745267949434284258, guid: cb56254730d2f1f4587d9f16dbb721a4, type: 2}
@@ -58947,8 +58949,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 2008599000
-  m_fontColor: {r: 0.84705883, g: 0.7882353, b: 0.72156864, a: 0.46666667}
+    rgba: 2005512154
+  m_fontColor: {r: 0.85490197, g: 0.6862745, b: 0.5372549, a: 0.46666667}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -223453,7 +223455,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1752190808
 RectTransform:
   m_ObjectHideFlags: 0
@@ -246765,7 +246767,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -220.1, y: -39}
+  m_AnchoredPosition: {x: -220.1, y: -80.8}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1961346440
