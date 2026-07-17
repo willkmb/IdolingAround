@@ -6,6 +6,8 @@ public class VoiceLinesBoulderChase : MonoBehaviour
 {
     AudioSource voiceSource;
     [SerializeField] AudioClip[] audioClips;
+    AudioClip currentClip;
+    AudioClip prevClip;
     [SerializeField] int minTime;
     [SerializeField] int maxTime;
 
@@ -15,6 +17,7 @@ public class VoiceLinesBoulderChase : MonoBehaviour
     void Start()
     {
         voiceSource = GetComponent<AudioSource>();
+        prevClip = audioClips[0];
     }
 
     private void FixedUpdate()
@@ -25,9 +28,12 @@ public class VoiceLinesBoulderChase : MonoBehaviour
             {
                 if (waitTimeCountdown <= 0)
                 {
-                    voiceSource.clip = audioClips[Random.Range(0, audioClips.Length - 1)];
+                    currentClip = audioClips[Random.Range(0, audioClips.Length - 1)];
+                    if (currentClip == prevClip) { currentClip = audioClips[Random.Range(0, audioClips.Length - 1)]; }
+                    voiceSource.clip = currentClip;
                     voiceSource.Play();
                     waitTimeCountdown = Random.Range(minTime, maxTime);
+                    prevClip = currentClip;
                 }
                 else
                 {
