@@ -24,7 +24,7 @@ public class SetSpawn : MonoBehaviour
         //respawnPoint.position = other.transform.position;
         movementScript.respawnPoint = respawnPoint;
 
-        sound.Play();
+        //sound.Play();
         totem.Play();
         totem.gameObject.GetComponent<AudioSource>().Play();
         particleRock.Play();

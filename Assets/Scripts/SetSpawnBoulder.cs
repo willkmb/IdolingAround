@@ -31,7 +31,7 @@ public class SetSpawnBoulder : MonoBehaviour
             if (triggered) return;
 
             movementScript.respawnPoint = respawnPoint;
-            sound.Play();
+            //sound.Play();
             //particle.gameObject.transform.position = other.gameObject.transform.position;
             //particle = GetComponentInChildren<ParticleSystem>();
             //particle.Play();

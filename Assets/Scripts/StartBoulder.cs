@@ -5,9 +5,12 @@ using UnityEngine.Splines;
 
 public class StartBoulder : MonoBehaviour
 {
-    [SerializeField] Rigidbody playerRB;
-    [SerializeField] MovementScript movementScript;
+    Rigidbody playerRB;
+    MovementScript movementScript;
+    RespawnPlayer respawnPlayer;
+
     SplineAnimate splineAnim;
+
     [SerializeField] GameObject Boulder;
     [SerializeField] GameObject mainCamera;
     [SerializeField] GameObject cutscene;
@@ -16,19 +19,18 @@ public class StartBoulder : MonoBehaviour
     [SerializeField] VoiceLinesBoulderStartRoll startRollVoicelines;
     [SerializeField] VoiceLinesBoulderChase chaseVoicelines;
     [SerializeField] AudioSource rollSound;
+
     bool hasStarted;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        movementScript = FindFirstObjectByType<MovementScript>();
+        respawnPlayer = FindFirstObjectByType<RespawnPlayer>();
+        playerRB = movementScript.gameObject.GetComponent<Rigidbody>();
         splineAnim = Boulder.GetComponent<SplineAnimate>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -37,6 +39,7 @@ public class StartBoulder : MonoBehaviour
             mainCamera.SetActive(false);
             cutscene.SetActive(true);
             transition1.Play();
+            movementScript.canSpeak = false;
             movementScript.timerRunning = false;
             movementScript.canRespawn = false;
             Invoke("PlayerKinematic", 0.5f);
@@ -51,10 +54,10 @@ public class StartBoulder : MonoBehaviour
 
     public IEnumerator StartBoulderRoll()
     {
-        playerRB.isKinematic = false;
+        respawnPlayer.Spawn();
+        movementScript.canSpeak = true;
         movementScript.timerRunning = true;
         movementScript.canRespawn = true;
-        transition1.Play();
         cutscene.SetActive(false);
         mainCamera.SetActive(true);
         splineAnim.Play();

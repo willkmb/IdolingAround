@@ -110,7 +110,7 @@ public class MovementScript : MonoBehaviour
     [HideInInspector] public bool flipped;
     private bool canJump;
     private bool drain;
-    public bool timerRunning = true;
+    [HideInInspector] public bool timerRunning = true;
     private bool following = true;
     private bool hasJumped;
     private float collisionCooldown = 0f;
@@ -127,6 +127,7 @@ public class MovementScript : MonoBehaviour
     private bool timeUp = false;
     private Vector3 meshOffset;
 
+    [HideInInspector] public bool canSpeak = true;
     #endregion
 
     #region Unity Methods
@@ -313,12 +314,12 @@ public class MovementScript : MonoBehaviour
         }
 
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
-        if (vel.magnitude > 2.75f)
+        if (vel.magnitude > 4.5f)
         {
             sourceCol.pitch = Random.Range(0.4f, 0.6f);
             sourceCol.Play();
 
-            if (vel.magnitude > 3.2f && Time.time - lastVoice >= 2f)
+            if (vel.magnitude > 5.5f && Time.time - lastVoice >= 2f)
             {
                 int lineVal = Random.Range(0, voiceLinesHit.Length);
                 source.PlayOneShot(voiceLinesHit[lineVal]);
@@ -706,9 +707,19 @@ public class MovementScript : MonoBehaviour
     private void HandleRollingSound()
     {
         if (activeScene.buildIndex != 1) return;
-
-        float target = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) ? 0.075f : 0f;
-        rolling.volume = Mathf.MoveTowards(rolling.volume, target, 0.12f * Time.deltaTime);
+        if (canJump)
+        {
+            Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+            float target = 0;
+            if (Input.GetKey(KeyCode.W)) { target = 0.0375f; }
+            else if (Input.GetKey(KeyCode.S)) { target = 0.0175f; }
+            else { target = 0; }
+            rolling.volume = Mathf.MoveTowards(rolling.volume, target, 0.06f * Time.deltaTime);
+        }
+        else
+        {
+            rolling.volume = Mathf.MoveTowards(rolling.volume, 0, 0.24f * Time.deltaTime);
+        }
     }
 
     private void CheckDecals()
@@ -785,24 +796,27 @@ public class MovementScript : MonoBehaviour
 
         while (true)
         {
-            if (activeScene.buildIndex != 1)
+            if (canSpeak)
             {
-                Debug.Log("WrongScene");
-                yield break;
+                if (activeScene.buildIndex != 1)
+                {
+                    Debug.Log("WrongScene");
+                    yield break;
+                }
+
+                Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+                bool isMoving = vel.magnitude > 2.75f;
+                AudioClip[] cur = isMoving ? voiceLinesMove : voiceLinesIdle;
+
+                if (!source.isPlaying && cur.Length > 0)
+                {
+                    int lineVal = Random.Range(0, cur.Length);
+                    source.clip = cur[lineVal];
+                    source.Play();
+                }
+
+                yield return new WaitForSeconds(Random.Range(30f, 60f));
             }
-
-            Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
-            bool isMoving = vel.magnitude > 2.75f;
-            AudioClip[] cur = isMoving ? voiceLinesMove : voiceLinesIdle;
-
-            if (!source.isPlaying && cur.Length > 0)
-            {
-                int lineVal = Random.Range(0, cur.Length);
-                source.clip = cur[lineVal];
-                source.Play();
-            }
-
-            yield return new WaitForSeconds(Random.Range(30f, 60f));
         }
     }
 
