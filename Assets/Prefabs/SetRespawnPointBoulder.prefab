@@ -10073,12 +10073,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a318b6491e8da54fa8e7e5cec72faef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particle: {fileID: 4597806188973206076}
   boulderScript: {fileID: 0}
-  respawnPoint: {fileID: 1563636793146538820}
   boulderTime: 1
+  respawnPoint: {fileID: 1563636793146538820}
   particleRock: {fileID: 7048263991962386236}
   totem: {fileID: 125472687083779753}
+  totemPole: {fileID: 8206775435421187151}
+  totemMat: {fileID: 2100000, guid: 2062fa66e86b9414c9357279338b3851, type: 2}
+  totemMatGlow: {fileID: 2100000, guid: a19802ddbbef9684a8527d02549b23e0, type: 2}
 --- !u!1 &8142865088882500708
 GameObject:
   m_ObjectHideFlags: 0

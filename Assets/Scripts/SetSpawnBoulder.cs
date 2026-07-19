@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -6,21 +7,25 @@ public class SetSpawnBoulder : MonoBehaviour
 {
     MovementScript movementScript;
     AudioSource sound;
-    [SerializeField] ParticleSystem particle;
-    [SerializeField] BoulderRoll boulderScript;
-    [SerializeField] Transform respawnPoint;
-    //[SerializeField] int knotNumber;
-    [SerializeField] int boulderTime;
 
+    [Header("Boulder and Respawn")]
+    [SerializeField] BoulderRoll boulderScript;
+    [SerializeField] int boulderTime;
+    [SerializeField] Transform respawnPoint;
+
+    [Header("Totem")]
     [SerializeField] private ParticleSystem particleRock;
     public Animation totem;
+    [SerializeField] GameObject totemPole;
+    [SerializeField] Material totemMat;
+    [SerializeField] Material totemMatGlow;
+
     private bool triggered = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         movementScript = GameObject.FindFirstObjectByType<MovementScript>().GetComponent<MovementScript>();
-        particle = GetComponentInChildren<ParticleSystem>();
         sound = GetComponent<AudioSource>();
     }
 
@@ -28,25 +33,30 @@ public class SetSpawnBoulder : MonoBehaviour
     {
         if (other.gameObject.layer == 6)
         {
+            totemPole.GetComponentInChildren<MeshRenderer>().material = totemMatGlow;
             if (triggered) return;
 
             movementScript.respawnPoint = respawnPoint;
-            //sound.Play();
-            //particle.gameObject.transform.position = other.gameObject.transform.position;
-            //particle = GetComponentInChildren<ParticleSystem>();
-            //particle.Play();
             totem.Play();
             totem.gameObject.GetComponent<AudioSource>().Play();
             particleRock.Play();
-            //Invoke("ParticleOff", 1f);
             boulderScript.boulderRespawnTime = boulderTime;
             triggered = true;
 
         }
     }
-
-    void ParticleOff()
+    private void OnTriggerExit(Collider other)
     {
-        //particle.SetActive(false);
+        if (other.gameObject.layer != 6) return;
+        totemPole.GetComponentInChildren<MeshRenderer>().material = totemMat;
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer != 6) return;
+
+        //replace with coroutine to prevent snapping when player enters trigger
+        totemPole.transform.LookAt(new Vector3(other.transform.position.x, totemPole.transform.position.y, other.transform.position.z));
+    }
+
 }
