@@ -1990,7 +1990,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11302367}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.111302756, y: -0.7895732, z: 0.17687993, w: 0.57697433}
+  m_LocalRotation: {x: 0.11130273, y: -0.78957325, z: 0.17687991, w: 0.57697433}
   m_LocalPosition: {x: 0.00024575455, y: 0.0000045893917, z: -0.000054255375}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -161629,8 +161629,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 753072878}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1277822, y: -0.7841833, z: 0.19942151, w: 0.57354975}
-  m_LocalPosition: {x: 0.00024575455, y: 0.0000045893917, z: -0.000054255375}
+  m_LocalRotation: {x: 0.12778224, y: -0.7841833, z: 0.19942155, w: 0.5735498}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -194724,7 +194724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &924047832
 Transform:
   m_ObjectHideFlags: 0
@@ -212962,7 +212962,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1019139745}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14426535, y: -0.7781077, z: 0.22194771, w: 0.56962717}
+  m_LocalRotation: {x: 0.14426541, y: -0.7781077, z: 0.22194783, w: 0.56962717}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -403643,7 +403643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1955574640
 Transform:
   m_ObjectHideFlags: 0
@@ -453750,6 +453750,10 @@ PrefabInstance:
     - target: {fileID: 2218470926396189083, guid: c98b934212443e5468aa64554b5dcef1, type: 3}
       propertyPath: m_Name
       value: FinalLevelSetDressing (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2218470926396189083, guid: c98b934212443e5468aa64554b5dcef1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2345132221976421582, guid: c98b934212443e5468aa64554b5dcef1, type: 3}
       propertyPath: m_LocalPosition.x
