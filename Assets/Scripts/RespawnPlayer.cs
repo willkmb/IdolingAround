@@ -10,9 +10,11 @@ public class RespawnPlayer : MonoBehaviour
     [SerializeField] GameObject mainCamera;
     [SerializeField] Animation transition1;
     [SerializeField] AudioSource respawnSound;
+    [SerializeField] AudioClip[] voicelines;
 
     [HideInInspector] public GameObject cutscene;
     [HideInInspector] public float cutsceneLength;
+    [HideInInspector] public AudioSource voicePlayer;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -88,6 +90,12 @@ public class RespawnPlayer : MonoBehaviour
         }
         rb.isKinematic = false;
         movementScript.isSpawning = false;
+        PlayVoiceline();
+    }
 
+    void PlayVoiceline()
+    {
+        voicePlayer.clip = voicelines[Random.Range(0, voicelines.Length - 1)];
+        voicePlayer.Play();
     }
 }

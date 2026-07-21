@@ -6,6 +6,7 @@ using UnityEngine.Splines;
 public class SetSpawnBoulder : MonoBehaviour
 {
     MovementScript movementScript;
+    RespawnPlayer respawnPlayer;
     AudioSource sound;
 
     [Header("Boulder and Respawn")]
@@ -20,12 +21,15 @@ public class SetSpawnBoulder : MonoBehaviour
     [SerializeField] Material totemMat;
     [SerializeField] Material totemMatGlow;
 
+    [Header("Audio")]
+    [SerializeField] AudioSource voiceSource;
     private bool triggered = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        movementScript = GameObject.FindFirstObjectByType<MovementScript>().GetComponent<MovementScript>();
+        movementScript = GameObject.FindFirstObjectByType<MovementScript>();
+        respawnPlayer = GameObject.FindFirstObjectByType<RespawnPlayer>();
         sound = GetComponent<AudioSource>();
     }
 
@@ -37,6 +41,7 @@ public class SetSpawnBoulder : MonoBehaviour
             if (triggered) return;
 
             movementScript.respawnPoint = respawnPoint;
+            respawnPlayer.voicePlayer = voiceSource;
             totem.Play();
             totem.gameObject.GetComponent<AudioSource>().Play();
             particleRock.Play();
@@ -56,7 +61,12 @@ public class SetSpawnBoulder : MonoBehaviour
         if (other.gameObject.layer != 6) return;
 
         //replace with coroutine to prevent snapping when player enters trigger
-        totemPole.transform.LookAt(new Vector3(other.transform.position.x, totemPole.transform.position.y, other.transform.position.z));
+        Vector3 idolPos = new Vector3(other.transform.position.x, totemPole.transform.position.y, other.transform.position.z);
+        Quaternion lookRot = Quaternion.LookRotation(idolPos - totemPole.transform.position, Vector3.up);
+        lookRot.x = 0;
+        lookRot.z = 0;
+        totemPole.transform.rotation = Quaternion.Slerp(totemPole.transform.rotation, lookRot, Time.deltaTime);
+        //totemPole.transform.LookAt(new Vector3(other.transform.position.x, totemPole.transform.position.y, other.transform.position.z));
     }
 
 }

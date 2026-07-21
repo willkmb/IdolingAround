@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class SetSpawn : MonoBehaviour
 {
+    private MovementScript movementScript;
+    RespawnPlayer respawnPlayer;
+    private AudioSource sound;
+
+    [Header("Totem")]
     [SerializeField] private ParticleSystem particleRock;
     [SerializeField] private Transform respawnPoint;
     public Animation totem;
@@ -9,13 +14,14 @@ public class SetSpawn : MonoBehaviour
     [SerializeField] Material totemMat;
     [SerializeField] Material totemMatGlow;
 
-    private MovementScript movementScript;
-    private AudioSource sound;
     private bool triggered = false;
 
+    [Header("Audio")]
+    [SerializeField] AudioSource voiceSource;
     void Start()
     {
         movementScript = FindFirstObjectByType<MovementScript>();
+        respawnPlayer = FindFirstObjectByType<RespawnPlayer>();
         sound = GetComponent<AudioSource>();
     }
 
@@ -27,6 +33,7 @@ public class SetSpawn : MonoBehaviour
         if (triggered) return;
 
         movementScript.respawnPoint = respawnPoint;
+        respawnPlayer.voicePlayer = voiceSource;
         totem.Play();
         totem.gameObject.GetComponentInChildren<AudioSource>().Play();
         particleRock.Play();
@@ -43,6 +50,10 @@ public class SetSpawn : MonoBehaviour
         if (other.gameObject.layer != 6) return;
 
         //replace with coroutine to prevent snapping when player enters trigger
-        totemPole.transform.LookAt(new Vector3(other.transform.position.x, totemPole.transform.position.y, other.transform.position.z));
+        Quaternion lookRot = Quaternion.LookRotation(other.transform.position - totemPole.transform.position, Vector3.up);
+        lookRot.x = 0;
+        lookRot.z = 0;
+        totemPole.transform.rotation = Quaternion.Slerp(totemPole.transform.rotation, lookRot, Time.deltaTime);
+        //totemPole.transform.LookAt(new Vector3(other.transform.position.x, totemPole.transform.position.y, other.transform.position.z));
     }
 }
