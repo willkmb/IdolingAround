@@ -6,8 +6,8 @@ using UnityEngine.Splines;
 public class StartBoulder : MonoBehaviour
 {
     Rigidbody playerRB;
-    MovementScript movementScript;
-    RespawnPlayer respawnPlayer;
+    [SerializeField] MovementScript movementScript;
+    [SerializeField] RespawnPlayer respawnPlayer;
 
     SplineAnimate splineAnim;
 
@@ -25,8 +25,8 @@ public class StartBoulder : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        movementScript = FindFirstObjectByType<MovementScript>();
-        respawnPlayer = FindFirstObjectByType<RespawnPlayer>();
+        //movementScript = FindFirstObjectByType<MovementScript>();
+        //respawnPlayer = FindFirstObjectByType<RespawnPlayer>();
         playerRB = movementScript.gameObject.GetComponent<Rigidbody>();
         splineAnim = Boulder.GetComponent<SplineAnimate>();
     }

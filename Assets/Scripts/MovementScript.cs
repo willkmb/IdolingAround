@@ -794,29 +794,26 @@ public class MovementScript : MonoBehaviour
     {
         yield return new WaitForSeconds(20f);
 
-        while (true)
+        while (canSpeak)
         {
-            if (canSpeak)
+            if (activeScene.buildIndex != 1)
             {
-                if (activeScene.buildIndex != 1)
-                {
-                    Debug.Log("WrongScene");
-                    yield break;
-                }
-
-                Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
-                bool isMoving = vel.magnitude > 2.75f;
-                AudioClip[] cur = isMoving ? voiceLinesMove : voiceLinesIdle;
-
-                if (!source.isPlaying && cur.Length > 0)
-                {
-                    int lineVal = Random.Range(0, cur.Length);
-                    source.clip = cur[lineVal];
-                    source.Play();
-                }
-
-                yield return new WaitForSeconds(Random.Range(30f, 60f));
+                Debug.Log("WrongScene");
+                yield break;
             }
+
+            Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+            bool isMoving = vel.magnitude > 2.75f;
+            AudioClip[] cur = isMoving ? voiceLinesMove : voiceLinesIdle;
+
+            if (!source.isPlaying && cur.Length > 0)
+            {
+                int lineVal = Random.Range(0, cur.Length);
+                source.clip = cur[lineVal];
+                source.Play();
+            }
+
+            yield return new WaitForSeconds(Random.Range(30f, 60f));
         }
     }
 
