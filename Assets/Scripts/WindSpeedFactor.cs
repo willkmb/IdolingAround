@@ -19,7 +19,7 @@ public class WindSpeedFactor : MonoBehaviour
         float speed = new Vector3(GetComponent<Rigidbody>().linearVelocity.x, 0f, GetComponent<Rigidbody>().linearVelocity.z).magnitude;
         float target = Mathf.Lerp(minVal, maxVal, Mathf.Clamp01(speed / maxSpeed));
         curVal = Mathf.MoveTowards(curVal, target, smoothFactor * Time.deltaTime);
-        Debug.Log(curVal);
+        //Debug.Log(curVal);
 
         foreach (var wind in wind)
         {

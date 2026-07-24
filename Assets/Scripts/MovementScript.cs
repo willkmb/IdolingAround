@@ -285,6 +285,7 @@ public class MovementScript : MonoBehaviour
         bool isGround = Vector3.Dot(normal, Vector3.up) > 0.5f;
 
         float impactSpeed = collision.relativeVelocity.magnitude;
+        Debug.Log(impactSpeed);
         if (impactSpeed > impactThreshold)
         {
             impulse.GenerateImpulse(collision.relativeVelocity / impulseStrengthDivider);
@@ -313,13 +314,14 @@ public class MovementScript : MonoBehaviour
             }
         }
 
-        Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
-        if (vel.magnitude > 4.5f)
+        //Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+        if (impactSpeed > 5f)
         {
-            sourceCol.pitch = Random.Range(0.4f, 0.6f);
+            sourceCol.volume = Mathf.Clamp(impactSpeed / 192f, 0f, 0.1f);
+            sourceCol.pitch = Random.Range(0.37f, 0.45f);
             sourceCol.Play();
 
-            if (vel.magnitude > 5.5f && Time.time - lastVoice >= 2f)
+            if (impactSpeed > 10.5f && Time.time - lastVoice >= 2f)
             {
                 int lineVal = Random.Range(0, voiceLinesHit.Length);
                 source.PlayOneShot(voiceLinesHit[lineVal]);
@@ -504,7 +506,7 @@ public class MovementScript : MonoBehaviour
         rb.AddForce(Vector3.up * jumpVel * mult, ForceMode.Impulse);
         rb.AddForce(forwardDir * jumpVelFor, ForceMode.Impulse);
         drain = true;
-        sourceJump.pitch = Random.Range(0.75f, 1.25f);
+        sourceJump.pitch = Random.Range(0.75f, 1.15f);
         sourceJump.Play();
         coyoteTimer = 0f;
         canJump = false;
@@ -794,7 +796,7 @@ public class MovementScript : MonoBehaviour
     {
         yield return new WaitForSeconds(20f);
 
-        while (canSpeak)
+        while (true)
         {
             if (activeScene.buildIndex != 1)
             {
@@ -802,18 +804,21 @@ public class MovementScript : MonoBehaviour
                 yield break;
             }
 
-            Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
-            bool isMoving = vel.magnitude > 0.5f;
-            AudioClip[] cur = isMoving ? voiceLinesMove : voiceLinesIdle;
-
-            if (!source.isPlaying && cur.Length > 0)
+            if (canSpeak)
             {
-                int lineVal = Random.Range(0, cur.Length);
-                source.clip = cur[lineVal];
-                source.Play();
+                Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+                bool isMoving = vel.magnitude > 0.5f;
+                AudioClip[] cur = isMoving ? voiceLinesMove : voiceLinesIdle;
+
+                if (!source.isPlaying && cur.Length > 0)
+                {
+                    int lineVal = Random.Range(0, cur.Length);
+                    source.clip = cur[lineVal];
+                    source.Play();
+                }
             }
 
-            yield return new WaitForSeconds(Random.Range(30f, 60f));
+            yield return new WaitForSeconds(canSpeak ? Random.Range(30f, 60f) : Random.Range(5f, 10f));
         }
     }
 
