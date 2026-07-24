@@ -504,7 +504,7 @@ public class MovementScript : MonoBehaviour
         rb.AddForce(Vector3.up * jumpVel * mult, ForceMode.Impulse);
         rb.AddForce(forwardDir * jumpVelFor, ForceMode.Impulse);
         drain = true;
-        sourceJump.pitch = Random.Range(0.80f, 1f);
+        sourceJump.pitch = Random.Range(0.75f, 1.25f);
         sourceJump.Play();
         coyoteTimer = 0f;
         canJump = false;
@@ -711,8 +711,8 @@ public class MovementScript : MonoBehaviour
         {
             Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
             float target = 0;
-            if (Input.GetKey(KeyCode.W)) { target = 0.0375f; }
-            else if (Input.GetKey(KeyCode.S)) { target = 0.0175f; }
+            if (Input.GetKey(KeyCode.W)) { target = 0.0275f; }
+            else if (Input.GetKey(KeyCode.S)) { target = 0.015f; }
             else { target = 0; }
             rolling.volume = Mathf.MoveTowards(rolling.volume, target, 0.06f * Time.deltaTime);
         }
@@ -803,7 +803,7 @@ public class MovementScript : MonoBehaviour
             }
 
             Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
-            bool isMoving = vel.magnitude > 2.75f;
+            bool isMoving = vel.magnitude > 0.5f;
             AudioClip[] cur = isMoving ? voiceLinesMove : voiceLinesIdle;
 
             if (!source.isPlaying && cur.Length > 0)

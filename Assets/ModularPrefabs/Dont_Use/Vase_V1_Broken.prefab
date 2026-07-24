@@ -1243,9 +1243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9f4e2ca4f3557409e3af0ea1ecc45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childObjDecay: []
   decaysOverTime: 0
-  timeUntilDecay: 0
   potVelocity: {x: 0, y: 0, z: 0}
   minPitch: 0.95
   maxPitch: 1.2
@@ -1264,7 +1262,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 0fcec7a273e24af4795e8db464f197c0, type: 3}
   m_Resource: {fileID: 8300000, guid: 0fcec7a273e24af4795e8db464f197c0, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
