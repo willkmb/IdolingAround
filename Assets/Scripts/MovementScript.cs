@@ -321,7 +321,7 @@ public class MovementScript : MonoBehaviour
             sourceCol.pitch = Random.Range(0.37f, 0.45f);
             sourceCol.Play();
 
-            if (impactSpeed > 10.5f && Time.time - lastVoice >= 2f)
+            if (impactSpeed > 10.5f && Time.time - lastVoice >= 2f && canSpeak)
             {
                 int lineVal = Random.Range(0, voiceLinesHit.Length);
                 source.PlayOneShot(voiceLinesHit[lineVal]);

@@ -45,11 +45,13 @@ public class RespawnPlayer : MonoBehaviour
             transition1.Play();
             Invoke("Spawn", cutsceneLength);
             Invoke("RunDeathCounter", cutsceneLength);
+            Invoke("PlayVoiceline", cutsceneLength);
         }
         else
         {
             Invoke("Spawn", 0.25f);
             Invoke("RunDeathCounter", 0.25f);
+            Invoke("PlayVoiceline", 0.25f);
         }
     }
 
@@ -58,6 +60,7 @@ public class RespawnPlayer : MonoBehaviour
         movementScript.isSpawning = true;
         Spawn();
         RunDeathCounter();
+        PlayVoiceline();
     }
 
     public void Spawn()
@@ -70,11 +73,12 @@ public class RespawnPlayer : MonoBehaviour
         this.transform.position = movementScript.respawnPoint.position;
         movementScript.respawnOnSide(movementScript.respawnPoint.eulerAngles.y);
         Debug.Log("should have moved");
-        GameObject.Find("CameraTarget").transform.rotation = Quaternion.Euler(0f, movementScript.respawnPoint.eulerAngles.y, 0f);
         respawnSound.pitch = Random.Range(0.75f, 1.1f);
         respawnSound.Play();
+        GameObject.Find("CameraTarget").transform.rotation = Quaternion.Euler(0f, movementScript.respawnPoint.eulerAngles.y, 0f);
         Invoke("KinematicOff", 0.05f);
     }
+
 
     void RunDeathCounter()
     {
@@ -90,7 +94,6 @@ public class RespawnPlayer : MonoBehaviour
         }
         rb.isKinematic = false;
         movementScript.isSpawning = false;
-        PlayVoiceline();
     }
 
     void PlayVoiceline()
