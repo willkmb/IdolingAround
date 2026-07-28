@@ -52,6 +52,8 @@ public class BoulderRoll : MonoBehaviour
                 rollSource.loop = false;
                 rollSource.Stop();
                 rollSource.clip = audioClip;
+                rollSource.pitch = 1;
+                rollSource.volume = 0.4f;
                 rollSource.Play();
                 boulderKillTrigger.SetActive(false);
                 boulderInvisWall.SetActive(true);
