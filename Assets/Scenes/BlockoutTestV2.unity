@@ -61341,7 +61341,7 @@ MonoBehaviour:
   StandUpSpeed: 12
   groundImpactThresh: 6
   timerText: {fileID: 14623758}
-  countdownTime: 300
+  countdownTime: 10
   endScreen: {fileID: 1161334216}
   minChargeColor: {r: 0.3254902, g: 0.21176471, b: 0.21568628, a: 0.5882353}
   maxChargeColor: {r: 0.3254902, g: 0.21176471, b: 0.21568628, a: 1}
@@ -61387,8 +61387,8 @@ MonoBehaviour:
   canSquashAndStretch: 0
   squashHolder: {fileID: 47429810}
   playerMesh: {fileID: 258626725}
-  jumpStretch: 1.1
-  landSquash: 0.9
+  jumpStretch: 1.2
+  landSquash: 0.85
   resetSpeed: 7.25
   impulse: {fileID: 288821128}
   impactThreshold: 3
@@ -124688,7 +124688,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 557508883}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05810391, y: 0.010014382, z: -0.004216029, w: 0.99825144}
+  m_LocalRotation: {x: 0.05810391, y: 0.010014381, z: -0.0042160284, w: 0.99825144}
   m_LocalPosition: {x: -0.06340877, y: 1.1231478, z: 1.1944978}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -351801,7 +351801,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641885919}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.029489117, y: 0.010131022, z: -0.003927476, w: 0.99950606}
+  m_LocalRotation: {x: 0.029489117, y: 0.010131023, z: -0.0039274762, w: 0.99950606}
   m_LocalPosition: {x: -0.06340877, y: 1.1231478, z: 1.1944978}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

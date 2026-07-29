@@ -105,7 +105,7 @@ public class CamPedestal : MonoBehaviour
         //nextArrow.GetComponent<Animation>().Blend("NextArrowFadeIn");
         needToClick = true;
         movementScript.enabled = false;
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(0.5f);
         StartCoroutine(LB());
     }
 
