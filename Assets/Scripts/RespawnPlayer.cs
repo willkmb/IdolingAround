@@ -28,7 +28,7 @@ public class RespawnPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace) && !movementScript.isSpawning && movementScript.canRespawn)
+        if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.R) && !movementScript.isSpawning && movementScript.canRespawn)
         {
             StartSpawnOnKeyDown();
             Debug.Log("respawning");
