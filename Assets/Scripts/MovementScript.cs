@@ -92,7 +92,8 @@ public class MovementScript : MonoBehaviour
     [Header("Camera")]
     [SerializeField] float normalFOV = 41f;
     [SerializeField] float MovingFOV = 63f;
-    [SerializeField] float fovSpeed = 1.15f;
+    [SerializeField] float fovSpeedOut = 1.15f;
+    [SerializeField] float fovSpeedIn = 1.15f;
 
     [Header("Respawn")]
     public bool canRespawn = true;
@@ -417,7 +418,7 @@ public class MovementScript : MonoBehaviour
                 COM = Vector3.Lerp(COM, Vector3.zero, StandUpSpeed * Time.deltaTime);
                 rb.angularDamping = 4;
                 flipped = true;
-                cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, MovingFOV, 0.55f * Time.deltaTime);
+                cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, MovingFOV, fovSpeedIn * Time.deltaTime);
             }
 
             if (!canJump)
@@ -459,7 +460,7 @@ public class MovementScript : MonoBehaviour
     {
         if (move == 0)
         {
-            cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, normalFOV, fovSpeed * Time.deltaTime);
+            cam.m_Lens.FieldOfView = Mathf.Lerp(cam.m_Lens.FieldOfView, normalFOV, fovSpeedOut * Time.deltaTime);
         }
     }
 
