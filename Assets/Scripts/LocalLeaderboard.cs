@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class LocalLeaderboard : MonoBehaviour
 {
+    [Header("Menu Preview")]
+    [SerializeField] bool allowEntry = true;
+    [SerializeField] string gameSceneName = "";
+
     private TMP_InputField nameInput;
     private List<(string name, float value, string ghostId, int gems, int deaths)> entries = new List<(string, float, string, int, int)>();
     private int maxEntries = 8;
@@ -16,11 +20,15 @@ public class LocalLeaderboard : MonoBehaviour
     [SerializeField] Button[] ghostButtons;
     [SerializeField] ExhibitionVerToggle ex;
     [SerializeField] GameObject player;
+    private bool IsExhibition => allowEntry ? ex.ExhibitionMode : true;
 
     void Start()
     {
-        nameInput = GetComponentInChildren<TMP_InputField>();
-        nameInput.characterLimit = 4;
+        if (allowEntry)
+        {
+            nameInput = GetComponentInChildren<TMP_InputField>();
+            nameInput.characterLimit = 4;
+        }
         loadEntries();
         RefreshList();
 
@@ -33,7 +41,7 @@ public class LocalLeaderboard : MonoBehaviour
 
     public void enterName()
     {
-        if (hasEntered) return;
+        if (!allowEntry || hasEntered) return;
         string name = nameInput.text;
         if (string.IsNullOrEmpty(name)) return;
 
@@ -44,7 +52,7 @@ public class LocalLeaderboard : MonoBehaviour
         int deaths = player.GetComponent<DeathCounter>().deaths;
 
         float value;
-        if (ex.ExhibitionMode)
+        if (IsExhibition)
         {
             value = PlayerPrefs.GetFloat("LastRunDist", 0f);
             entries.Add((name.ToLower(), value, ghostId, gems, deaths));
@@ -68,12 +76,13 @@ public class LocalLeaderboard : MonoBehaviour
     {
         if (index >= entries.Count) return;
         ghostRecorder.selectedId = entries[index].ghostId;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (allowEntry) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        else SceneManager.LoadScene(gameSceneName);
     }
 
     void saveEntries()
     {
-        if (ex.ExhibitionMode)
+        if (IsExhibition)
         {
             PlayerPrefs.SetInt("DistLBCount", entries.Count);
             for (int i = 0; i < entries.Count; i++)
@@ -103,7 +112,7 @@ public class LocalLeaderboard : MonoBehaviour
     void loadEntries()
     {
         entries.Clear();
-        if (ex.ExhibitionMode)
+        if (IsExhibition)
         {
             int count = PlayerPrefs.GetInt("DistLBCount", 0);
             for (int i = 0; i < count; i++)entries.Add((PlayerPrefs.GetString($"DistLBName_{i}", ""), PlayerPrefs.GetFloat($"DistLBValue_{i}", 0f), PlayerPrefs.GetString($"DistLBGhost_{i}", ""),PlayerPrefs.GetInt($"DistLBGems_{i}", 0), PlayerPrefs.GetInt($"DistLBDeaths_{i}", 0)));
@@ -122,7 +131,7 @@ public class LocalLeaderboard : MonoBehaviour
         {
             if (i < entries.Count)
             {
-                if (ex.ExhibitionMode) entryText[i].text = $"{i + 1}. {entries[i].name} - {entries[i].value:F1}m";
+                if (IsExhibition) entryText[i].text = $"{i + 1}. {entries[i].name} - {entries[i].value:F1}m";
                 else entryText[i].text = $"{i + 1}. {entries[i].name} - {Mathf.FloorToInt(entries[i].value / 60f):00}:{Mathf.FloorToInt(entries[i].value % 60f):00}";
             }
             else entryText[i].text = $"{i + 1}. ----";
@@ -161,6 +170,7 @@ public class LocalLeaderboard : MonoBehaviour
 
     private void Update()
     {
+        if (!allowEntry) return;
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.C))
         {
             PlayerPrefs.DeleteKey("HighScore");
