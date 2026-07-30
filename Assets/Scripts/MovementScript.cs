@@ -68,7 +68,7 @@ public class MovementScript : MonoBehaviour
     [SerializeField] AudioSource source;
     public AudioSource sourceJump;
     [SerializeField] AudioSource sourceCol;
-    [SerializeField] AudioSource rolling;
+    public AudioSource rolling;
 
     [Header("Decals")]
     [SerializeField] Material[] grassMats;

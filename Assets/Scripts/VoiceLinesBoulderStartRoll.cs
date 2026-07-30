@@ -17,7 +17,7 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             StopCoroutine(Cutscene());
             StartCoroutine(startBoulder.StartBoulderRoll());
