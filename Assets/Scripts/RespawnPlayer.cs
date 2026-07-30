@@ -28,7 +28,7 @@ public class RespawnPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.R) && !movementScript.isSpawning && movementScript.canRespawn)
+        if ((Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.R)) && !movementScript.isSpawning && movementScript.canRespawn)
         {
             StartSpawnOnKeyDown();
             Debug.Log("respawning");
@@ -38,6 +38,7 @@ public class RespawnPlayer : MonoBehaviour
     public void StartSpawn()
     {
         movementScript.isSpawning = true;
+        movementScript.canRespawn = false;
         if (cutscene != null)
         {
             mainCamera.SetActive(false);
@@ -58,6 +59,7 @@ public class RespawnPlayer : MonoBehaviour
     public void StartSpawnOnKeyDown()
     {
         movementScript.isSpawning = true;
+        movementScript.canRespawn = false;
         Spawn();
         RunDeathCounter();
         PlayVoiceline();
@@ -94,11 +96,18 @@ public class RespawnPlayer : MonoBehaviour
         }
         rb.isKinematic = false;
         movementScript.isSpawning = false;
+        Invoke("SetCanSpawn", 0.25f);
+
     }
 
     void PlayVoiceline()
     {
         voicePlayer.clip = voicelines[Random.Range(0, voicelines.Length - 1)];
         voicePlayer.Play();
+    }
+
+    void SetCanSpawn()
+    {
+        movementScript.canRespawn = true;
     }
 }
