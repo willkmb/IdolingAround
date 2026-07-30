@@ -26,24 +26,29 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!paused)
-            {
-                move.enabled = false;
-                GetComponent<Rigidbody>().isKinematic = true;
-                StartCoroutine(fadeSFX());
-                pause.callPauseScreen();
-                GhostPauser.PauseGhosts();
-            }
-            else
-            {
-                pause.callPauseScreenOff();
-            }
-
-            paused = !paused;
+            PauseUnpause();
         }
 
         if (toggle.isOn) move.inverted = true;
         else { move.inverted = false; }
+    }
+
+    public void PauseUnpause()
+    {
+        if (!paused)
+        {
+            move.enabled = false;
+            GetComponent<Rigidbody>().isKinematic = true;
+            StartCoroutine(fadeSFX());
+            pause.callPauseScreen();
+            GhostPauser.PauseGhosts();
+        }
+        else
+        {
+            pause.callPauseScreenOff();
+        }
+
+        paused = !paused;
     }
 
     IEnumerator fadeSFX()

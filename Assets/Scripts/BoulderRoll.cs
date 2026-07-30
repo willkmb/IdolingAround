@@ -36,7 +36,7 @@ public class BoulderRoll : MonoBehaviour
     {
         if (!isEndOfCorridor)
         {
-            if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.R) && trig.hasEntered)
+            if ((Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.R)) && trig.hasEntered)
             {
                 Debug.Log("Respawning Boulder");
 

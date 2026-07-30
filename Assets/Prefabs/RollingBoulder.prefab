@@ -97,8 +97,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a287bf5d3600e44bd4d63beb016c5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chaseVoicelines: {fileID: 0}
+  voiceSource: {fileID: 0}
+  audioClip: {fileID: 0}
+  boulderKillTrigger: {fileID: 0}
+  boulderInvisWall: {fileID: 0}
   boulderRespawn: {fileID: 0}
   boulderRespawnTime: 0
+  trig: {fileID: 0}
 --- !u!114 &6608403471468265891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,6 +195,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd7f97408e99189469b8f0f155434279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  respawnPlayer: {fileID: 0}
+  boulderScript: {fileID: 0}
+  thisCutscene: {fileID: 0}
+  cutsceneLength: 0
 --- !u!82 &8168005975389650170
 AudioSource:
   m_ObjectHideFlags: 0
@@ -350,6 +360,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6530484666136975673, guid: f3807b7d8e3797b4e86a02939cf3c9ba, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3321b38b6535995448609d058ef0cc71, type: 2}
     - target: {fileID: 8117319838246408986, guid: f3807b7d8e3797b4e86a02939cf3c9ba, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
