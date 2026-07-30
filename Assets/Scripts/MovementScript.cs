@@ -133,6 +133,7 @@ public class MovementScript : MonoBehaviour
     private bool justRespawned = false;
     private bool timeUp = false;
     private Vector3 meshOffset;
+    private float alignmentCheckTimer = 0f;
 
     [HideInInspector] public bool canSpeak = true;
     #endregion
@@ -548,7 +549,7 @@ public class MovementScript : MonoBehaviour
                     {
                         Debug.Log("times Up");
                         ghost.stopRecording();
-                        endScreen.callEndScreen();
+                        endScreen.callEndScreenEx();
                         timeUp = true;
                     }
                 }
@@ -660,6 +661,7 @@ public class MovementScript : MonoBehaviour
         if (cubeFrozen) return;
         if (stoodUp)
         {
+            alignmentCheckTimer = 0f;
             Quaternion target = Quaternion.Euler(0, transform.localEulerAngles.y, 0);
             cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, target, 15f * Time.deltaTime);
             return;
@@ -682,10 +684,8 @@ public class MovementScript : MonoBehaviour
 
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         float speed = vel.magnitude;
-
         if (speed < 0.01f) return;
         if (collisionCooldown > 0f) return;
-
         Vector3 velDir = vel.normalized;
         Vector3 flatForward = Vector3.ProjectOnPlane(cube.transform.forward, Vector3.up);
 
@@ -699,8 +699,19 @@ public class MovementScript : MonoBehaviour
 
         if (alignDot > 0.15f)
         {
+            alignmentCheckTimer = 0f;
             Quaternion targetRotation = Quaternion.LookRotation(velDir, Vector3.up);
             cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime);
+        }
+        else if (speed > 1.6f)
+        {
+            alignmentCheckTimer += Time.deltaTime;
+
+            if (alignmentCheckTimer > 2f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(velDir, Vector3.up);
+                cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime);
+            }
         }
     }
 

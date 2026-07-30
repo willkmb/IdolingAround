@@ -72,6 +72,35 @@ public class CamPedestal : MonoBehaviour
         StartCoroutine(CamSwitch());
         hasEnded = true;
     }
+    public void callEndScreenEx()
+    {
+        if (hasEnded) return;
+        dist.ended = true;
+        movementScript.canRespawn = false;
+        movementScript.enabled = false;
+        StartCoroutine(endScreenEx());
+        hasEnded = true;
+    }
+
+    IEnumerator endScreenEx()
+    {
+        jumpCharge.SetActive(false);
+        idol.GetComponent<MovementScript>().CheckScore();
+        trans.GetComponent<Animation>().Play("TransIn");
+        transSound.Play();
+        yield return new WaitForSeconds(0.9f);
+        screenTint.Play();
+        yield return new WaitForSeconds(0.3f);
+        screenTint.gameObject.SetActive(false);
+        trans.GetComponent<Animation>().Play("Transout");
+        transSound.Play();
+        Destroy(oldUIAnim);
+        foreach (var ui in oldUI) Destroy(ui);
+        newUI.SetActive(true);
+        needToClick = true;
+        yield return new WaitForSeconds(0.75f);
+        StartCoroutine(LB());
+    }
 
     IEnumerator CamSwitch()
     {
