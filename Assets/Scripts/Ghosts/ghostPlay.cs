@@ -27,14 +27,17 @@ public class ghostPlay : MonoBehaviour
             float time = carry / interpolateTime;
             while (time < 1f)
             {
-                time += Time.deltaTime * playbackSpeed / interpolateTime;
-                if (i + 1 >= positions.Count)
+                if (!GhostPauser.paused)
                 {
-                    this.gameObject.SetActive(false);
-                    yield break;
+                    time += Time.deltaTime * playbackSpeed / interpolateTime;
+                    if (i + 1 >= positions.Count)
+                    {
+                        this.gameObject.SetActive(false);
+                        yield break;
+                    }
+                    transform.position = Vector3.Lerp(positions[i], positions[i + 1], time);
+                    transform.rotation = Quaternion.Lerp(Quaternion.Euler(rotations[i]), Quaternion.Euler(rotations[i + 1]), time);
                 }
-                transform.position = Vector3.Lerp(positions[i], positions[i + 1], time);
-                transform.rotation = Quaternion.Lerp(Quaternion.Euler(rotations[i]), Quaternion.Euler(rotations[i + 1]), time);
                 yield return null;
             }
             carry = (time - 1f) * interpolateTime;

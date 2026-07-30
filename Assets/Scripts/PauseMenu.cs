@@ -32,6 +32,7 @@ public class PauseMenu : MonoBehaviour
                 GetComponent<Rigidbody>().isKinematic = true;
                 StartCoroutine(fadeSFX());
                 pause.callPauseScreen();
+                GhostPauser.PauseGhosts();
             }
             else
             {

@@ -13,6 +13,7 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
     {
         voiceSource = GetComponent<AudioSource>();
         StartCoroutine(Cutscene());
+        GhostPauser.PauseGhosts();
     }
 
     private void Update()
@@ -52,6 +53,7 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
 
             //5. Go back to #2 and play the next audio in the adClips array
         }
+        GhostPauser.ResumeGhosts();
         StartCoroutine(startBoulder.StartBoulderRoll());
         yield return null;
     }

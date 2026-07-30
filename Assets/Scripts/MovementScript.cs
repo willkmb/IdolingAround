@@ -710,7 +710,7 @@ public class MovementScript : MonoBehaviour
             if (alignmentCheckTimer > 2f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(velDir, Vector3.up);
-                cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime);
+                cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 150f * Time.deltaTime);
             }
         }
     }

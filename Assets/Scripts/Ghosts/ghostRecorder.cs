@@ -14,6 +14,7 @@ public class ghostRecorder : MonoBehaviour
     [Range(1f, 20f)]
     [SerializeField]private int frameCount = 5;
     private bool recording = false;
+    private float recordingTime = 0f;
 
     public static string selectedId = "";
 
@@ -22,6 +23,7 @@ public class ghostRecorder : MonoBehaviour
         positions.Clear();
         rotations.Clear();
         timestamp.Clear();
+        recordingTime = 0f;
         recording = true;
     }
 
@@ -113,15 +115,18 @@ public class ghostRecorder : MonoBehaviour
     }
 
     private void Update()
-    {
-        if(!recording) return;
+    { 
+        if(!recording || GhostPauser.paused) return;
+
+        if (!GhostPauser.paused) recordingTime += Time.deltaTime;
+        if (GhostPauser.paused) return;
 
         frames++;
         if(frames >= frameCount)
         {
             positions.Add(transform.position);
             rotations.Add(transform.eulerAngles);
-            timestamp.Add(Time.time);
+            timestamp.Add(recordingTime);
             frames = 0;
         }
     }

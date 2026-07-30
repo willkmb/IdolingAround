@@ -183,6 +183,9 @@ public class CamPedestal : MonoBehaviour
         needToClick = true;
         yield return new WaitForSeconds(0.75f);
         StartCoroutine(LB());
+        yield return new WaitForSeconds(1.25f);
+        restartText.GetComponent<Animation>().Play();
+        canRestart = true;
     }
 
     public void callPauseScreen()
@@ -226,6 +229,7 @@ public class CamPedestal : MonoBehaviour
         needToClick = false;
         Cursor.visible = false;
         movementScript.enabled = true;
+        GhostPauser.ResumeGhosts();
         idol.GetComponent<Rigidbody>().isKinematic = false;
     }
 
