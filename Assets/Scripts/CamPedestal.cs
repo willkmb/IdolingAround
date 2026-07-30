@@ -224,6 +224,7 @@ public class CamPedestal : MonoBehaviour
         foreach (var ui in oldUI) ui.SetActive(true);
         PauseUI.SetActive(false);
         needToClick = false;
+        Cursor.visible = false;
         movementScript.enabled = true;
         idol.GetComponent<Rigidbody>().isKinematic = false;
     }
