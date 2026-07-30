@@ -754,7 +754,7 @@ public class MovementScript : MonoBehaviour
 
     private void CheckDecals()
     {
-        if (!canJump || stoodUp)
+        if (!canJump || stoodUp || rb.linearVelocity.sqrMagnitude < 0.01f)
         {
             grassPart.Stop();
             mudPart.Stop();
