@@ -33,11 +33,17 @@ public class CamPedestal : MonoBehaviour
     [SerializeField] checkProgressScript dist;
 
     BoxCollider col;
+    PauseMenu pauseMenu;
+
     private bool gamefin = false;
     private bool needToClick = false;
     private bool canRestart = false;
     private bool hasEnded = false;
-    void Start() { col = GetComponent<BoxCollider>(); }
+    void Start() 
+    { 
+        col = GetComponent<BoxCollider>(); 
+        pauseMenu = FindFirstObjectByType<PauseMenu>();
+    }
 
     void Update()
     {
@@ -211,6 +217,7 @@ public class CamPedestal : MonoBehaviour
         oldUIAnim.enabled = false;
         foreach (var ui in oldUI) ui.SetActive(false);
         PauseUI.SetActive(true);
+        pauseMenu.paused = true;
         needToClick = true;
     }
     IEnumerator pauseScreenOff()
@@ -231,6 +238,7 @@ public class CamPedestal : MonoBehaviour
         movementScript.enabled = true;
         GhostPauser.ResumeGhosts();
         idol.GetComponent<Rigidbody>().isKinematic = false;
+        pauseMenu.paused = false;
     }
 
 }

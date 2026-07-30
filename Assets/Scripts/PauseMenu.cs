@@ -11,8 +11,10 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] Slider volSliderSFX;
     [SerializeField] Slider volSliderMusic;
     [SerializeField] Toggle toggle;
-    private bool paused = false;
+    [HideInInspector] public bool paused = false;
+    [HideInInspector] public bool canPause = true;
 
+    float timer = 1.3f;
     void Start()
     {
         volSliderMusic.value = 1f;
@@ -24,11 +26,13 @@ public class PauseMenu : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && timer > 1.3f && canPause)
         {
             PauseUnpause();
+            timer = 0;
         }
 
+        timer += Time.deltaTime;
         if (toggle.isOn) move.inverted = true;
         else { move.inverted = false; }
     }
@@ -47,8 +51,6 @@ public class PauseMenu : MonoBehaviour
         {
             pause.callPauseScreenOff();
         }
-
-        paused = !paused;
     }
 
     IEnumerator fadeSFX()

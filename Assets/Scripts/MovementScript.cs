@@ -861,6 +861,10 @@ public class MovementScript : MonoBehaviour
                 }
             }
 
+            else
+            {
+                source.Stop();
+            }
             yield return new WaitForSeconds(canSpeak ? Random.Range(30f, 60f) : Random.Range(5f, 10f));
         }
     }

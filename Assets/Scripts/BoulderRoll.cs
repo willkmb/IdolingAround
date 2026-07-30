@@ -19,9 +19,13 @@ public class BoulderRoll : MonoBehaviour
     AudioSource rollSource;
     Rigidbody rb;
 
+    PauseMenu pause;
+
     float targetDistance;
 
     bool isEndOfCorridor;
+
+    public bool hasStartedRolling = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,6 +33,7 @@ public class BoulderRoll : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rollAnim = GetComponentInChildren<Animation>();
         rollSource = GetComponent<AudioSource>();
+        pause = FindFirstObjectByType<PauseMenu>();
     }
 
 
@@ -36,7 +41,7 @@ public class BoulderRoll : MonoBehaviour
     {
         if (!isEndOfCorridor)
         {
-            if ((Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.R)) && trig.hasEntered)
+            if ((Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.R)) && trig.hasEntered && !pause.paused)
             {
                 Debug.Log("Respawning Boulder");
 
@@ -45,7 +50,7 @@ public class BoulderRoll : MonoBehaviour
                 splineAnim.Play();
             }
 
-            if (splineAnim.Duration - splineAnim.ElapsedTime < 0.1f)
+            if (splineAnim.Duration - splineAnim.ElapsedTime < 0.1f && !pause.paused)
             {
                 chaseVoicelines.isNearby = false;
                 rollAnim.Stop();
@@ -59,6 +64,23 @@ public class BoulderRoll : MonoBehaviour
                 boulderInvisWall.SetActive(true);
                 isEndOfCorridor = true;
             }
+
+            if (hasStartedRolling)
+            {
+                if (pause.paused) 
+                { 
+                    splineAnim.Pause();
+                    rollSource.Pause();
+                    rollAnim["BoulderRoll"].speed = 0f;
+                }
+                else 
+                { 
+                    splineAnim.Play();
+                    rollSource.Play();
+                    rollAnim["BoulderRoll"].speed = 1f;
+                }
+            }
+
         }
 
 

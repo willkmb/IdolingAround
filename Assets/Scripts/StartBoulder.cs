@@ -18,6 +18,7 @@ public class StartBoulder : MonoBehaviour
     [SerializeField] Animation transition1;
     [SerializeField] VoiceLinesBoulderStartRoll startRollVoicelines;
     [SerializeField] VoiceLinesBoulderChase chaseVoicelines;
+    [SerializeField] BoulderRoll boulderRollScript;
     [SerializeField] AudioSource rollSound;
 
     bool hasStarted;
@@ -58,6 +59,7 @@ public class StartBoulder : MonoBehaviour
         movementScript.canSpeak = true;
         movementScript.timerRunning = true;
         movementScript.canRespawn = true;
+        boulderRollScript.hasStartedRolling = true;
         cutscene.SetActive(false);
         mainCamera.SetActive(true);
         splineAnim.Play();

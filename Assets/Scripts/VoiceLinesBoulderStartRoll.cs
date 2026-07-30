@@ -9,9 +9,11 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
     [SerializeField] StartBoulder startBoulder;
 
     AudioSource voiceSource;
+    PauseMenu pauseMenu;
     private void OnEnable()
     {
         voiceSource = GetComponent<AudioSource>();
+        pauseMenu = FindFirstObjectByType<PauseMenu>();
         StartCoroutine(Cutscene());
         GhostPauser.PauseGhosts();
     }
@@ -22,6 +24,7 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
         {
             StopCoroutine(Cutscene());
             StartCoroutine(startBoulder.StartBoulderRoll());
+            pauseMenu.canPause = true;
         }
     }
 
@@ -29,6 +32,7 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
     public IEnumerator Cutscene()
     {
         boulderRock.Play();
+        pauseMenu.canPause = false;
         yield return null;
 
         //1.Loop through each AudioClip
@@ -54,6 +58,7 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
             //5. Go back to #2 and play the next audio in the adClips array
         }
         GhostPauser.ResumeGhosts();
+        pauseMenu.canPause = true;
         StartCoroutine(startBoulder.StartBoulderRoll());
         yield return null;
     }
