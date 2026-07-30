@@ -14,6 +14,11 @@ public class MenuScript : MonoBehaviour
     [SerializeField] AudioSource click;
     [SerializeField] GameObject arrow;
     private bool pressedPlay = false;
+
+    private void Start()
+    {
+        Screen.SetResolution(3840, 2160, true);
+    }
     public void playButton()
     {
         if (pressedPlay) return;

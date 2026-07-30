@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class ghostRecorder : MonoBehaviour
 {
