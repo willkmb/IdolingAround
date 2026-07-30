@@ -225,7 +225,7 @@ public class MovementScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(0);
+            LoadMainMenu();
         }
 
         if(Input.GetKeyDown(KeyCode.W))
@@ -827,6 +827,10 @@ public class MovementScript : MonoBehaviour
         }
     }
 
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
     #endregion
 
     #region Voice Lines
