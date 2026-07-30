@@ -668,16 +668,11 @@ public class MovementScript : MonoBehaviour
         float move = Input.GetAxis("Vertical");
         float turning = Input.GetAxis("Horizontal");
 
-        // keep the cube turning in step with the player's actual steering input,
-        // same as HandleTurning does to transform - independent of velocity entirely
         if (turning != 0f && flipped && move != 0f)
         {
             float currentTurnSpeed = move > 0f ? turnSpeed : reverseTurnSpeed;
 
-            if (!inverted)
-            {
-                cube.transform.Rotate(Vector3.up, turning * currentTurnSpeed * Time.deltaTime, Space.World);
-            }
+            if (!inverted) cube.transform.Rotate(Vector3.up, turning * currentTurnSpeed * Time.deltaTime, Space.World);
             else
             {
                 float reverseFactor = Mathf.Sign(move);
@@ -689,22 +684,19 @@ public class MovementScript : MonoBehaviour
         float speed = vel.magnitude;
 
         if (speed < 0.01f) return;
-        if (collisionCooldown > 0f) return; // don't read velocity right after a wall hit, let it settle first
+        if (collisionCooldown > 0f) return;
 
         Vector3 velDir = vel.normalized;
         Vector3 flatForward = Vector3.ProjectOnPlane(cube.transform.forward, Vector3.up);
 
         if (flatForward.sqrMagnitude < 0.001f)
         {
-            // no real horizontal forward yet (e.g. right after respawnOnSide) - snap once to start from
             cube.transform.rotation = Quaternion.LookRotation(velDir, Vector3.up);
             return;
         }
 
         float alignDot = Vector3.Dot(flatForward.normalized, velDir);
 
-        // only turn towards velocity that's actually ahead of current facing.
-        // anything with a backward component - bounces, reversing, whatever - gets ignored completely
         if (alignDot > 0.15f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(velDir, Vector3.up);
