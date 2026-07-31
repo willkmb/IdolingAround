@@ -31,6 +31,7 @@ public class CamPedestal : MonoBehaviour
 
     [SerializeField] MovementScript movementScript;
     [SerializeField] checkProgressScript dist;
+    [SerializeField] PauseMenu pause;
 
     BoxCollider col;
     PauseMenu pauseMenu;
@@ -85,6 +86,7 @@ public class CamPedestal : MonoBehaviour
     {
         Debug.Log("idol black screen");
 
+        pause.canPause = false;
         jumpCharge.SetActive(false);
         mainCam.SetActive(false);
         thisCam.SetActive(true);
@@ -173,6 +175,7 @@ public class CamPedestal : MonoBehaviour
 
     IEnumerator endScreenEx()
     {
+        pause.canPause = false;
         jumpCharge.SetActive(false);
         idol.GetComponent<MovementScript>().CheckScore();
         trans.GetComponent<Animation>().Play("TransIn");

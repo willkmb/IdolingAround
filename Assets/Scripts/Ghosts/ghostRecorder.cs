@@ -9,6 +9,10 @@ public class ghostRecorder : MonoBehaviour
     public static List<Vector3> rotations = new List<Vector3>();
     public static List<float> timestamp = new List<float>();
 
+    public static List<Vector3> loadedPositions = new List<Vector3>();
+    public static List<Vector3> loadedRotations = new List<Vector3>();
+    public static List<float> loadedTimestamp = new List<float>();
+
     private int frames = 0;
     [Range(1f, 20f)]
     [SerializeField]private int frameCount = 5;
@@ -68,9 +72,9 @@ public class ghostRecorder : MonoBehaviour
 
     public static void load()
     {
-        positions.Clear();
-        rotations.Clear();
-        timestamp.Clear();
+        loadedPositions.Clear();
+        loadedRotations.Clear();
+        loadedTimestamp.Clear();
 
         if (string.IsNullOrEmpty(selectedId)) return;
 
@@ -95,20 +99,20 @@ public class ghostRecorder : MonoBehaviour
         {
             if(string.IsNullOrEmpty(pos)) continue;
             string[] values = pos.Split("#");
-            positions.Add(new Vector3(float.Parse(values[0]), float.Parse(values[1]), float.Parse(values[2])));
+            loadedPositions.Add(new Vector3(float.Parse(values[0]), float.Parse(values[1]), float.Parse(values[2])));
         }
 
         foreach(string rot in rotFrames)
         {
             if (string.IsNullOrEmpty(rot)) continue;
             string[] values = rot.Split("#");
-            rotations.Add(new Vector3(float.Parse(values[0]), float.Parse(values[1]), float.Parse(values[2])));
+            loadedRotations.Add(new Vector3(float.Parse(values[0]), float.Parse(values[1]), float.Parse(values[2])));
         }
 
         foreach(string time in timeFrames)
         {
             if (string.IsNullOrEmpty(time)) continue;
-            timestamp.Add(float.Parse(time));
+            loadedTimestamp.Add(float.Parse(time));
         }
 
     }

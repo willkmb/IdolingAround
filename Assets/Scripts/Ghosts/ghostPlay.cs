@@ -11,9 +11,9 @@ public class ghostPlay : MonoBehaviour
     private void Start()
     {
         ghostRecorder.load();
-        positions.AddRange(ghostRecorder.positions);
-        rotations.AddRange(ghostRecorder.rotations);
-        timestamp.AddRange(ghostRecorder.timestamp);
+        positions.AddRange(ghostRecorder.loadedPositions);
+        rotations.AddRange(ghostRecorder.loadedRotations);
+        timestamp.AddRange(ghostRecorder.loadedTimestamp);
         if (positions.Count > 1 && rotations.Count > 1) StartCoroutine(playback());
         else this.gameObject.SetActive(false);
     }

@@ -829,6 +829,10 @@ public class MovementScript : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        foreach (GameObject obj in FindObjectsByType<GameObject>(FindObjectsSortMode.None))
+        {
+            if (obj.scene.name == "DontDestroyOnLoad") Destroy(obj);
+        }
         SceneManager.LoadScene(0);
     }
     #endregion
