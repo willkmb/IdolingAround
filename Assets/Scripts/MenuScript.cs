@@ -9,10 +9,12 @@ public class MenuScript : MonoBehaviour
     [SerializeField] GameObject screen;
     [SerializeField] GameObject text;
     [SerializeField] GameObject aboutScreen;
+    [SerializeField] GameObject levelScreen;
     [SerializeField] GameObject menuScreen;
     [SerializeField] GameObject tint;
     [SerializeField] AudioSource click;
     [SerializeField] GameObject arrow;
+    [SerializeField] GameObject arrow2;
     private bool pressedPlay = false;
 
     private void Start()
@@ -81,6 +83,44 @@ public class MenuScript : MonoBehaviour
         about["AboutAnimIn"].speed = -1;
         about["AboutAnimIn"].time = about["AboutAnimIn"].length;
         about.Play("AboutAnimIn");
+
+        var menu = menuScreen.GetComponent<Animation>();
+        menu["MenuSlideOutAnim"].speed = -1;
+        menu["MenuSlideOutAnim"].time = menu["MenuSlideOutAnim"].length;
+        menu.Play("MenuSlideOutAnim");
+
+        trans.GetComponent<AudioSource>().Play();
+        var tintAnim = tint.GetComponent<Animation>();
+        tintAnim["TintMenuAnim"].speed = -1;
+        tintAnim["TintMenuAnim"].time = tintAnim["TintMenuAnim"].length;
+        tintAnim.Play("TintMenuAnim");
+    }
+
+    public void levelIn()
+    {
+        levelScreen.GetComponent<Animation>()["LevelSelectIn"].speed = 1;
+        levelScreen.GetComponent<Animation>()["LevelSelectIn"].time = 0f;
+        levelScreen.GetComponent<Animation>().Play();
+        menuScreen.GetComponent<Animation>()["MenuSlideOutAnim"].speed = 1;
+        menuScreen.GetComponent<Animation>()["MenuSlideOutAnim"].time = 0f;
+        menuScreen.GetComponent<Animation>().Play();
+        menuScreen.GetComponent<MenuMove>().enabled = false;
+        click.Play();
+        tint.GetComponent<Animation>()["TintMenuAnim"].speed = 1;
+        tint.GetComponent<Animation>()["TintMenuAnim"].time = 0f;
+        tint.GetComponent<Animation>().Play();
+        trans.GetComponent<AudioSource>().Play();
+    }
+
+    public void LevelBack()
+    {
+        arrow2.GetComponent<Animation>().Play("NextArrowClick");
+        click.Play();
+
+        var level = levelScreen.GetComponent<Animation>();
+        level["LevelSelectIn"].speed = -1;
+        level["LevelSelectIn"].time = level["LevelSelectIn"].length;
+        level.Play("LevelSelectIn");
 
         var menu = menuScreen.GetComponent<Animation>();
         menu["MenuSlideOutAnim"].speed = -1;
