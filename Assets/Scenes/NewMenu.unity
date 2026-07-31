@@ -36059,6 +36059,11 @@ MonoBehaviour:
   fovSpeedOut: 1.15
   fovSpeedIn: 1.15
   canRespawn: 1
+  minSpeedToRotate: 0.5
+  flipThresh: 0.2
+  rotateLerpSpeed: 10
+  flipMinSpeed: 1.6
+  flipConfirmTime: 0.25
   flipped: 0
   timerRunning: 1
   canSpeak: 1
@@ -93716,7 +93721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.7882353}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.0627451}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
