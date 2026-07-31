@@ -98,6 +98,13 @@ public class MovementScript : MonoBehaviour
 
     [Header("Respawn")]
     public bool canRespawn = true;
+
+    [Header("Cube Facing Tuning")]
+    [SerializeField] private float minSpeedToRotate = 0.5f;
+    [SerializeField] private float flipThresh = 0.2f;
+    [SerializeField] private float rotateLerpSpeed = 10f;
+    [SerializeField] private float flipMinSpeed = 1.6f;
+    [SerializeField] private float flipConfirmTime = 0.25f;
     #endregion
 
     #region Private Fields
@@ -134,6 +141,8 @@ public class MovementScript : MonoBehaviour
     private bool timeUp = false;
     private Vector3 meshOffset;
     private float alignmentCheckTimer = 0f;
+    private bool cubeMatchVel = true;
+    private float flipMisalignTimer = 0f;
 
     [HideInInspector] public bool canSpeak = true;
     #endregion
@@ -658,60 +667,47 @@ public class MovementScript : MonoBehaviour
 
     private void RotateCubeToVelocity()
     {
-        if (cubeFrozen) return;
-        if (stoodUp)
+        if (cubeFrozen)
         {
-            alignmentCheckTimer = 0f;
-            Quaternion target = Quaternion.Euler(0, transform.localEulerAngles.y, 0);
-            cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, target, 15f * Time.deltaTime);
+            flipMisalignTimer = 0f;
             return;
         }
 
-        float move = Input.GetAxis("Vertical");
-        float turning = Input.GetAxis("Horizontal");
-
-        if (turning != 0f && flipped && move != 0f)
+        if (stoodUp)
         {
-            float currentTurnSpeed = move > 0f ? turnSpeed : reverseTurnSpeed;
-
-            if (!inverted) cube.transform.Rotate(Vector3.up, turning * currentTurnSpeed * Time.deltaTime, Space.World);
-            else
-            {
-                float reverseFactor = Mathf.Sign(move);
-                cube.transform.Rotate(Vector3.up, turning * currentTurnSpeed * reverseFactor * Time.deltaTime, Space.World);
-            }
+            Quaternion target = Quaternion.Euler(0, transform.localEulerAngles.y, 0);
+            cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, target, 15f * Time.deltaTime);
+            flipMisalignTimer = 0f;
+            return;
         }
 
         Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         float speed = vel.magnitude;
-        if (speed < 0.01f) return;
-        if (collisionCooldown > 0f) return;
-        Vector3 velDir = vel.normalized;
-        Vector3 flatForward = Vector3.ProjectOnPlane(cube.transform.forward, Vector3.up);
 
-        if (flatForward.sqrMagnitude < 0.001f)
+        if (speed < minSpeedToRotate)
         {
-            cube.transform.rotation = Quaternion.LookRotation(velDir, Vector3.up);
+            flipMisalignTimer = 0f;
             return;
         }
 
-        float alignDot = Vector3.Dot(flatForward.normalized, velDir);
+        Vector3 velDir = vel.normalized;
+        float alignDot = Vector3.Dot(cube.transform.forward, velDir);
+        if (cubeMatchVel && alignDot < -flipThresh) cubeMatchVel = false;
+        else if (!cubeMatchVel && alignDot > flipThresh) cubeMatchVel = true;
 
-        if (alignDot > 0.15f)
-        {
-            alignmentCheckTimer = 0f;
-            Quaternion targetRotation = Quaternion.LookRotation(velDir, Vector3.up);
-            cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 10f * Time.deltaTime);
-        }
-        else if (speed > 1.6f)
-        {
-            alignmentCheckTimer += Time.deltaTime;
+        Quaternion targetRotation = cubeMatchVel ? Quaternion.LookRotation(velDir, Vector3.up): Quaternion.LookRotation(-velDir, Vector3.up);
+        cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, rotateLerpSpeed * Time.deltaTime);
 
-            if (alignmentCheckTimer > 2f)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(velDir, Vector3.up);
-                cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, 150f * Time.deltaTime);
-            }
+        float vert = Input.GetAxis("Vertical");
+        bool forwardInput = vert > 0.2f;
+        bool suspiciousMisalignment = !cubeMatchVel && forwardInput && speed > flipMinSpeed && collisionCooldown <= 0f;
+        flipMisalignTimer = suspiciousMisalignment ? flipMisalignTimer + Time.deltaTime : 0f;
+
+        if (flipMisalignTimer >= flipConfirmTime)
+        {
+            cube.transform.Rotate(Vector3.up, 180f, Space.World);
+            cubeMatchVel = true;
+            flipMisalignTimer = 0f;
         }
     }
 
