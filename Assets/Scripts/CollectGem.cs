@@ -38,11 +38,18 @@ public class CollectGem : MonoBehaviour
         {
             sfx.Play();
             gemCounter.UpdateGemCounter();
-            thisGem.SetActive(false);
+            StartCoroutine(collectRoutine());
             GetComponent<BoxCollider>().enabled = false;
             isCollected = true;
         }
 
+    }
+
+    IEnumerator collectRoutine()
+    {
+        thisGem.GetComponent<Animation>().Play("GemCollectAnim");
+        yield return new WaitForSeconds(thisGem.GetComponent<Animation>()["GemCollectAnim"].length);
+        thisGem.SetActive(false);
     }
 
     IEnumerator TriggerOn()
