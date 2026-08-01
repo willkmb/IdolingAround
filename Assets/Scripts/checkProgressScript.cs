@@ -1,12 +1,14 @@
 using System;
-using UnityEngine;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
 public class checkProgressScript : MonoBehaviour
 {
     [SerializeField] Transform[] wp;
     [SerializeField] Transform player;
     [SerializeField] TextMeshProUGUI distText;
+    [SerializeField] Transform waypointParent;
     [HideInInspector] public bool ended = false;
 
     private int nextWp = 1;
@@ -15,11 +17,25 @@ public class checkProgressScript : MonoBehaviour
 
     void Start()
     {
+        if (MenuScript.corridorStart)
+        {
+            List<Transform> newWp = new List<Transform>();
+            for (int i = 0; i < waypointParent.childCount; i++)
+            {
+                Transform child = waypointParent.GetChild(i);
+
+                if (child.CompareTag("CorridorPoints"))
+                {
+                    newWp.Add(child);
+                }
+            }
+
+            wp = newWp.ToArray();
+        }
         distToWp = new float[wp.Length];
         for (int i = 1; i < wp.Length; i++)
         {
-            distToWp[i] = distToWp[i - 1] +
-                Vector3.Distance(wpGroundPos(wp[i - 1].position), wpGroundPos(wp[i].position));
+            distToWp[i] = distToWp[i - 1] + Vector3.Distance(wpGroundPos(wp[i - 1].position), wpGroundPos(wp[i].position));
         }
     }
 

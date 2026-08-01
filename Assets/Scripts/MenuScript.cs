@@ -15,6 +15,8 @@ public class MenuScript : MonoBehaviour
     [SerializeField] AudioSource click;
     [SerializeField] GameObject arrow;
     [SerializeField] GameObject arrow2;
+    public static bool jungleStart = false;
+    public static bool corridorStart = false;
     private bool pressedPlay = false;
 
     private void Start()
@@ -30,6 +32,8 @@ public class MenuScript : MonoBehaviour
         clicked.GetComponent<AudioSource>().Play();
         trans.GetComponent<Animation>().Play();
         trans.GetComponent<AudioSource>().Play();
+        jungleStart = false;
+        corridorStart=false;
         Invoke("load", trans.GetComponent<Animation>().clip.length);
     }
 
@@ -141,5 +145,31 @@ public class MenuScript : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+    }
+
+    public void junglePlayButton()
+    {
+        if (pressedPlay) return;
+        pressedPlay = true;
+        GameObject clicked = EventSystem.current.currentSelectedGameObject;
+        clicked.GetComponent<AudioSource>().Play();
+        trans.GetComponent<Animation>().Play();
+        trans.GetComponent<AudioSource>().Play();
+        jungleStart = true;
+        corridorStart = false;
+        Invoke("load", trans.GetComponent<Animation>().clip.length);
+    }
+
+    public void corridorPlayButton()
+    {
+        if (pressedPlay) return;
+        pressedPlay = true;
+        GameObject clicked = EventSystem.current.currentSelectedGameObject;
+        clicked.GetComponent<AudioSource>().Play();
+        trans.GetComponent<Animation>().Play();
+        trans.GetComponent<AudioSource>().Play();
+        jungleStart = false;
+        corridorStart = true;
+        Invoke("load", trans.GetComponent<Animation>().clip.length);
     }
 }

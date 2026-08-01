@@ -191,7 +191,7 @@ public class CamPedestal : MonoBehaviour
         newUI.SetActive(true);
         needToClick = true;
         yield return new WaitForSeconds(0.75f);
-        StartCoroutine(LB());
+        if(!MenuScript.corridorStart) StartCoroutine(LB());
         yield return new WaitForSeconds(1.25f);
         restartText.GetComponent<Animation>().Play();
         canRestart = true;
