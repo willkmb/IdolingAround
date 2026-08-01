@@ -28,6 +28,7 @@ public class CamPedestal : MonoBehaviour
     [SerializeField] AudioSource transSound;
     [SerializeField] GameObject restartText;
     [SerializeField] GameObject jumpCharge;
+    [SerializeField] GameObject LBWhole;
 
     [SerializeField] MovementScript movementScript;
     [SerializeField] checkProgressScript dist;
@@ -79,6 +80,7 @@ public class CamPedestal : MonoBehaviour
         movementScript.canRespawn = false;
         StartCoroutine(CamSwitch());
         hasEnded = true;
+        LBWhole.SetActive(true);
     }
 
 
@@ -171,6 +173,7 @@ public class CamPedestal : MonoBehaviour
         movementScript.enabled = false;
         StartCoroutine(endScreenEx());
         hasEnded = true;
+        LBWhole.SetActive(true);
     }
 
     IEnumerator endScreenEx()
