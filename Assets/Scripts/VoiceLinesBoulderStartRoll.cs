@@ -7,6 +7,8 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
     [SerializeField] Animation boulderRoll;
     [SerializeField] AudioClip[] audioClips;
     [SerializeField] StartBoulder startBoulder;
+    private bool ableToSkip = false;
+    [SerializeField] GameObject text;
 
     AudioSource voiceSource;
     PauseMenu pauseMenu;
@@ -16,16 +18,24 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
         pauseMenu = FindFirstObjectByType<PauseMenu>();
         StartCoroutine(Cutscene());
         GhostPauser.PauseGhosts();
+        Invoke("enableSkip", 5);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && ableToSkip)
         {
+            ableToSkip = false;
             StopCoroutine(Cutscene());
             StartCoroutine(startBoulder.StartBoulderRoll());
             pauseMenu.canPause = true;
         }
+    }
+
+    void enableSkip()
+    {
+        ableToSkip = true;
+        text.GetComponent<Animation>().Play();
     }
 
 
