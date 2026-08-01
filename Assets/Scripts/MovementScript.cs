@@ -12,6 +12,7 @@ public class MovementScript : MonoBehaviour
     #region Inspector Fields
 
     public bool inverted = false;
+    [SerializeField] PauseMenu pause;
 
     [Header("References")]
     public Transform respawnPoint;
@@ -168,6 +169,8 @@ public class MovementScript : MonoBehaviour
         StartCoroutine(voices());
         meshOffset = transform.InverseTransformPoint(playerMesh.position);
         canSquashAndStretch = true;
+
+        pause.SilentPauseUnpause();
     }
 
     private void FixedUpdate()
@@ -455,7 +458,7 @@ public class MovementScript : MonoBehaviour
     {
         if (turning != 0 && flipped && move != 0)
         {
-            if (!inverted)
+            if (inverted)
             {
                 transform.Rotate(Vector3.up, turning * turnSpeed * Time.deltaTime, Space.World);
             }

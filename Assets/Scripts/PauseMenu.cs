@@ -66,4 +66,15 @@ public class PauseMenu : MonoBehaviour
 
     public void SetSFXVolume(float value) { mixer.SetFloat("SFXVolume", Mathf.Log10(Mathf.Clamp(value, 0.001f, 1f)) * 20); }
 
+    public void SilentPauseUnpause()
+    {
+        move.enabled = false;
+        GetComponent<Rigidbody>().isKinematic = true;
+        GhostPauser.PauseGhosts();
+
+        move.enabled = true;
+        GetComponent<Rigidbody>().isKinematic = false;
+        GhostPauser.ResumeGhosts();
+    }
+
 }

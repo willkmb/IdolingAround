@@ -15,4 +15,16 @@ public class SwapParticles : MonoBehaviour
             embers.Play();
         }
     }
+
+    private void Start()
+    {
+        if (MenuScript.corridorStart)
+        {
+            foreach (ParticleSystem p in leaves)
+            {
+                p.Stop();
+            }
+            embers.Play();
+        }
+    }
 }
