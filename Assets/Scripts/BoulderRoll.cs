@@ -76,7 +76,7 @@ public class BoulderRoll : MonoBehaviour
                 else 
                 { 
                     splineAnim.Play();
-                    rollSource.Play();
+                    rollSource.UnPause();
                     rollAnim["BoulderRoll"].speed = 1f;
                 }
             }
