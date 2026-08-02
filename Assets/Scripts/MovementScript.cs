@@ -559,10 +559,10 @@ public class MovementScript : MonoBehaviour
                     timer = 0f;
                     if (!timeUp)
                     {
-                        Debug.Log("times Up");
-                        ghost.stopRecording();
-                        endScreen.callEndScreenEx();
                         timeUp = true;
+                        Debug.Log("times Up");
+                        endScreen.callEndScreenEx();
+                        ghost.stopRecording();
                     }
                 }
             }

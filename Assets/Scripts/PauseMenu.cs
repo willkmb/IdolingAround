@@ -71,10 +71,12 @@ public class PauseMenu : MonoBehaviour
         move.enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         GhostPauser.PauseGhosts();
+        paused = true;
 
         move.enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
         GhostPauser.ResumeGhosts();
+        paused = false;
     }
 
 }

@@ -4,7 +4,7 @@ public class GhostPauser : MonoBehaviour
 {
     public static bool paused = false;
 
-    private void Start()
+    private void Awake()
     {
         paused = true;
     }

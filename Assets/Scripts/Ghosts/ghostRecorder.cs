@@ -38,6 +38,7 @@ public class ghostRecorder : MonoBehaviour
 
     private void Save()
     {
+        if (timestamp.Count == 0) return;
         string posString = "";
         string rotString = "";
         string timeString = "";
@@ -55,6 +56,7 @@ public class ghostRecorder : MonoBehaviour
 
     public static void SaveGhost(string id)
     {
+        if (timestamp.Count == 0) return;
         string posString = "";
         string rotString = "";
         string timeString = "";
@@ -118,8 +120,8 @@ public class ghostRecorder : MonoBehaviour
     }
 
     private void Update()
-    { 
-        if(!recording || GhostPauser.paused) return;
+    {
+        if (!recording || GhostPauser.paused) return;
 
         if (!GhostPauser.paused) recordingTime += Time.deltaTime;
         if (GhostPauser.paused) return;

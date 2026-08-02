@@ -68,7 +68,7 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
             //5. Go back to #2 and play the next audio in the adClips array
         }
         GhostPauser.ResumeGhosts();
-        text.SetActive(false);
+        Destroy(text.gameObject);
         pauseMenu.canPause = true;
         StartCoroutine(startBoulder.StartBoulderRoll());
         yield return null;
