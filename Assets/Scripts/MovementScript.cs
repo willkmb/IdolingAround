@@ -25,7 +25,7 @@ public class MovementScript : MonoBehaviour
     public Image chargeHolder;
     public Image chargeBlur;
     public bool isSpawning;
-    [SerializeField] ExhibitionVerToggle ex;
+    public ExhibitionVerToggle ex;
     [SerializeField] ghostRecorder ghost;
 
     [Header("Movement Settings")]
@@ -117,7 +117,7 @@ public class MovementScript : MonoBehaviour
     private Vector3 forwardDir;
 
     private float coyoteTimer;
-    private float timer;
+    [HideInInspector] public float timer;
     private float highScore = Mathf.Infinity;
     private float lastVoice = -Mathf.Infinity;
     private float camTimer = 0f;

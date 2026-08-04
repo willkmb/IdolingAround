@@ -40,6 +40,9 @@ public class SetSpawnBoulder : MonoBehaviour
             totemPole.GetComponentInChildren<MeshRenderer>().material = totemMatGlow;
             if (triggered) return;
 
+            float timeChange = movementScript.ex.ExhibitionMode ? 15 : -15;
+            movementScript.timer += timeChange;
+
             movementScript.respawnPoint = respawnPoint;
             respawnPlayer.voicePlayer = voiceSource;
             totem.Play();
