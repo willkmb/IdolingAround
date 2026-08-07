@@ -674,7 +674,7 @@ public class MovementScript : MonoBehaviour
         float speed = flatVel.magnitude;
         float turnInput = Input.GetAxis("Horizontal");
 
-        bool suppressSnap = collisionCooldown > 0f; // don't trust velocity right after a wall hit
+        bool suppressSnap = collisionCooldown > 0f;
         bool velocityIsDriving = false;
 
         if (speed > minSpeedToRotate && !suppressSnap)
