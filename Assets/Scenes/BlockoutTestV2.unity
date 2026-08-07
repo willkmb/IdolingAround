@@ -2174,7 +2174,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11302367}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.03129518, y: -0.026993154, z: 0.011421079, w: 0.9990804}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -62310,10 +62310,11 @@ MonoBehaviour:
   fovSpeedIn: 0.75
   canRespawn: 1
   minSpeedToRotate: 0.5
-  flipThresh: 0.2
+  flipThresh: 10
   rotateLerpSpeed: 10
   flipMinSpeed: 1.6
   flipConfirmTime: 0.25
+  timer: 0
   flipped: 0
   timerRunning: 1
   canSpeak: 1

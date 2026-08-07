@@ -670,47 +670,46 @@ public class MovementScript : MonoBehaviour
 
     private void RotateCubeToVelocity()
     {
-        if (cubeFrozen)
+        Vector3 flatVel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+        float speed = flatVel.magnitude;
+        float turnInput = Input.GetAxis("Horizontal");
+
+        bool suppressSnap = collisionCooldown > 0f; // don't trust velocity right after a wall hit
+        bool velocityIsDriving = false;
+
+        if (speed > minSpeedToRotate && !suppressSnap)
+        {
+            Vector3 targetDir = flatVel.normalized;
+            float alignment = Vector3.Dot(cube.transform.forward, targetDir);
+
+            if (alignment >= flipThresh)
+            {
+                flipMisalignTimer = 0f;
+                velocityIsDriving = true;
+                Quaternion targetRot = Quaternion.LookRotation(targetDir, Vector3.up);
+                cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRot, rotateLerpSpeed * Time.deltaTime);
+            }
+            else
+            {
+                flipMisalignTimer += Time.deltaTime;
+
+                if (flipMisalignTimer > flipConfirmTime && speed > flipMinSpeed)
+                {
+                    velocityIsDriving = true;
+                    Quaternion targetRot = Quaternion.LookRotation(targetDir, Vector3.up);
+                    cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRot, rotateLerpSpeed * Time.deltaTime);
+                    flipMisalignTimer = 0f;
+                }
+            }
+        }
+        else
         {
             flipMisalignTimer = 0f;
-            return;
         }
 
-        if (stoodUp)
+        if (!velocityIsDriving && speed > minSpeedToRotate && Mathf.Abs(turnInput) > 0.01f)
         {
-            Quaternion target = Quaternion.Euler(0, transform.localEulerAngles.y, 0);
-            cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, target, 15f * Time.deltaTime);
-            flipMisalignTimer = 0f;
-            return;
-        }
-
-        Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
-        float speed = vel.magnitude;
-
-        if (speed < minSpeedToRotate)
-        {
-            flipMisalignTimer = 0f;
-            return;
-        }
-
-        Vector3 velDir = vel.normalized;
-        float alignDot = Vector3.Dot(cube.transform.forward, velDir);
-        if (cubeMatchVel && alignDot < -flipThresh) cubeMatchVel = false;
-        else if (!cubeMatchVel && alignDot > flipThresh) cubeMatchVel = true;
-
-        Quaternion targetRotation = cubeMatchVel ? Quaternion.LookRotation(velDir, Vector3.up): Quaternion.LookRotation(-velDir, Vector3.up);
-        cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRotation, rotateLerpSpeed * Time.deltaTime);
-
-        float vert = Input.GetAxis("Vertical");
-        bool forwardInput = vert > 0.2f;
-        bool suspiciousMisalignment = !cubeMatchVel && forwardInput && speed > flipMinSpeed && collisionCooldown <= 0f;
-        flipMisalignTimer = suspiciousMisalignment ? flipMisalignTimer + Time.deltaTime : 0f;
-
-        if (flipMisalignTimer >= flipConfirmTime)
-        {
-            cube.transform.Rotate(Vector3.up, 180f, Space.World);
-            cubeMatchVel = true;
-            flipMisalignTimer = 0f;
+            cube.transform.Rotate(Vector3.up, turnInput * turnSpeed * Time.deltaTime, Space.World);
         }
     }
 
