@@ -144,7 +144,6 @@ public class MovementScript : MonoBehaviour
     private float alignmentCheckTimer = 0f;
     private bool cubeMatchVel = true;
     private float flipMisalignTimer = 0f;
-    private float reverseConfirmTimer = 0f;
 
     [HideInInspector] public bool canSpeak = true;
     #endregion
@@ -674,30 +673,26 @@ public class MovementScript : MonoBehaviour
         Vector3 flatVel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
         float speed = flatVel.magnitude;
         float turnInput = Input.GetAxis("Horizontal");
+
         bool suppressSnap = collisionCooldown > 0f;
         bool velocityIsDriving = false;
+
         if (speed > minSpeedToRotate && !suppressSnap)
         {
             Vector3 targetDir = flatVel.normalized;
             float alignment = Vector3.Dot(cube.transform.forward, targetDir);
+
             if (alignment >= flipThresh)
             {
-                float vert = Input.GetAxis("Vertical");
-                bool holdingBackward = vert < -0.2f && speed > flipMinSpeed;
-                reverseConfirmTimer = holdingBackward ? reverseConfirmTimer + Time.deltaTime : 0f;
-
                 flipMisalignTimer = 0f;
                 velocityIsDriving = true;
-                Quaternion targetRot = (reverseConfirmTimer > flipConfirmTime)
-                    ? Quaternion.LookRotation(-targetDir, Vector3.up)
-                    : Quaternion.LookRotation(targetDir, Vector3.up);
+                Quaternion targetRot = Quaternion.LookRotation(targetDir, Vector3.up);
                 cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRot, rotateLerpSpeed * Time.deltaTime);
-                if (reverseConfirmTimer > flipConfirmTime) reverseConfirmTimer = 0f;
             }
             else
             {
-                reverseConfirmTimer = 0f;
                 flipMisalignTimer += Time.deltaTime;
+
                 if (flipMisalignTimer > flipConfirmTime && speed > flipMinSpeed)
                 {
                     velocityIsDriving = true;
@@ -710,8 +705,8 @@ public class MovementScript : MonoBehaviour
         else
         {
             flipMisalignTimer = 0f;
-            reverseConfirmTimer = 0f;
         }
+
         if (!velocityIsDriving && speed > minSpeedToRotate && Mathf.Abs(turnInput) > 0.01f)
         {
             cube.transform.Rotate(Vector3.up, turnInput * turnSpeed * Time.deltaTime, Space.World);
