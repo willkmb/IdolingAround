@@ -2174,7 +2174,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11302367}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.03129518, y: -0.026993154, z: 0.011421079, w: 0.9990804}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -62310,10 +62310,10 @@ MonoBehaviour:
   fovSpeedIn: 0.75
   canRespawn: 1
   minSpeedToRotate: 0.5
-  flipThresh: 10
-  rotateLerpSpeed: 100
+  flipThresh: 0.2
+  rotateLerpSpeed: 10
   flipMinSpeed: 1.6
-  flipConfirmTime: 0.025
+  flipConfirmTime: 0.25
   timer: 0
   flipped: 0
   timerRunning: 1
@@ -124264,6 +124264,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8c4eb9e67b511494c9a44d2b61e9626e, type: 3}
   - {fileID: 8300000, guid: df12e16e98e859147821ca828a7fa21e, type: 3}
   - {fileID: 8300000, guid: 4ee27772d7702b94e8b8866e8a7f5398, type: 3}
+  boulderSubtitle: {fileID: 605187403}
+  audioSubtitles:
+  - 'Boulder: Idol! I''m glad to see you. I thought that lot got you for good.'
+  - 'Boulder: You''ll be happy to know I squished one of them for you . [shudders]
+    I hope it''s not still on me. '
+  - 'Boulder: [grunt of effort] I''m properly in here this time.'
+  - 'Boulder: Could you give me a hand? Well.. uh.. not a hand considering you''re
+    just a head, but could you help me out please?'
+  - 'Boulder: Oh wait a minute, I''m moving!'
+  - 'Boulder: Oh gods, I''m rolling. Get out of the way! Go!'
   startBoulder: {fileID: 933816454}
   text: {fileID: 1623657070}
 --- !u!82 &545991381
@@ -126264,7 +126274,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 557508883}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09117004, y: -0.012910279, z: 0.004937891, w: 0.9957394}
+  m_LocalRotation: {x: 0.09117004, y: -0.01291028, z: 0.0049378914, w: 0.9957394}
   m_LocalPosition: {x: -0.13741164, y: 1.040162, z: 1.2615418}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -129827,6 +129837,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 546538684}
     - target: {fileID: 9193711332717537677, guid: 51294cd89b3b2364994749c100382f95, type: 3}
+      propertyPath: audioSubtitle
+      value: 'Boulder: Oh gods, I feel sick'
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193711332717537677, guid: 51294cd89b3b2364994749c100382f95, type: 3}
       propertyPath: chaseVoicelines
       value: 
       objectReference: {fileID: 1503635144}
@@ -129834,6 +129848,10 @@ PrefabInstance:
       propertyPath: boulderInvisWall
       value: 
       objectReference: {fileID: 1877895937}
+    - target: {fileID: 9193711332717537677, guid: 51294cd89b3b2364994749c100382f95, type: 3}
+      propertyPath: boulderSubtitles
+      value: 
+      objectReference: {fileID: 605187403}
     - target: {fileID: 9193711332717537677, guid: 51294cd89b3b2364994749c100382f95, type: 3}
       propertyPath: boulderKillTrigger
       value: 
@@ -135842,6 +135860,142 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.45, y: 3.25, z: 3}
   m_Center: {x: -0.05, y: -0.45, z: 0}
+--- !u!1 &605187401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 605187402}
+  - component: {fileID: 605187404}
+  - component: {fileID: 605187403}
+  m_Layer: 5
+  m_Name: BoulderSubtitles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &605187402
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605187401}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1062409062}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -295, y: 25}
+  m_SizeDelta: {x: 650, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &605187403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605187401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: cb56254730d2f1f4587d9f16dbb721a4, type: 2}
+  m_sharedMaterial: {fileID: 745267949434284258, guid: cb56254730d2f1f4587d9f16dbb721a4, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4287213530
+  m_fontColor: {r: 0.85490197, g: 0.6862745, b: 0.5372549, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 18
+  m_fontSizeBase: 18
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &605187404
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605187401}
+  m_CullTransparentMesh: 1
 --- !u!1001 &605298243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -228638,6 +228792,7 @@ RectTransform:
   - {fileID: 1485913305}
   - {fileID: 531913701}
   - {fileID: 1687481855}
+  - {fileID: 605187402}
   m_Father: {fileID: 1003245178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -286060,7 +286215,7 @@ Transform:
   m_GameObject: {fileID: 1322513113}
   serializedVersion: 2
   m_LocalRotation: {x: 0.03135105, y: 0.014475405, z: -0.005553821, w: 0.9993882}
-  m_LocalPosition: {x: 0.17993319, y: 0.9804102, z: 1.064471}
+  m_LocalPosition: {x: 0.18032952, y: 0.98065245, z: 1.0644217}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -327111,6 +327266,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6ee0aae8ec2157b408c14c0b0a474710, type: 3}
   - {fileID: 8300000, guid: a9710a6eb3723794686939887a9d5002, type: 3}
   - {fileID: 8300000, guid: 2d459ecb575d1ee4c83a04bfbb67e177, type: 3}
+  boulderSubtitle: {fileID: 605187403}
+  audioSubtitles:
+  - 'Boulder: Ahhhhh!'
+  - 'Boulder: Coming through!'
+  - 'Boulder: Get outta the way!'
+  - 'Boulder: Woaaah!'
+  - 'Boulder: Look out!'
+  - 'Boulder: Woaaah!'
   minTime: 5
   maxTime: 15
   isNearby: 0
@@ -356606,7 +356769,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641885919}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06261366, y: -0.013046411, z: 0.0045661014, w: 0.99794215}
+  m_LocalRotation: {x: 0.06261366, y: -0.013046412, z: 0.004566102, w: 0.99794215}
   m_LocalPosition: {x: -0.13741164, y: 1.040162, z: 1.2615418}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -368176,7 +368339,7 @@ Transform:
   m_GameObject: {fileID: 1701703695}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0000000066213928, y: -0.00000000956024, z: 0.0000000026236529, w: 1}
-  m_LocalPosition: {x: 0.31734487, y: -0.05975173, z: -0.19707069}
+  m_LocalPosition: {x: 0.3177412, y: -0.059509564, z: -0.19712016}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -442544,7 +442707,7 @@ Transform:
   m_GameObject: {fileID: 2064541391}
   serializedVersion: 2
   m_LocalRotation: {x: 0.13653934, y: 0.022338094, z: -0.0030796612, w: 0.990378}
-  m_LocalPosition: {x: -443.20273, y: 4.9491982, z: -187.04001}
+  m_LocalPosition: {x: -443.20312, y: 4.9489517, z: -187.04001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

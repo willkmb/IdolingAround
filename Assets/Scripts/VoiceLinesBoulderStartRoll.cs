@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class VoiceLinesBoulderStartRoll : MonoBehaviour
@@ -6,6 +7,8 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
     [SerializeField] Animation boulderRock;
     [SerializeField] Animation boulderRoll;
     [SerializeField] AudioClip[] audioClips;
+    [SerializeField] TMP_Text boulderSubtitle;
+    [SerializeField] string[] audioSubtitles;
     [SerializeField] StartBoulder startBoulder;
     private bool ableToSkip = false;
     [SerializeField] GameObject text;
@@ -52,6 +55,7 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
             voiceSource.clip = audioClips[i];
 
             //3.Play Audio
+            boulderSubtitle.text = audioSubtitles[i];
             voiceSource.Play();
 
             if (audioClips[i] == audioClips[audioClips.Length - 1])

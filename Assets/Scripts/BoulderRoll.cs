@@ -1,36 +1,41 @@
 
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Splines;
 
 public class BoulderRoll : MonoBehaviour
 {
+    [Header("Audio and Voicelines")]
     [SerializeField] VoiceLinesBoulderChase chaseVoicelines;
-    [SerializeField] AudioSource voiceSource;
-    
+    AudioSource rollSource;
+
     [SerializeField] AudioClip audioClip;
+    [SerializeField] string audioSubtitle;
+    [SerializeField] TMP_Text boulderSubtitles;
+
+    [Header("End of Corridor Objects")]
     [SerializeField] GameObject boulderKillTrigger;
     [SerializeField] GameObject boulderInvisWall;
+
     [HideInInspector] public Transform boulderRespawn;
     [HideInInspector] public float boulderRespawnTime;
+
+    [Header("Trigger")]
     [SerializeField] StartBoulderTrigger trig;
+    
     SplineAnimate splineAnim;
     Animation rollAnim;
-    AudioSource rollSource;
-    Rigidbody rb;
 
     PauseMenu pause;
 
-    float targetDistance;
-
     bool isEndOfCorridor;
-
     public bool hasStartedRolling = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         splineAnim = GetComponent<SplineAnimate>();
-        rb = GetComponent<Rigidbody>();
         rollAnim = GetComponentInChildren<Animation>();
         rollSource = GetComponent<AudioSource>();
         pause = FindFirstObjectByType<PauseMenu>();
@@ -60,6 +65,7 @@ public class BoulderRoll : MonoBehaviour
                 rollSource.pitch = 1;
                 rollSource.volume = 0.4f;
                 rollSource.Play();
+                SetSubtitles();
                 boulderKillTrigger.SetActive(false);
                 boulderInvisWall.SetActive(true);
                 isEndOfCorridor = true;
@@ -94,5 +100,15 @@ public class BoulderRoll : MonoBehaviour
             splineAnim.ElapsedTime = boulderRespawnTime;
             splineAnim.Play();
         }
+    }
+
+    void SetSubtitles()
+    {
+        boulderSubtitles.text = audioSubtitle;
+        Invoke("BlankSubtitles", audioClip.length);
+    }
+    void BlankSubtitles()
+    {
+        boulderSubtitles.text = "";
     }
 }

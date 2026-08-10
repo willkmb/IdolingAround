@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public class VoiceLinesBoulderChase : MonoBehaviour
 {
     AudioSource voiceSource;
     [SerializeField] AudioClip[] audioClips;
+    [SerializeField] TMP_Text boulderSubtitle;
+    [SerializeField] string[] audioSubtitles;
     AudioClip currentClip;
     AudioClip prevClip;
     [SerializeField] int minTime;
@@ -13,8 +16,6 @@ public class VoiceLinesBoulderChase : MonoBehaviour
 
     float waitTimeCountdown;
     public bool isNearby;
-    bool hasVoiceStarted;
-
     PauseMenu pause;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,14 +34,15 @@ public class VoiceLinesBoulderChase : MonoBehaviour
             {
                 if (waitTimeCountdown <= 0)
                 {
-                    hasVoiceStarted = true;
-                    currentClip = audioClips[Random.Range(0, audioClips.Length - 1)];
-                    if (currentClip == prevClip) { currentClip = audioClips[Random.Range(0, audioClips.Length - 1)]; }
+                    var clipInt = Random.Range(0, audioClips.Length - 1);
+                    currentClip = audioClips[clipInt];
+                    if (currentClip == prevClip) { clipInt = Random.Range(0, audioClips.Length - 1); currentClip = audioClips[clipInt]; }
                     voiceSource.clip = currentClip;
+                    boulderSubtitle.text = audioSubtitles[clipInt];
                     voiceSource.Play();
+                    SetSubtitle(audioSubtitles[clipInt]);
                     waitTimeCountdown = Random.Range(minTime, maxTime);
                     prevClip = currentClip;
-                    Invoke("SetBool", currentClip.length);
                 }
                 else
                 {
@@ -48,5 +50,16 @@ public class VoiceLinesBoulderChase : MonoBehaviour
                 }
             }
         }
+    }
+
+    void SetSubtitle(string subtitle)
+    {
+        boulderSubtitle.text = subtitle;
+        Invoke("BlankSubtitle", currentClip.length);
+    }
+
+    void BlankSubtitle()
+    {
+        boulderSubtitle.text = "";
     }
 }
