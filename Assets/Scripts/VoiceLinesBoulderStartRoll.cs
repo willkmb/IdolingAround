@@ -74,6 +74,7 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
         GhostPauser.ResumeGhosts();
         Destroy(text.gameObject);
         pauseMenu.canPause = true;
+        boulderSubtitle.text = "";
         StartCoroutine(startBoulder.StartBoulderRoll());
         yield return null;
     }
