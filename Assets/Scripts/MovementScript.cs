@@ -53,6 +53,7 @@ public class MovementScript : MonoBehaviour
     [SerializeField] Color maxChargeColor;
     [SerializeField] Color holderMinChargeColor;
     [SerializeField] Color holderMaxChargeColor;
+    [SerializeField] float jumpChargeSpeed = 1.25f;
 
     [Header("Score")]
     [SerializeField] TextMeshProUGUI currentTimeText;
@@ -502,7 +503,7 @@ public class MovementScript : MonoBehaviour
                 jumpVel += 100f * Time.deltaTime;
             }
 
-            charge.fillAmount += 1.25f * Time.deltaTime;
+            charge.fillAmount += jumpChargeSpeed * Time.deltaTime;
             float third = Mathf.InverseLerp(0.33f, 1f, charge.fillAmount);
             charge.color = Color.Lerp(minChargeColor, maxChargeColor, third);
             chargeHolder.color = Color.Lerp(holderMinChargeColor, holderMaxChargeColor, charge.fillAmount);

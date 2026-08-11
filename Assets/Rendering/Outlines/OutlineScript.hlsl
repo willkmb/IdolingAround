@@ -12,7 +12,7 @@ ScharrOperators GetEdgeDetectionKernels()
     return kernels;
 }
 
-void DepthBasedOutlines_float(float2 screenUV, float2 px, out float outlines)
+void DepthBasedOutlines_float(float2 screenUV,float2 px,float fadeStart,float fadeEnd,out float outlines)
 {
     outlines = 0;
     #if defined(UNITY_DECLARE_DEPTH_TEXTURE_INCLUDED)
@@ -34,7 +34,9 @@ void DepthBasedOutlines_float(float2 screenUV, float2 px, out float outlines)
 
     }
     float g = sqrt(gx * gx + gy * gy);
-    outlines = step(0.2, g);
+    float depth = SampleSceneDepth(screenUV);
+    float distanceFade = 1.0 - smoothstep(fadeStart, fadeEnd, depth);
+    outlines = step(0.2, g) * distanceFade;
 #endif
 }
 
