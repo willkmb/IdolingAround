@@ -101,11 +101,8 @@ public class MovementScript : MonoBehaviour
     public bool canRespawn = true;
 
     [Header("Cube Facing Tuning")]
-    [SerializeField] private float minSpeedToRotate = 0.5f;
-    [SerializeField] private float flipThresh = 0.2f;
-    [SerializeField] private float rotateLerpSpeed = 10f;
-    [SerializeField] private float flipMinSpeed = 1.6f;
-    [SerializeField] private float flipConfirmTime = 0.25f;
+    [SerializeField] private float minSpeedToRotate = 1f;
+    [SerializeField] private float maxDegreesToTurn = 260f;
     #endregion
 
     #region Private Fields
@@ -141,9 +138,7 @@ public class MovementScript : MonoBehaviour
     private bool justRespawned = false;
     private bool timeUp = false;
     private Vector3 meshOffset;
-    private float alignmentCheckTimer = 0f;
-    private bool cubeMatchVel = true;
-    private float flipMisalignTimer = 0f;
+    private Vector3 cubeFacing;
 
     [HideInInspector] public bool canSpeak = true;
     #endregion
@@ -152,6 +147,9 @@ public class MovementScript : MonoBehaviour
 
     private void Start()
     {
+        cubeFacing = Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized;
+        if (cubeFacing == Vector3.zero) cubeFacing = Vector3.forward;
+
         activeScene = SceneManager.GetActiveScene();
         Application.targetFrameRate = 200;
 
@@ -670,47 +668,27 @@ public class MovementScript : MonoBehaviour
 
     private void RotateCubeToVelocity()
     {
-        Vector3 flatVel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
-        float speed = flatVel.magnitude;
+        float moveInput = Input.GetAxis("Vertical");
         float turnInput = Input.GetAxis("Horizontal");
 
-        bool suppressSnap = collisionCooldown > 0f;
-        bool velocityIsDriving = false;
+        Vector3 flatVel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+        float speed = flatVel.magnitude;
 
-        if (speed > minSpeedToRotate && !suppressSnap)
+        bool suppressSnap = collisionCooldown > 0f;
+        bool pressingForward = moveInput > 0.01f;
+
+        if (pressingForward && speed > minSpeedToRotate && !suppressSnap)
         {
             Vector3 targetDir = flatVel.normalized;
-            float alignment = Vector3.Dot(cube.transform.forward, targetDir);
-
-            if (alignment >= flipThresh)
-            {
-                flipMisalignTimer = 0f;
-                velocityIsDriving = true;
-                Quaternion targetRot = Quaternion.LookRotation(targetDir, Vector3.up);
-                cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRot, rotateLerpSpeed * Time.deltaTime);
-            }
-            else
-            {
-                flipMisalignTimer += Time.deltaTime;
-
-                if (flipMisalignTimer > flipConfirmTime && speed > flipMinSpeed)
-                {
-                    velocityIsDriving = true;
-                    Quaternion targetRot = Quaternion.LookRotation(targetDir, Vector3.up);
-                    cube.transform.rotation = Quaternion.Slerp(cube.transform.rotation, targetRot, rotateLerpSpeed * Time.deltaTime);
-                    flipMisalignTimer = 0f;
-                }
-            }
+            cubeFacing = Vector3.RotateTowards(cubeFacing,targetDir,maxDegreesToTurn * Mathf.Deg2Rad * Time.deltaTime,0f).normalized;
         }
-        else
+        else if (Mathf.Abs(turnInput) > 0.01f)
         {
-            flipMisalignTimer = 0f;
+            cubeFacing = Quaternion.AngleAxis(turnInput * turnSpeed * Time.deltaTime, Vector3.up) * cubeFacing;
+            cubeFacing.Normalize();
         }
 
-        if (!velocityIsDriving && speed > minSpeedToRotate && Mathf.Abs(turnInput) > 0.01f)
-        {
-            cube.transform.Rotate(Vector3.up, turnInput * turnSpeed * Time.deltaTime, Space.World);
-        }
+        cube.transform.rotation = Quaternion.LookRotation(cubeFacing, Vector3.up);
     }
 
     public IEnumerator FreezeCube(float waitTime)
