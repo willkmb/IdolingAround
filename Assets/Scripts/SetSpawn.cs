@@ -32,8 +32,10 @@ public class SetSpawn : MonoBehaviour
         if (other.gameObject.layer != 6) return;
         if (triggered) return;
 
+        /*
         float timeChange = movementScript.ex.ExhibitionMode ? 15 : -15;
         movementScript.timer += timeChange;
+        */
 
         movementScript.respawnPoint = respawnPoint;
         respawnPlayer.voicePlayer = voiceSource;
