@@ -257,11 +257,11 @@ public class MovementScript : MonoBehaviour
         //if (stoodUp) started = false;
         if (collisionCooldown > 0f) collisionCooldown -= Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyUp(KeyCode.S))
         {
             if (!started) return;
             if (freezeCube != null) StopCoroutine(freezeCube);
-            freezeCube = StartCoroutine(FreezeCube(0.5f));
+            freezeCube = StartCoroutine(FreezeCube(0.4f));
         }
 
         if (justRespawned && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)))
@@ -668,6 +668,7 @@ public class MovementScript : MonoBehaviour
 
     private void RotateCubeToVelocity()
     {
+        if (cubeFrozen) return;
         float moveInput = Input.GetAxis("Vertical");
         float turnInput = Input.GetAxis("Horizontal");
 
