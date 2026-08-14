@@ -61,7 +61,7 @@ public class checkProgressScript : MonoBehaviour
         float totalDistance = distToWp[this.nextWp - 1] + distToSeg;
         bestDist = Mathf.Max(bestDist, totalDistance);
 
-        distText.text = "rolled: " + bestDist.ToString("F1") + " m";
+        distText.text = "rolled: \n" + bestDist.ToString("F1") + " m";
     }
 
     Vector3 wpGroundPos(Vector3 worldPosition)

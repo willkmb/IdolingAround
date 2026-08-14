@@ -63,9 +63,13 @@ public class MovementScript : MonoBehaviour
     [SerializeField] checkProgressScript dist;
 
     [Header("Voice Lines")]
+    [SerializeField] TMP_Text idolSubtitles;
     [SerializeField] AudioClip[] voiceLinesMove;
+    [SerializeField] string[] subtitlesMove;
     [SerializeField] AudioClip[] voiceLinesIdle;
+    [SerializeField] string[] subtitlesIdle;
     [SerializeField] AudioClip[] voiceLinesHit;
+    [SerializeField] string[] subtitlesHit;
     [SerializeField] AudioClip colClip;
     [SerializeField] AudioSource source;
     public AudioSource sourceJump;
@@ -344,6 +348,8 @@ public class MovementScript : MonoBehaviour
             {
                 int lineVal = Random.Range(0, voiceLinesHit.Length);
                 source.PlayOneShot(voiceLinesHit[lineVal]);
+                idolSubtitles.text = subtitlesHit[lineVal];
+                StartCoroutine(SetSubtitlesEmpty());
                 lastVoice = Time.time;
             }
         }
@@ -524,9 +530,12 @@ public class MovementScript : MonoBehaviour
         forwardDir = rb.linearVelocity.normalized;
         rb.AddForce(Vector3.up * jumpVel * mult, ForceMode.Impulse);
         rb.AddForce(forwardDir * jumpVelFor, ForceMode.Impulse);
-        drain = true;
-        sourceJump.pitch = Random.Range(0.75f, 1.15f);
-        sourceJump.Play();
+        drain = true; 
+        if (jumpVel > 160)
+        {
+            sourceJump.pitch = Random.Range(0.75f, 1.15f);
+            sourceJump.Play();
+        }
         coyoteTimer = 0f;
         canJump = false;
         hasJumped = true;
@@ -834,12 +843,15 @@ public class MovementScript : MonoBehaviour
                 Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
                 bool isMoving = vel.magnitude > 0.5f;
                 AudioClip[] cur = isMoving ? voiceLinesMove : voiceLinesIdle;
+                string[] curSub = isMoving ? subtitlesMove : subtitlesIdle;
 
                 if (!source.isPlaying && cur.Length > 0)
                 {
                     int lineVal = Random.Range(0, cur.Length);
                     source.clip = cur[lineVal];
                     source.Play();
+                    idolSubtitles.text = curSub[lineVal];
+                    StartCoroutine(SetSubtitlesEmpty());
                 }
             }
 
@@ -849,6 +861,15 @@ public class MovementScript : MonoBehaviour
             }
             yield return new WaitForSeconds(canSpeak ? Random.Range(30f, 60f) : Random.Range(5f, 10f));
         }
+    }
+
+    IEnumerator SetSubtitlesEmpty()
+    {
+        while (source.isPlaying)
+        {
+            yield return new WaitForSeconds(0.05f);
+        }
+        idolSubtitles.text = "";
     }
 
     #endregion

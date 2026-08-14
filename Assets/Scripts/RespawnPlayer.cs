@@ -1,3 +1,5 @@
+using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -6,11 +8,16 @@ public class RespawnPlayer : MonoBehaviour
     MovementScript movementScript;
     DeathCounter deathCounter;
     Rigidbody rb;
-    
+
+    [Header("On Death")]
     [SerializeField] GameObject mainCamera;
     [SerializeField] Animation transition1;
     [SerializeField] AudioSource respawnSound;
+
+    [Header("Respawn Voicelines")]
+    [SerializeField] TMP_Text checkpointSubtitles;
     [SerializeField] AudioClip[] voicelines;
+    [SerializeField] string[] subtitles;
 
     [HideInInspector] public GameObject cutscene;
     [HideInInspector] public float cutsceneLength;
@@ -102,10 +109,22 @@ public class RespawnPlayer : MonoBehaviour
 
     void PlayVoiceline()
     {
-        voicePlayer.clip = voicelines[Random.Range(0, voicelines.Length - 1)];
+        int randomVL = Random.Range(0, voicelines.Length - 1);
+        voicePlayer.clip = voicelines[randomVL];
+        checkpointSubtitles.text = subtitles[randomVL];
         voicePlayer.Play();
+        StartCoroutine(SetSubtitleEmpty());
     }
 
+    
+    IEnumerator SetSubtitleEmpty()
+    {
+        while (voicePlayer.isPlaying)
+        {
+            yield return new WaitForSeconds(0.05f);
+        }
+        checkpointSubtitles.text = "";
+    }
     void SetCanSpawn()
     {
         movementScript.canRespawn = true;
