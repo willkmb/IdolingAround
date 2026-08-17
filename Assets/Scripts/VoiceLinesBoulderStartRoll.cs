@@ -31,6 +31,7 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
             ableToSkip = false;
             StopCoroutine(Cutscene());
             StartCoroutine(startBoulder.StartBoulderRoll());
+            Destroy(text.gameObject);
             pauseMenu.canPause = true;
         }
     }
@@ -72,7 +73,6 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
             //5. Go back to #2 and play the next audio in the adClips array
         }
         GhostPauser.ResumeGhosts();
-        Destroy(text.gameObject);
         pauseMenu.canPause = true;
         boulderSubtitle.text = "";
         StartCoroutine(startBoulder.StartBoulderRoll());
