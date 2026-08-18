@@ -501,7 +501,7 @@ public class MovementScript : MonoBehaviour
 
     private void HandleJumpInput()
     {
-        if (Input.GetKey(KeyCode.Space) && !hasJumped)
+        if (Input.GetKey(KeyCode.Space) || (Input.GetKey(KeyCode.JoystickButton0)) && !hasJumped)
         {
             drain = false;
             if (jumpVel < 220f)
@@ -516,7 +516,7 @@ public class MovementScript : MonoBehaviour
             chargeBlur.color = Color.Lerp(holderMinChargeColor, holderMaxChargeColor, charge.fillAmount);
         }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetKey(KeyCode.JoystickButton0))
         {
             if(coyoteTimer > 0f && !hasJumped) jump(1f);
             drain = true;
