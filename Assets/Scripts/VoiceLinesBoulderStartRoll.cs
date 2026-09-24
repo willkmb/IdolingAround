@@ -29,6 +29,7 @@ public class VoiceLinesBoulderStartRoll : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0) && ableToSkip)
         {
             ableToSkip = false;
+            GhostPauser.ResumeGhosts();
             StopCoroutine(Cutscene());
             StartCoroutine(startBoulder.StartBoulderRoll());
             Destroy(text.gameObject);
