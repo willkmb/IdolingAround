@@ -308,7 +308,7 @@ public class MovementScript : MonoBehaviour
         bool isGround = Vector3.Dot(normal, Vector3.up) > 0.5f;
 
         float impactSpeed = collision.relativeVelocity.magnitude;
-        Debug.Log(impactSpeed);
+        //Debug.Log(impactSpeed);
         if (impactSpeed > impactThreshold)
         {
             impulse.GenerateImpulse(collision.relativeVelocity / impulseStrengthDivider);

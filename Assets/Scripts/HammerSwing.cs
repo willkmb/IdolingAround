@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class HammerSwing : MonoBehaviour
 {
-    [SerializeField] AudioSource sound;
-    bool soundPlayed;
-
+    [SerializeField] float waitForTime;
+    Animation anim;
     private void Start()
     {
-        Invoke("PlaySound", 0.5f);
+        anim = GetComponentInChildren<Animation>();
+        Invoke("StartAnim", waitForTime);
     }
 
-    void PlaySound()
+    void StartAnim()
     {
-        sound.Play();
+        anim.Play();
     }
 }
