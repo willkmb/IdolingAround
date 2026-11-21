@@ -8,10 +8,12 @@ public class MovingPlatform : MonoBehaviour
 {
     [SerializeField] GameObject pointA;
     [SerializeField] GameObject pointB;
+    [SerializeField] float timeUntilStartMove;
     [SerializeField] float speed = 5f;
     [SerializeField] float waitTime = 1f;
     [SerializeField] float snapDist = 0.01f;
 
+    bool canMove = false;
     Vector3 targetPos;
     Vector3 midPos;
     Rigidbody rb;
@@ -29,7 +31,7 @@ public class MovingPlatform : MonoBehaviour
         totalDist = Vector3.Distance(pointA.transform.position, pointB.transform.position);
         rb = GetComponent<Rigidbody>();
 
-        //StartCoroutine(MovePlatform());
+        Invoke("BeginMove", timeUntilStartMove);
     }
 
     // Update is called once per frame
@@ -39,25 +41,33 @@ public class MovingPlatform : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
-        if ((targetPos - transform.position).sqrMagnitude > snapDist)
+        if (canMove)
         {
-            float dist = Vector3.Distance(transform.position, midPos);
-            float distPerc = Mathf.Clamp(1 - (dist / (totalDist / 2)), 0.5f, 1f);
-            Vector3 newPos = Vector3.MoveTowards(transform.position, targetPos, speed * Time.fixedDeltaTime * distPerc);
-            rb.MovePosition(newPos);
-        }
-        else
-        {
-            if (timer < waitTime)
+            if ((targetPos - transform.position).sqrMagnitude > snapDist)
             {
-                timer += Time.fixedDeltaTime;
+                float dist = Vector3.Distance(transform.position, midPos);
+                float distPerc = Mathf.Clamp(1 - (dist / (totalDist / 2)), 0.5f, 1f);
+                Vector3 newPos = Vector3.MoveTowards(transform.position, targetPos, speed * Time.fixedDeltaTime * distPerc);
+                rb.MovePosition(newPos);
             }
             else
             {
-                targetPos = targetPos == pointA.transform.position ? pointB.transform.position : pointA.transform.position;
-                timer = 0f;
-            }
-        }   
+                if (timer < waitTime)
+                {
+                    timer += Time.fixedDeltaTime;
+                }
+                else
+                {
+                    targetPos = targetPos == pointA.transform.position ? pointB.transform.position : pointA.transform.position;
+                    timer = 0f;
+                }
+            }   
+        }
+
+    }
+
+    void BeginMove()
+    {
+        canMove = true;
     }
 }
